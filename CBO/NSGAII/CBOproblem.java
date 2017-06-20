@@ -260,6 +260,43 @@ public class CBOproblem implements Problem {
 
 		return b;
 	}
+	
+	
+	/**
+	 * constraint 2, VM constraint: each VM can be deployed at most once.
+	 */
+	public boolean constraint2(boolean[] s){
+		boolean b =true;
+		for(int v = 0; v<nVMs;v++){
+			int sum = 0;
+			for(int a = 0;a<napplications; a++){
+				sum += s[a*nVMs+v]?1:0;
+			}
+			if(sum > 1) b =false;
+		}
+		
+		return b;
+	}
+	/**
+	 * constraint 3, deployment requirement constraint.
+	 */
+	public boolean constraint3(boolean[] s){
+		boolean b = true;
+		for(int a = 0;a<napplications;a++){
+			for(int v = 0;v<nVMs;v++){
+				if(s[a*nVMs+v]){
+					if((Acpu[a]<=Computing[v])&&(Aram[a]<=Vram[v])&&(Abw[a]<=Vbw[v])){
+						continue;
+					}else{
+						b=false;
+						break;
+					}
+				}
+			}
+		}
+		return b;
+	}
+	
 
 	@Override
 	public void evaluate(Solution solution) {
@@ -267,20 +304,24 @@ public class CBOproblem implements Problem {
 		double cost = caculateCost(s);
 		double response = caculateResponse(s);
 		boolean c1 = constraint1(s);
+		boolean c2 = constraint2(s);
+		boolean c3 = constraint3(s);
 		solution.setConstraint(0, c1 ? 0.0 : 1.1);
+		solution.setConstraint(1, c2?0.0:1.1);
+		solution.setConstraint(2, c3?0.0:1.1);
 		solution.setObjective(0, cost);
 		solution.setObjective(1, response);
 	}
 
 	@Override
 	public Solution newSolution() {
-		Solution solution = new Solution(1, 2, 1);
-		solution.setVariable(0, EncodingUtils.newBinary(nfunctions * nVMs));
+		Solution solution = new Solution(1, 2, 3);
+		solution.setVariable(0, EncodingUtils.newBinary(napplications * nVMs));
 		return solution;
 	}
 
 	/*
-	 * test
+	 * Unit test
 	 */
 	public static void main(String[] args) {
 		CBOproblem c = new CBOproblem();
@@ -297,7 +338,13 @@ public class CBOproblem implements Problem {
 		//System.out.println(c.caculateResponse(s));
 		
 		//testing the application deployment constraint
-		System.out.println(c.constraint1(s));
+		//System.out.println(c.constraint1(s));
+		
+		//testing the VM constraint
+		//System.out.println(c.constraint2(s));
+		
+		//testing application deployment requirement constraint
+		System.out.println(c.constraint3(s));
 		
 	}
 
@@ -310,7 +357,7 @@ public class CBOproblem implements Problem {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "CBO";
 	}
 
 	@Override
@@ -322,13 +369,13 @@ public class CBOproblem implements Problem {
 	@Override
 	public int getNumberOfObjectives() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public int getNumberOfVariables() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	public Solution generate() {

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.concurrent.ThreadLocalRandom;
-public class ExampleDataGenerator {
+public class DataGenerator {
 	
 	public int[][] randomWorkload(int u, int f){
 		int[][] workload = new int[u][f];
@@ -120,7 +120,7 @@ public class ExampleDataGenerator {
 		// nextInt is normally exclusive of the top value,
 		// so add 1 to make it inclusive
 
-		ExampleDataGenerator g = new ExampleDataGenerator();
+		DataGenerator g = new DataGenerator();
 		//Generate and write workload data
 		int f=10;
 		int u=30;

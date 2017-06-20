@@ -9,7 +9,7 @@ import org.moeaframework.Executor;
 import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 
-public class RunWriteCBO {
+public class RunWriteCBO1 {
 
 public static void main(String[] args) {
 	try {
@@ -19,7 +19,7 @@ public static void main(String[] args) {
         for(int i=0;i<iterations;i++){
         NondominatedPopulation result = new Executor()
 		.withAlgorithm("NSGAII")
-		.withProblemClass(CBOproblem.class)
+		.withProblemClass(CBOproblem1.class)
 		.withProperty("populationSize", 100)
 		.distributeOnAllCores()
 		.withMaxEvaluations(10000)

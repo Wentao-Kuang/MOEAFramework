@@ -10,10 +10,10 @@ import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.BinaryVariable;
 import org.moeaframework.problem.AbstractProblem;
 
-public class CBOproblem implements Problem{
+public class CBOproblem1 implements Problem{
 
 	
-	public CBOproblem() {
+	public CBOproblem1() {
 		super();
 		createExampleData();
 		// TODO Auto-generated constructor stub
@@ -75,7 +75,7 @@ public class CBOproblem implements Problem{
 		nVMs=v;
 
 		//generator dataset
-		ExampleDataGenerator g=new ExampleDataGenerator();
+		ExampleDataGenerator1 g=new ExampleDataGenerator1();
 		workload = g.readIntMatrix("CBO/workload", u, f);
 		computing = g.readIntMatrix("CBO/computing", v, f);
 		price = g.readDoubleMatrix("CBO/price", v, f);
@@ -218,7 +218,7 @@ public class CBOproblem implements Problem{
 	 * test
 	 */
 	public static void main(String[] args) {
-		CBOproblem c = new CBOproblem();
+		CBOproblem1 c = new CBOproblem1();
 		c.createExampleData();
 		boolean[] a= new boolean[]{false,true,false,true,false,false,false,false,false};
 		c.constraint1(a);

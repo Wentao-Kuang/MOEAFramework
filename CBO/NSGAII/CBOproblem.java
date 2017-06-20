@@ -92,23 +92,6 @@ public class CBOproblem implements Problem {
 	 */
 	private double[][] Latency;
 
-	/**
-	 * Entry {@code Task[u][f]} is the function workload matrix from including
-	 * functions {@code f} in user groups {@code u}.
-	 */
-	private int[][] workload;
-
-	/**
-	 * Entry {@code computing[v][f]} is the VM computing capability matrix from
-	 * including functions {@code f} in VMs {@code v}.
-	 */
-	private int[][] computing;
-
-	/**
-	 * Entry {@code price[v][f]} is the VM price matrix from including functions
-	 * {@code f} in VMs {@code v}.
-	 */
-	private double[][] price;
 
 	/**
 	 * Generate Example data for testing fitness and constraints
@@ -154,13 +137,6 @@ public class CBOproblem implements Problem {
 				,{ 0.434, 5.135, 0.044 },{ 6.22, 2.33, 4.044 },{ 0, 1.15, 2 }
 				,{ 1.4, 4.135, 2.144 },{ 0, 2.135, 0.044 }};
 
-		// to be deleted
-		workload = new int[][] { { 4500, 3000, 20000 }, { 1000, 50000, 2500 },
-				{ 34000, 1500, 2000 } };
-		computing = new int[][] { { 3000, 1500, 1500 }, { 2000, 1000, 1000 },
-				{ 5000, 2500, 2500 } };
-		price = new double[][] { { 0.138, 0.150, 0.148 },
-				{ 0.080, 0.090, 0.080 }, { 0.210, 0.200, 0.200 } };
 
 	}
 

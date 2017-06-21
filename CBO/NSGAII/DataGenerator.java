@@ -13,9 +13,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGenerator {
 
-	private int[][] Belong;
-	private int[][] Task;
-	private int[][] Frequency;
+	private static int[][] Belong;
+	private static int[][] Task;
+	private static int[][] Frequency;
 
 	/**
 	 * Function Task size and belong generator
@@ -47,10 +47,26 @@ public class DataGenerator {
 		}
 		if(sumCol(Belong)) break;//constraint each function have belongings.
 		}
-		System.out.println(Arrays.deepToString(Belong));
-		System.out.println(Arrays.deepToString(Task));
+		System.out.println("Belong: "+Arrays.deepToString(Belong));
+		System.out.println("Task: "+Arrays.deepToString(Task));
 	}
-
+	
+	
+	/**
+	 * function invocation frequency generator
+	 * @param nusers
+	 * @param nfunctions
+	 */
+	public void frequencyGen(int nusers,int nfunctions){
+		Frequency = new int[nusers][nfunctions];
+		for(int u=0;u<nusers;u++){
+			for(int f=0;f<nfunctions;f++){
+				Frequency[u][f]=ThreadLocalRandom.current().nextInt(0,100);
+			}
+		}
+		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
+	}
+	
 	/**
 	 * sum the column of a matrix to make sure each col have non-null value.
 	 * @return
@@ -69,10 +85,76 @@ public class DataGenerator {
 		return b;
 	}
 	
+	/**
+	 * write int matrix into file to store generated data
+	 * @param filename
+	 * @param matrix
+	 */
+	
+	public void writeIntMatrix(String filename, int[][] matrix) {
+		try {
+			OutputStreamWriter write = new OutputStreamWriter(
+					new FileOutputStream(filename), "UTF-8");
+			BufferedWriter bw = new BufferedWriter(write);
+			for (int i = 0; i < matrix.length; i++) {
+				for (int j = 0; j < matrix[i].length; j++) {
+
+					bw.write(matrix[i][j] + "\n");
+				}
+			}
+			bw.flush();
+		} catch (IOException e) {
+			// why does the catch need its own curly?
+		}
+	}
+	
+	/**
+	 * read int matrix into file to store generated data
+	 * @param filename
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public int[][] readIntMatrix(String filename, int x, int y) {
+		int[][] matrix = new int[x][y];
+		try {
+			InputStreamReader read = new InputStreamReader(new FileInputStream(
+					filename), "UTF-8");
+			BufferedReader br = new BufferedReader(read);
+			for (int i = 0; i < x; i++) {
+				for (int j = 0; j < y; j++) {
+					matrix[i][j] = Integer.parseInt(br.readLine());
+				}
+			}
+			read.close();
+		} catch (IOException e) {
+			// why does the catch need its own curly?
+		}
+		return matrix;
+	}
+	
+	//test
+	
 	public static void main(String[] args) {
 		DataGenerator d = new DataGenerator();
-		d.applicationGen(3, 3);
-
+		int a=10;
+		int f=30;
+		int u=30;
+		
+		//testing function belonging and task size generator
+		d.applicationGen(a, f);
+		
+		//testing frequency generator
+		d.frequencyGen(u, f);
+		
+		//testing write and read matrix
+		//d.writeIntMatrix("CBO/Belong", Belong);
+		//d.writeIntMatrix("CBO/Task", Task);
+		//d.writeIntMatrix("CBO/Frequency", Frequency);
+		//System.out.println(Arrays.deepToString(d.readIntMatrix("CBO/Belong", a, f)));
+		//System.out.println(Arrays.deepToString(d.readIntMatrix("CBO/Task", a, f)));
+		//System.out.println(Arrays.deepToString(d.readIntMatrix("CBO/Frequency", a, f)));
+		
 	}
 
 	public int[][] randomWorkload(int u, int f) {
@@ -118,23 +200,7 @@ public class DataGenerator {
 		return latency;
 	}
 
-	public void writeIntMatrix(String filename, int[][] matrix) {
-		try {
-			OutputStreamWriter write = new OutputStreamWriter(
-					new FileOutputStream(filename), "UTF-8");
-			BufferedWriter bw = new BufferedWriter(write);
-			for (int i = 0; i < matrix.length; i++) {
-				for (int j = 0; j < matrix[i].length; j++) {
-
-					bw.write(matrix[i][j] + "\n");
-				}
-			}
-			bw.flush();
-		} catch (IOException e) {
-			// why does the catch need its own curly?
-		}
-	}
-
+	
 	public void writeDoubleMatrix(String filename, double[][] matrix) {
 		try {
 			OutputStreamWriter write = new OutputStreamWriter(
@@ -151,23 +217,7 @@ public class DataGenerator {
 		}
 	}
 
-	public int[][] readIntMatrix(String filename, int x, int y) {
-		int[][] matrix = new int[x][y];
-		try {
-			InputStreamReader read = new InputStreamReader(new FileInputStream(
-					filename), "UTF-8");
-			BufferedReader br = new BufferedReader(read);
-			for (int i = 0; i < x; i++) {
-				for (int j = 0; j < y; j++) {
-					matrix[i][j] = Integer.parseInt(br.readLine());
-				}
-			}
-			read.close();
-		} catch (IOException e) {
-			// why does the catch need its own curly?
-		}
-		return matrix;
-	}
+
 
 	public double[][] readDoubleMatrix(String filename, int x, int y) {
 		double[][] matrix = new double[x][y];

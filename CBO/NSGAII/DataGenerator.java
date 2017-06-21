@@ -13,10 +13,99 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGenerator {
 
-	private static int[][] Belong;
-	private static int[][] Task;
-	private static int[][] Frequency;
+	
+	//test
+	public static void main(String[] args) {
+		
+		int a=10;
+		int f=30;
+		int u=30;
+		int v=50;
+		new DataGenerator(a,f,u,v);
+		
+	}
+	
+	/**
+	 * initialization
+	 * @param napplications
+	 * @param nfunction
+	 * @param nusers
+	 */
+	public DataGenerator(int napplications, int nfunctions, int nusers, int nVMs){
+		
+		System.out.println("Initializing data generator");
+		System.out.println("Application Num: "+napplications+" ; Functions Num: "+nfunctions+" ; Usergroups Num: "+nusers+" ; VMs Num: "+nVMs);
+		//generate belonging and task size matrix
+		applicationGen(napplications, nfunctions);
+		//generate frequency matrix
+		frequencyGen(nusers, nfunctions);
+		//generate VM information
+		VMGen(nVMs);
+		//generate application requirement
+		AGen(napplications);
+		//resize latency data
+		latencyResize(nusers,nVMs);
+	}
+	
 
+	//predefined VM types
+	private int[][] VMtypes = new int[][]{{3500,16,1000},{3000,8,1000},{2500,4,1000},{2000,8,1250},{1500,4,1000},{1000,2,750},{500,1,500}};
+	private double[][] VMprice = new double[][]{{0.398,0.618},{0.199,0.309},{0.100,0.155},{0.094,0.162},{0.047,0.081},{0.023,0.041},{0.012,0.020}};
+	
+	//predefined application requirements
+	private int[] CPU = new int[]{3500,3250,3000,2750,2500,2250,2000,1750,1500,1250,1000,750,500};
+	private int[] ram = new int[]{1,2,4,8,16};
+	private int[] bw = new int[]{500,750,1000,1250};
+	
+	/**
+	 * predefined application generator
+	 * @param napplications
+	 */
+	public void AGen(int napplications){
+		int[] Acpu= new int[napplications];
+		int[] Aram = new int[napplications];
+		int[] Abw = new int[napplications];
+		for(int a=0;a<napplications;a++){
+			Acpu[a]=CPU[ThreadLocalRandom.current().nextInt(0, CPU.length)];
+			Aram[a]=ram[ThreadLocalRandom.current().nextInt(0,ram.length)];
+			Abw[a]=bw[ThreadLocalRandom.current().nextInt(0,bw.length)];
+		}
+		System.out.println("Acpu: "+Arrays.toString(Acpu));
+		System.out.println("Aram: "+Arrays.toString(Aram));
+		System.out.println("Abw: "+Arrays.toString(Abw));
+		//write data to file
+		writeIntVector("CBO/Acpu", Acpu);
+		writeIntVector("CBO/Aram", Aram);
+		writeIntVector("CBO/Abw", Abw);
+	}
+	
+	/**
+	 * predefined VM data generator
+	 * @param nVMs
+	 */
+	public void VMGen(int nVMs){
+		int[] Computing = new int[nVMs];
+		int[] Vram = new int[nVMs];
+		int[] Vbw = new int[nVMs];
+		double[] Price = new double[nVMs];
+		for(int v=0;v<nVMs;v++){
+			int index = ThreadLocalRandom.current().nextInt(0, VMtypes.length);
+			Computing[v]=VMtypes[index][0];
+			Vram[v]=VMtypes[index][1];
+			Vbw[v]=VMtypes[index][2];
+			Price[v]=ThreadLocalRandom.current().nextDouble(VMprice[index][0],VMprice[index][1]);
+		}
+		System.out.println("VMcpu:"+Arrays.toString(Computing));
+		System.out.println("VMram: "+Arrays.toString(Vram));
+		System.out.println("VMbw: "+Arrays.toString(Vbw));
+		System.out.println("VMprice: "+Arrays.toString(Price));
+		//write data to file
+		writeIntVector("CBO/Computing", Computing);
+		writeIntVector("CBO/Vram", Vram);
+		writeIntVector("CBO/Vbw", Vbw);
+		writeDoubleVector("CBO/Price", Price);
+	}
+	
 	/**
 	 * Function Task size and belong generator
 	 * @param napplications
@@ -24,8 +113,8 @@ public class DataGenerator {
 	 */
 	
 	public void applicationGen(int napplications, int nfunctions) {
-		Belong = new int[napplications][nfunctions];
-		Task = new int[napplications][nfunctions];
+		int[][] Belong = new int[napplications][nfunctions];
+		int[][] Task = new int[napplications][nfunctions];
 		while(true){
 		for (int a = 0; a < napplications; a++) {
 			// share function rate
@@ -49,8 +138,10 @@ public class DataGenerator {
 		}
 		System.out.println("Belong: "+Arrays.deepToString(Belong));
 		System.out.println("Task: "+Arrays.deepToString(Task));
+		//write data to file
+		writeIntMatrix("CBO/Belong", Belong);
+		writeIntMatrix("CBO/Task", Task);
 	}
-	
 	
 	/**
 	 * function invocation frequency generator
@@ -58,14 +149,50 @@ public class DataGenerator {
 	 * @param nfunctions
 	 */
 	public void frequencyGen(int nusers,int nfunctions){
-		Frequency = new int[nusers][nfunctions];
+		int[][] Frequency = new int[nusers][nfunctions];
 		for(int u=0;u<nusers;u++){
 			for(int f=0;f<nfunctions;f++){
 				Frequency[u][f]=ThreadLocalRandom.current().nextInt(0,100);
 			}
 		}
 		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
+		writeIntMatrix("CBO/Frequency", Frequency);
 	}
+	
+	
+	/**
+	 * resize the rtMatrix based on u and v, than generate new latency matrix
+	 * @param filename
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public double[][] latencyResize(int u,int v) {
+		double[][] latency = new double[u][v];
+		try {
+			InputStreamReader read = new InputStreamReader(new FileInputStream(
+					"CBO/rtMatrix.txt"), "UTF-8");
+			BufferedReader br = new BufferedReader(read);
+			for (int i = 0; i < u; i++) {
+				String line =br.readLine();
+				for (int j = 0; j < v; j++) {
+					String[] splited = line.split("\\s+");
+					if(Double.parseDouble(splited[j])==-1.0){
+						latency[i][j] = 0;
+					}else{
+						latency[i][j] = Double.parseDouble(splited[j]);
+					}
+				}
+			}
+			read.close();
+		} catch (IOException e) {
+			// why does the catch need its own curly?
+		}
+		System.out.println("Latency: "+Arrays.deepToString(latency));
+		writeDoubleMatrix("CBO/Latency",latency);
+		return latency;
+	}
+	
 	
 	/**
 	 * sum the column of a matrix to make sure each col have non-null value.
@@ -86,6 +213,46 @@ public class DataGenerator {
 	}
 	
 	/**
+	 * Write vector to file
+	 * @param filename
+	 * @param vector
+	 */
+	public void writeIntVector(String filename, int[] vector) {
+		try {
+			OutputStreamWriter write = new OutputStreamWriter(
+					new FileOutputStream(filename), "UTF-8");
+			BufferedWriter bw = new BufferedWriter(write);
+			for (int i = 0; i < vector.length; i++) {
+					bw.write(vector[i] + "\n");
+			}
+			bw.flush();
+		} catch (IOException e) {
+			System.err.println("Writing data error");
+			// why does the catch need its own curly?
+		}
+	}
+
+	/**
+	 * Write double vector to file
+	 * @param filename
+	 * @param vector
+	 */
+	public void writeDoubleVector(String filename, double[] vector) {
+		try {
+			OutputStreamWriter write = new OutputStreamWriter(
+					new FileOutputStream(filename), "UTF-8");
+			BufferedWriter bw = new BufferedWriter(write);
+			for (int i = 0; i < vector.length; i++) {
+					bw.write(vector[i] + "\n");
+			}
+			bw.flush();
+		} catch (IOException e) {
+			System.err.println("Writing data error");
+			// why does the catch need its own curly?
+		}
+	}
+
+	/**
 	 * write int matrix into file to store generated data
 	 * @param filename
 	 * @param matrix
@@ -104,102 +271,13 @@ public class DataGenerator {
 			}
 			bw.flush();
 		} catch (IOException e) {
+			System.err.println("Writing data error");
 			// why does the catch need its own curly?
 		}
 	}
+
+
 	
-	/**
-	 * read int matrix into file to store generated data
-	 * @param filename
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public int[][] readIntMatrix(String filename, int x, int y) {
-		int[][] matrix = new int[x][y];
-		try {
-			InputStreamReader read = new InputStreamReader(new FileInputStream(
-					filename), "UTF-8");
-			BufferedReader br = new BufferedReader(read);
-			for (int i = 0; i < x; i++) {
-				for (int j = 0; j < y; j++) {
-					matrix[i][j] = Integer.parseInt(br.readLine());
-				}
-			}
-			read.close();
-		} catch (IOException e) {
-			// why does the catch need its own curly?
-		}
-		return matrix;
-	}
-	
-	//test
-	
-	public static void main(String[] args) {
-		DataGenerator d = new DataGenerator();
-		int a=10;
-		int f=30;
-		int u=30;
-		
-		//testing function belonging and task size generator
-		d.applicationGen(a, f);
-		
-		//testing frequency generator
-		d.frequencyGen(u, f);
-		
-		//testing write and read matrix
-		//d.writeIntMatrix("CBO/Belong", Belong);
-		//d.writeIntMatrix("CBO/Task", Task);
-		//d.writeIntMatrix("CBO/Frequency", Frequency);
-		//System.out.println(Arrays.deepToString(d.readIntMatrix("CBO/Belong", a, f)));
-		//System.out.println(Arrays.deepToString(d.readIntMatrix("CBO/Task", a, f)));
-		//System.out.println(Arrays.deepToString(d.readIntMatrix("CBO/Frequency", a, f)));
-		
-	}
-
-	public int[][] randomWorkload(int u, int f) {
-		int[][] workload = new int[u][f];
-		for (int i = 0; i < u; i++) {
-			for (int j = 0; j < f; j++) {
-				workload[i][j] = ThreadLocalRandom.current().nextInt(10000,
-						500000);
-			}
-		}
-		return workload;
-	}
-
-	public int[][] randomComputing(int v, int f) {
-		int[][] computing = new int[v][f];
-		for (int i = 0; i < v; i++) {
-			for (int j = 0; j < f; j++) {
-				computing[i][j] = ThreadLocalRandom.current().nextInt(1000,
-						5000);
-			}
-		}
-		return computing;
-	}
-
-	public double[][] randomPrice(int v, int f) {
-		double[][] price = new double[v][f];
-		for (int i = 0; i < v; i++) {
-			for (int j = 0; j < f; j++) {
-				price[i][j] = ThreadLocalRandom.current().nextDouble(0.001,
-						0.020);
-			}
-		}
-		return price;
-	}
-
-	public double[][] randomLatency(int v, int u) {
-		double[][] latency = new double[v][u];
-		for (int i = 0; i < v; i++) {
-			for (int j = 0; j < u; j++) {
-				latency[i][j] = ThreadLocalRandom.current().nextDouble(0, 5);
-			}
-		}
-		return latency;
-	}
-
 	
 	public void writeDoubleMatrix(String filename, double[][] matrix) {
 		try {
@@ -219,38 +297,6 @@ public class DataGenerator {
 
 
 
-	public double[][] readDoubleMatrix(String filename, int x, int y) {
-		double[][] matrix = new double[x][y];
-		try {
-			InputStreamReader read = new InputStreamReader(new FileInputStream(
-					filename), "UTF-8");
-			BufferedReader br = new BufferedReader(read);
-			for (int i = 0; i < x; i++) {
-				for (int j = 0; j < y; j++) {
-					matrix[i][j] = Double.parseDouble(br.readLine());
-				}
-			}
-			read.close();
-		} catch (IOException e) {
-			// why does the catch need its own curly?
-		}
-		return matrix;
-	}
 
-	/**
-	 * public static void main(String[] args) {
-	 * 
-	 * // nextInt is normally exclusive of the top value, // so add 1 to make it
-	 * inclusive
-	 * 
-	 * DataGenerator g = new DataGenerator(); //Generate and write workload data
-	 * int f=10; int u=30; int v=100; g.writeIntMatrix("CBO/workload",
-	 * g.randomWorkload(u, f)); g.writeIntMatrix("CBO/computing",
-	 * g.randomComputing(v, f)); g.writeDoubleMatrix("CBO/price",
-	 * g.randomPrice(v, f)); g.writeDoubleMatrix("CBO/latency",
-	 * g.randomLatency(v, u)); g.readIntMatrix("CBO/workload", u, f);
-	 * g.readIntMatrix("CBO/computing", v, f); g.readDoubleMatrix("CBO/price",
-	 * v, f); g.readDoubleMatrix("CBO/latency", v, u); }
-	 */
 
 }

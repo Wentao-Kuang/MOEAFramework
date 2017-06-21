@@ -8,12 +8,34 @@ import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.BinaryVariable;
 import org.moeaframework.problem.AbstractProblem;
+import java.util.Arrays;
 
 public class CBOproblem implements Problem {
 
 	public CBOproblem() {
 		super();
-		createExampleData();
+		// problem size define same with data generator
+		int a=10;
+		int f=30;
+		int u=30;
+		int v=50;
+		LoadData l=new LoadData(a,f,u,v);
+		this.napplications=a;
+		this.nfunctions=f;
+		this.nusers=u;
+		this.nVMs=v;
+		this.Belong=l.readBelong();
+		this.Task=l.readTask();
+		this.Frequency=l.readFrequency();
+		this.Latency=l.readLatency();
+		this.Computing=l.readComputing();
+		this.Vram=l.readVram();
+		this.Vbw=l.readVbw();
+		this.Price=l.readPrice();
+		this.Acpu=l.readAcpu();
+		this.Aram=l.readAram();
+		this.Abw=l.readAbw();
+		//createExampleData();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -87,7 +109,7 @@ public class CBOproblem implements Problem {
 	private int[][] Frequency;
 
 	/**
-	 * Entry {@code latency[v][u]} is the latency matrix from including user
+	 * Entry {@code latency[u][v]} is the latency matrix from including user
 	 * groups {@code u} in VMs {@code v}.
 	 */
 	private double[][] Latency;
@@ -132,12 +154,7 @@ public class CBOproblem implements Problem {
 		Task = new int[][] { { 4500, 0, 0 }, { 0, 0, 2500 }, { 0, 1500, 2500 } };
 		Frequency = new int[][] { { 103, 25, 30 }, { 13, 5, 24 },
 				{ 67, 19, 75 } };
-		Latency = new double[][] { { 3.454, 5.556, 0 }, { 2.222, 0, 2.500 },
-				{ 1.434, 1.135, 2.044 },{ 2.444, 2.135, 0 },{ 0, 1.55, 2.944 }
-				,{ 0.434, 5.135, 0.044 },{ 6.22, 2.33, 4.044 },{ 0, 1.15, 2 }
-				,{ 1.4, 4.135, 2.144 },{ 0, 2.135, 0.044 }};
-
-
+		Latency = new double[][] { { 3.454, 5.556, 0 , 2.222, 0, 2.500, 1.434, 1.135, 2.044, 2.444}, {2.135, 0, 0, 1.55, 2.944 , 0.434, 5.135, 0.044 , 6.22, 2.33}, {4.044 , 0, 1.15, 2, 1.4, 4.135, 2.144, 0, 2.135, 0.044 }};
 	}
 
 	/**
@@ -196,7 +213,7 @@ public class CBOproblem implements Problem {
 							double l = 0;// latency
 							e = (double) Frequency[u][f]*Task[a][f]
 									/ (double) Computing[v];
-							l=Latency[v][u]*Frequency[u][f];
+							l=Latency[u][v]*Frequency[u][f];
 							response += l+e;
 							/**
 							 System.out.println("a: "+a+" f: "+f+" u: "+u+" v: "+v);
@@ -215,7 +232,7 @@ public class CBOproblem implements Problem {
 				}
 			}
 		}
-		return response;
+		return response/3600;
 	}
 
 	/**
@@ -223,7 +240,7 @@ public class CBOproblem implements Problem {
 	 */
 	public boolean constraint1(boolean[] s) {
 		boolean b = true;
-		for (int a = 0; a < nfunctions; a++) {
+		for (int a = 0; a < napplications; a++) {
 			int sum = 0;
 			for (int v = 0; v < nVMs; v++) {
 				sum += s[(a) * nVMs + v] ? 1 : 0;
@@ -320,7 +337,7 @@ public class CBOproblem implements Problem {
 		//System.out.println(c.constraint2(s));
 		
 		//testing application deployment requirement constraint
-		System.out.println(c.constraint3(s));
+		//System.out.println(c.constraint3(s));
 		
 	}
 

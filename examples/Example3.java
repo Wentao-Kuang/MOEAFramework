@@ -34,7 +34,8 @@ public class Example3 {
 				.withProblem("UF1")
 				.withFrequency(100)
 				.attachElapsedTimeCollector()
-				.attachGenerationalDistanceCollector();
+				.attachGenerationalDistanceCollector()
+				.attachAll();
 		
 		// use the executor to run the algorithm with the instrumenter
 		new Executor()
@@ -53,7 +54,7 @@ public class Example3 {
 			System.out.format("%5d    %-8.4f  %-8.4f%n",
 					accumulator.get("NFE", i),
 					accumulator.get("Elapsed Time", i),
-					accumulator.get("GenerationalDistance", i));
+					accumulator.get("Hypervolume", i));
 		}
 	}
 

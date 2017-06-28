@@ -74,9 +74,9 @@ public class DataGenerator {
 		System.out.println("Aram: "+Arrays.toString(Aram));
 		System.out.println("Abw: "+Arrays.toString(Abw));
 		//write data to file
-		writeIntVector("CBO/Acpu", Acpu);
-		writeIntVector("CBO/Aram", Aram);
-		writeIntVector("CBO/Abw", Abw);
+		writeIntVector("CBO/datasets/Acpu", Acpu);
+		writeIntVector("CBO/datasets/Aram", Aram);
+		writeIntVector("CBO/datasets/Abw", Abw);
 	}
 	
 	/**
@@ -100,10 +100,10 @@ public class DataGenerator {
 		System.out.println("VMbw: "+Arrays.toString(Vbw));
 		System.out.println("VMprice: "+Arrays.toString(Price));
 		//write data to file
-		writeIntVector("CBO/Computing", Computing);
-		writeIntVector("CBO/Vram", Vram);
-		writeIntVector("CBO/Vbw", Vbw);
-		writeDoubleVector("CBO/Price", Price);
+		writeIntVector("CBO/datasets/Computing", Computing);
+		writeIntVector("CBO/datasets/Vram", Vram);
+		writeIntVector("CBO/datasets/Vbw", Vbw);
+		writeDoubleVector("CBO/datasets/Price", Price);
 	}
 	
 	/**
@@ -139,8 +139,8 @@ public class DataGenerator {
 		System.out.println("Belong: "+Arrays.deepToString(Belong));
 		System.out.println("Task: "+Arrays.deepToString(Task));
 		//write data to file
-		writeIntMatrix("CBO/Belong", Belong);
-		writeIntMatrix("CBO/Task", Task);
+		writeIntMatrix("CBO/datasets/Belong", Belong);
+		writeIntMatrix("CBO/datasets/Task", Task);
 	}
 	
 	/**
@@ -156,7 +156,7 @@ public class DataGenerator {
 			}
 		}
 		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
-		writeIntMatrix("CBO/Frequency", Frequency);
+		writeIntMatrix("CBO/datasets/Frequency", Frequency);
 	}
 	
 	
@@ -189,7 +189,7 @@ public class DataGenerator {
 			// why does the catch need its own curly?
 		}
 		System.out.println("Latency: "+Arrays.deepToString(latency));
-		writeDoubleMatrix("CBO/Latency",latency);
+		writeDoubleMatrix("CBO/datasets/Latency",latency);
 		return latency;
 	}
 	

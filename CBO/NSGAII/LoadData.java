@@ -45,7 +45,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readBelong(){
-		return readIntMatrix("CBO/Belong",a,f);
+		return readIntMatrix("CBO/datasets/Belong",a,f);
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readTask(){
-		return readIntMatrix("CBO/Task",a,f);
+		return readIntMatrix("CBO/datasets/Task",a,f);
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readFrequency(){
-		return readIntMatrix("CBO/Frequency",u,f);
+		return readIntMatrix("CBO/datasets/Frequency",u,f);
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readComputing(){
-		return readIntVector("CBO/Computing",v);
+		return readIntVector("CBO/datasets/Computing",v);
 	}
 	
 	/**
@@ -77,7 +77,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readVram(){
-		return readIntVector("CBO/Vram",v);
+		return readIntVector("CBO/datasets/Vram",v);
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readVbw(){
-		return readIntVector("CBO/Vbw",v);
+		return readIntVector("CBO/datasets/Vbw",v);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class LoadData {
 	 * @return
 	 */
 	public double[] readPrice(){
-		return readDoubleVector("CBO/Price",v);
+		return readDoubleVector("CBO/datasets/Price",v);
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readAcpu(){
-		return readIntVector("CBO/Acpu",a);
+		return readIntVector("CBO/datasets/Acpu",a);
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readAram(){
-		return readIntVector("CBO/Aram",a);
+		return readIntVector("CBO/datasets/Aram",a);
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readAbw(){
-		return readIntVector("CBO/Abw",a);
+		return readIntVector("CBO/datasets/Abw",a);
 	}
 	
 	
@@ -129,7 +129,7 @@ public class LoadData {
 	 * @return
 	 */
 	public double[][] readLatency() {
-		return readDoubleMatrix("CBO/Latency",u,v);
+		return readDoubleMatrix("CBO/datasets/Latency",u,v);
 	}
 	
 	

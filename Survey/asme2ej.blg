@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: asme2ej.aux
+The style file: asmems4.bst
+Database file #1: asme2e.bib
+Warning--empty author in IBM01
+Warning--empty publisher in IBM01
+Warning--empty publisher in HCSP
+You've used 43 entries,
+            1984 wiz_defined-function locations,
+            728 strings with 12530 characters,
+and the built_in function-call counts, 14015 in all, are:
+= -- 1343
+> -- 460
+< -- 0
++ -- 182
+- -- 139
+* -- 911
+:= -- 1865
+add.period$ -- 130
+call.type$ -- 43
+change.case$ -- 43
+chr.to.int$ -- 0
+cite$ -- 46
+duplicate$ -- 768
+empty$ -- 1365
+format.name$ -- 139
+if$ -- 3355
+int.to.chr$ -- 0
+int.to.str$ -- 43
+missing$ -- 43
+newline$ -- 218
+num.names$ -- 42
+pop$ -- 234
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 505
+stack$ -- 0
+substring$ -- 1098
+swap$ -- 344
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 3
+while$ -- 155
+width$ -- 45
+write$ -- 495
+(There were 3 warnings)

@@ -1,0 +1,304 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%% asme2ej.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template for producing ASME-format journal articles using LaTeX    %
+% Written by   Harry H. Cheng, Professor and Director                %
+%              Integration Engineering Laboratory                    %
+%              Department of Mechanical and Aeronautical Engineering %
+%              University of California                              %
+%              Davis, CA 95616                                       %
+%              Tel: (530) 752-5020 (office)                          %
+%                   (530) 752-1028 (lab)                             %
+%              Fax: (530) 752-4158                                   %
+%              Email: hhcheng@ucdavis.edu                            %
+%              WWW:   http://iel.ucdavis.edu/people/cheng.html       %
+%              May 7, 1994                                           %
+% Modified: February 16, 2001 by Harry H. Cheng                      %
+% Modified: January  01, 2003 by Geoffrey R. Shiflett                %
+% Use at your own risk, send complaints to /dev/null                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% use twocolumn and 10pt options with the asme2ej format
+\documentclass[onecolumn,10pt]{asme2ej}
+
+\usepackage{epsfig} %% for loading postscript figures
+\usepackage{float} % lets you have non-floating floats
+\usepackage{colortbl}
+\usepackage{multirow}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}  
+\usepackage{url} % for typesetting urls
+%% The class has several options
+%  onecolumn/twocolumn - format for one or two columns per page
+%  10pt/11pt/12pt - use 10, 11, or 12 point font
+%  oneside/twoside - format for oneside/twosided printing
+%  final/draft - format for final/draft copy
+%  cleanfoot - take out copyright info in footer leave page number
+%  cleanhead - take out the conference banner on the title page
+%  titlepage/notitlepage - put in titlepage or leave out titlepage
+%  
+%% The default is oneside, onecolumn, 10pt, final
+
+
+\title{A Survey of Resource Allocation Optimization in Cloud Computing}
+
+%%% first author
+\author{Wentao Kuang
+    \affiliation{
+	School of Engineering and Computer Science\\
+	Victoria University of Wellington\\
+    Email: wt.kuang@icloud.com
+    }	
+}
+
+%%% second author
+%%% remove the following entry for single author papers
+%%% add more entries for additional authors
+\author{Hui Ma 
+    \affiliation{Supervisor, Senior Lecturer\\
+	School of Engineering and Computer Science\\
+	Victoria University of Wellington
+    }
+}
+
+
+
+\begin{document}
+
+\maketitle    
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+{\it Cloud computing provides available, scalable processing and storage resources by sharing commodity computer resources which significantly restructuring the IT industry. Small companies can benefit from using state of the art services and infrastructures with a reasonable price, while large organizations are interested in the high processing speed and ultimate storages. However, optimal allocation of resources in cloud environment is a hard problem due to many factors, such as the heterogeneity of resource types, the scale of data centers, and the diversity of objectives from different actors in the cloud. In this paper, we survey many recent literatures, and identify five challenges for the future scope, includes auxiliary objectives, coherent cloud optimization simulator or framework, hybridization, problem scalability, and cross-layer optimization.\\\\
+\textbf{Keywords:} CLoud Computing, Resource allocation, Survey.
+}
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+Cloud Computing (CC) delivers hosts of services over the internet and enables companies to consume cloud resources, such as virtual machines (VMs), network,storage, and power. Due to the increasing demands of the cloud resources, it becomes difficult to optimally allocate resources based on the users demands in order to satisfy the their requirement under the constraint of Service Level Agreement(SLA) \cite{dillon2010cloud}. 
+
+CC resource allocation is a novel, interesting and important area to explore. CC resource allocation often refers to the efficient allocation between the resource requests and heterogeneous cloud resources by the different actors in cloud environments \cite{endo2011resource}. The resource requests can be varied from different actors, for example, cloud clients may request for VMs to deploy web services or applications, and cloud providers may request to allocate their VMs into Physical Machines (PMs) in the data centers. Cloud resources can be classified into different types of resources, such as compute resource, network resource and storage resource and power resource. The allocation objectives also different concerned by different cloud actors, cloud clients often concern their deployment cost and Quality of Service (QoS), and cLoud provider may interested in minimization of the power consumption and resource utilization \cite{jennings2015resource}. Apparently, the cloud resource allocation problems present a variety of mixture due to the complex architecture, and many actors involving. In our survey, our first contribution is to classify these resource allocation problems based on the cloud requests, resource types and cloud actors. 
+
+These resource allocation problems are large-scale optimization problems with dynamics an uncertainty due to the multiple actors and users with variety of requirements and objectives. So most of CC resource allocation problem are NP-hard problem which means there no exact and optimal algorithms for optimization, in order to solve these NP-hard problems, Heuristic algorithms are common solutions for CC resource allocation optimization. Computational Intelligence (CI) is also known as soft computing which provides near optimal solutions to NP-hard problems. CI technique deals with many CC resource allocation factors resulting from the multi-tier structure and diverse requirements, such as dynamics, uncertainty and approximation. CI community using techniques such as Evolutionary Computing (EC) and Fuzzy System to solve CC resource allocation problems \cite{guzek2015survey}. 
+Another contribution of our survey is to identify the gap and challenges of CI techniques in the cloud resource allocation scope.
+
+After reviewing the literatures under the scope of cloud resource allocation optimization with CI techniques, we classified the allocation problems into four main categories: \emph{Cloud Brokering, Service Allocation, VMs Allocation} and \emph{VMs Migration}, which will discuss in the section 2 and section 3. We also identify five challenges in section 4, which include: \emph{auxiliary objectives, coherent cloud optimization simulator or framework, Hybrid algorithms, problem scalability,} and \emph{cross-layer optimization}. Finally, we give our conclusion.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Background}
+CC Architecture consists of different layers and construct to distinct business model which is managed by different cloud actors. Cloud resource allocation challenges are distributed between these layers, and resource allocation objectives are concerned by different actors. These objectives many vary due to different concerns, such as financial, environment, performance, geo-location and so on \cite{zhang2010cloud}. This section will introduce the background knowledge of the CC resources allocation includes CC architecture and cloud actors and their objectives.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cloud Computing Architecture}
+The commonly architecture of CC can be separated into four layers: \emph{Application layer, Platform layer, Infrastructure layer} and \emph{Hardware layer} \cite{jadeja2012cloud}. 
+
+\emph{The hardware layer} is also known as server layer, it is the bottom layer of the cloud stack, which represents all the cloud physical resources, such as physical machines, power and cooling systems. This layer is implemented in data centers and consists of thousands of servers. The main resource allocation challenge in hardware level is efficient utilization of the hardware resources, so the power resource usage is minimized. 
+
+\emph{The infrastructure layer} provides virtual resources on top of physical resources by using Virtualization techniques, such as KVM, Xen and VMware \cite{rodriguez2012summary}, so it is also called Virtualization layer. The virtual resources consist of computing and storage resources by partitioning the physical machines. The main challenge here is the efficiently allocate of virtual resource to physical machine to minimize the usage of physical resources.
+
+\emph{The platform layer} rests on the infrastructure layer, if provides operating systems and application frameworks for customers to develop their application, so the customers do not need to manage their applications directly in Virtual Machine (VM). The platform layer is responsible to manage the platform resources, such as framework and VM. The main challenge in platform layer is optimizing the performance of platform by a given available resources, i.e. Efficiently allocate VMs between data centers in order to maximize the network performance.
+
+\emph{The Application layer} is on the top of the Cloud Computing architecture hierarchy, it can be web applications and services that serve end user directly. The application layer manages all the software resources and encompasses the largest accessible layer of CC. Their main concern is the Quality of Service (QoS), which is constrained by the service provisioning problem.
+
+\subsection{Cloud Computing Business Model}
+Cloud Providers employ a service driven business model \cite{foster2008cloud}, they provide different resources as services. In practice, CC business models are normally described as three main levels of service, that is, \emph{Infrastructure as a Service (IaaS), Platform as a Service (PaaS)} and \emph{Software as a Service (SaaS)} \cite{parikh2013survey}. For CC architecture discussed in the previous section, every layer can be an implementation of service business model or a customer on the top of another layer \cite{vaquero2008break}. 
+
+\emph{Infrastructure as a Service} provides computer infrastructure as a service such as computing capacity and storage, customers can enjoy the state of the art technology and pay as growth infrastructure resources from public cloud. Infrastructure providers manage thousands of physical resources and provide virtual resources by sharing and virtualization. In order to optimize the infrastructure resources, VM allocation, load balancing and Capacity planning are some common problems for infrastructure providers.
+
+\emph{Platform as a Service} is an additional abstract implementation based on IaaS. Platform providers offer OS, framework, storage for customers to develop and host web applications. In practice, PaaS and IaaS are commonly owned by the same organization, such as Google, Amazon and Microsoft. Hence, PaaS and IaaS providers often faced same resource management problems. As a result, Most of studies in the research community are only tackling the resource allocation problem on IaaS and SaaS level.
+
+\emph{Software as a Service} serves a wide variety of customers with web applications in the cloud. Web Service providers host their services on geographically distributed servers to provide large scaled online services for customers. Service providers always consider the QoS and profit optimization objectives since they only need to consider the service provisioning problem such as cloud brokering and service allocation. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Resource Allocation Literature Review}
+
+As previously discussed, CC offers services as IaaS, PaaS and SaaS models. In terms of resource allocation, based on the usage and providing of these business models cloud actors can be described as follows: \emph{Cloud Provider, Cloud User, End User} and \emph{Cloud Broker}. Each actor concerns different objectives for the resource allocation optimization.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Cloud Provider based Resource Allocation}
+
+\emph{Cloud Provider} owns a set of data centers and provides both hardware resources and software resources. A cloud provider can offers many business models depends on the deployment model. In the context of public cloud, cloud provider normally provides IaaS and PaaS to the cloud user, the goal of cloud provider is to maximum their income by minimizing cost under the constraint of SLA. The cost are usually related to the power usage, resource utilization. In terms of private cloud, cloud provider manages all the layers from hardware layer to the software layer, and provides SaaS to the End User, in addition to the cost related objectives, cloud provider also need to consider the QoS objectives such as throughput and response time. The most basic concerns of cloud providers are how to efficiently allocate VMs to the PMs, since they always manage the hardware layer and infrastructure layer. Some static problems like VM allocation and dynamic problem like VM migration are exploited by many researchers.
+
+\subsubsection{VM Placement and Allocation}
+The fundamental technology powers CC is virtualization, which create a pool of virtualized resources on top of physical resources. It enables the infrastructure provider to reduce IT costs while increasing utilization. VM allocation as a concomitant bin packing problem of virtualization, is the process to optimally map virtual machine to appropriate infrastructure and Physical Machine (PM) in a data center or private cloud. Common objectives concerned by cloud provider in VM placement are energy, resource utilization, performance, cost. The static VM allocation differs from VM migration and consolidation, which only consider the initial deployment of the data center. Table \ref{VMallo} is the summary of VM allocation problems.  
+
+An single objective energy aware VM allocation problem is solved by Gao et al. \cite{gao2016energy} with considering both PM constraints and network constraints. They propose an Ant Colony Optimization (ACO) to minimize a single objective energy cost. The PM constraints include CPU utilization, memory capacity and idle PMs, the network constraints are flow conservation, flow routing and bandwidth. They use a 2 dimensional matrix to present the ACO solution of allocating VMs to PMs, that each VM row can only select one element to ensure a VM is hosted on only one PM. They compare ACO with a greedy algorithm, which is First Fit  Decreasing Algorithm (FFD). The test results show that ACO always has better performance than FFD for different number of VMs. They also illustrate that the network constraint will limit the optimization result. Finally, they prove that the ACO has much better performance than FFD, since the FDD greedy strategy can easily fall into local optimal for large problem. 
+
+Some multi-objectives VM allocation problems are also tackled by recent researchers, Portaluri and Giordano \cite{portaluri2016multi} propose a VM allocator for CC that allocate a set of VMs on servers in the data center. They solve this problem with a Multi-Objective GA (MOGA) approach by considering server power, switch power consumption and resource utilization include CPU, RAM, disk and bandwidth. They compared their allocator with a mixed integer linear problem which solve by CPLEX \cite{IBM01}. They set up experiments with different parameters and allocated up to 2000 VMs. The results indicate that, Although MOGA and CPLEX both can find similar optimal solutions, MOGA is more powerful for larger number of VMs than CPLEX since the execution time increased significantly for more than 200 VMs. Pires and Fabio \cite{pires2013multi} devote to a Multi Objective Memetic Algorithm (MOMA) for optimally selecting PMs as VMs placement by minimizing energy consumption and network traffic and maximizing economical revenue. The experiment is performed in several scenarios with different number of instances. They also implement an Exhaustive Search Algorithm (ESA) for comparison and evaluation their proposed algorithm. Three experimental tests are conducted for different purposes. For the first test, they prove the effectiveness of MOMA. Compared to ESA, MOMA find 100\% of the optimal Pareto front. The second test verifies the scalability of MOMA while considering lager solutions search space. The last test shows that by increasing the percentage of VMs with critical Service Level Agreement (SLA) also decrease the execution time, and the MOMA can find at least 95\% of feasible solutions. 
+
+One emerging objective of the VM allocation problem is environmental impact. Ahvar et al. \cite{ahvar2016cacev} present a study on the VM allocation problem which aims at minimizing the Carbon emission and cost. They propose a combination of prediction-based A* Algorithm and Fuzzy Sets optimization method called CACEV. Their scenario is focused on allocating the new VM requests to the available PMs from geographically distributed data centers, since the energy prices and carbon emission rates vary by location. As a consequence, their algorithm consists two steps, the first step selects data centers and the second step choose PM to allocate from the selected data center. They construct three different versions of CACEV for comparison, which include CACEV-Cost(only consider cost objective), CACEV-Carbon (only consider carbon emission) and CACEV (consider both objectives). After simulation, they demonstrate that CACEV improves 40-155\% in carbon emissions on CACEV-Cost which increases 20-60\% on cost. In general, CACEV can improve total cost by 40-60\% and carbon emission by 10-30\%.
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[b]{|l|llll}
+\rowcolor[gray]{.4}
+\color{white}Paper    							  & \color{white}CI Technique & \color{white}Request     & \color{white}Resource    &\color{white}Objectives  \\ \hline 
+Gao et al. \cite{gao2016energy}                   & ACO      				  & VM              		 & PM 						&Energy Cost  \\ \hline
+Portaluri and  Giordano \cite{portaluri2016multi} & GA       				  & VM       				 & PM 						&Power Consumption, Resource Utilization\\ \hline
+Pires and Fabio \cite{pires2013multi}        	  & MA     			          & VM  			         & PM  						&Energy, Network, Revenue   \\ \hline
+Ahvar et al. \cite{ahvar2016cacev}				  & A* + Fuzzy 				  & VM                       & PM  			        	&Cost,Carbon Emission, Energy\\
+\end{tabular}
+\end{center}
+\caption{VM Placement and Allocation Optimizations}
+\label{VMallo}
+\end{table}
+
+\subsubsection{VM Migration}
+VM migration is an online server load balancing problem that scheduling the virtual resources to physical resources with balanced load. Compare to the static VM allocation problem, VM migration is a dynamic problem since the cloud providers often encounter a load imbalance problem when existing hosts are stoped and new hosts are requested dynamically. Technique likes live migration enable the VM migration with minimal disturbance to services that running inside the migration. The aims of VM migration are to 
+shut down idle PMs and increase the utilization of functional PMs, in order to minimize energy cost and resource utilization. Reviewed papers are listed in table \ref{VMmig}.
+
+Some single objective VM migration problems have been proposed. Sharma and Guddeti \cite{sharma2016demand} solve an on-demand VM migration problem to optimize energy consumption by a hybrid of Cat Swarm Optimization (CSO) and GA called HGACSO. The design of algorithm is embedded CSO in the middle of GA, The solutions are initialized in GA, then apply CSO algorithm for the selecting 50\% fittest solutions, finally, apply GA crossover and mutation on the best cats from the CSO. The experiments consider 1500 of 3 types PMs in the data center and periodical VM request from 50 users. They compare four algorithms in the experiments include First Fit Decreasing (FFD), GA, CSO and HGACSO. Results show that HGACSO has the highest resource utilization and the lowest energy consumption. Sundararajan et al. \cite{sundararajan2015constrained} propose a constrained GA approach for rebalancing of services in cloud data centers with considering affinity and anti-affinity constraints, and the objective is minimizing the number of service migrations. Affinity constrains some VMs should place on the same host for reducing the co-hosting data transfers. Anti-affinity constrains some VMs are needed to allocate on different hosts for backup replica. They conduct simulation based experiments on real world PlanetLab data \cite{park2006comon}. The first experiment shows the impact of the number of hosts will decrease the performance for larger number compared to demanded number. The second experiment  illustrates that the increasing of services will increase the fitness for larger number of hosts. The last experiment concludes that the number of affinity and anti-affinity constraint services set is no major impact on the fitness. 
+
+A traditional multi objectives VM migrating problem is tackled by Zhao et al. \cite{zhao2011multi} by NSGA-II, they consider three resource utilization include CPU, Memory and bandwidth. A set of experiments is constructed to compare NSGA-II with Random Algorithm, static Algorithm and Rank Algorithm mentioned in study \cite{sotomayor2009virtual}. They provide four different strategies since the attributes are non-dominated in NSGA-II, which are CPU dominated, memory dominated, bandwidth dominated and balance strategy. For the comparison of Algorithms, NSGA-II is obviously better than other three algorithms, and the Rank Algorithm is the worst. Ramezani et al. \cite{ramezani2016multi} improve a PSO by using Fuzzy Logic System (FLS) to solve VM migration problem with the multiple objectives of minimizing the power consumption and maximizing the resource utilization. In PSO, the particle’s situation changes dynamically with the environment, hence the choice of the inertia weight can provide a balance between local and global optimal. The author uses a fuzzy rule to select the inertia weight for achieving optimum results. The experiment results indicate that their proposed algorithm achieves better resource utilization and also decreases the bandwidth traffic.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[b]{|l|llll}
+\rowcolor[gray]{.4}
+\color{white}Paper    							  & \color{white}CI Technique & \color{white}Request     & \color{white}Resource    &\color{white}Objectives  \\ \hline 
+Sharma and Guddeti \cite{sharma2016demand}    	  & CSO + GA 				  & VM                       & PM   			        & Energy Consumption \\ \hline
+Sundararajan et al.\cite{sundararajan2015constrained} & GA     			      & VM  			         & PM  						& Migration Number \\ \hline
+Zhao et al. \cite{zhao2011multi}                  & GA       				  & VM       				 & PM 						& CPU, Memory, Bandwidth	\\ \hline
+Ramezani et al. \cite{ramezani2016multi}          & PSO + Fuzzy      		  & VM              		 & PM 						& Power Consumption, Makespan  \\
+\end{tabular}
+\end{center}
+\caption{VM Migration Optimization}
+\label{VMmig}
+\end{table}
+
+\subsection{Cloud User based Resource Allocation}
+\emph{Cloud User} deploys application on the public cloud witch provided by cloud provider, and offers SaaS to the end users. Cloud users are interested in obtaining the best QoS performance for the lowest price while meeting the SLA with the end users. The SaaS market presents incredibly competitive, so most cloud users must consider multiple objectives include QoS factors and cost in order to survive. The cloud provider also scales and redeploy their application based on the demand of end users. The most common resource allocation problem for cloud users is service allocation, which is allocating web services to virtual resources or servers in order to provide a better SaaS with a lower cost.
+
+\subsubsection{Service Allocation}
+
+Service allocation and composition problems are often concerned by service providers who are trying to optimally allocate web service onto a set of virtualized infrastructure resources in order to optimize the cost and QoS. The QoS is often presented by latency and throughput, since network latency and throughput became increasingly important for QoS while the Internet bandwidth and computing power are guaranteed \cite{aboolian2009location}. The network latency can vary between different geographical infrastructure locations where the service hosted. In order to provide a better service performance, service providers attempt to minimize the network latency by allocation servers in geographically distributed data centers with minimal cost. Table 3 summarizes the reviewed literatures about service allocation and composition problems.
+
+Bao et al. \cite{bao2016orthogonal} proposed an Orthogonal Genetic Algorithm for QoS objective service composition problem, they add up six QoS objectives into one same weighted fitness function, which includes execution price, execution duration, availability, throughput, successful execution rate and reliability. They also introduce an Orthogonal array design into the solution presentation in order to simplify the complexity. They set up a set of experiments based on the QWS dataset \cite{al2007discovering, al2008investigating} and compare to 20 different advanced optimization algorithms which include nine PSOs, five GA and six Differential Evolution (DE). The results show that OGA has a better solution quality than other algorithms, but often give smaller standard deviation of function values. In terms of execution speed, OGA converge faster than other PSO and GA algorithms. 
+
+Tan et al. \cite{tan2016optimization, tan2016particle, tan2017binary} perform a series of studies on the service location allocation problem. They consider the latency as the most critical effect on the QoS, so their objectives are minimizing the total cost and latency add them up into one tradeoff weighted model. They employ the dataset collected by WS-DREAM \cite{zheng2014investigating, zheng2010distributed} which describes real world evaluation results between end user and web services such as location and latency. In their first research \cite{tan2016optimization}, they propose a NSGA-II approach, and conduct full experiment on the comparison between NSGA-II and GA. The results show that NSGA-II perform effectively to produce near optimal solutions, NSGA-II is also more efficient for problem with big numbers of data, and GA only can tackle small problems. For their following research \cite{tan2016particle}, they devote to the PSO approach with a set of larger experiment datasets. They initial propose a Weighted Sum PSO (WSPSO) since the fitness function is weighted sum up of all the objectives, then another approach is dominance-based fitness assignment schema PSO called Non-dominated PSO (NSPSO). The results show that both WSPSO and NSPSO perform more effective than NSGA-II, and NSPSO can perform better than WSPSO especially on large problems. Their next research \cite{tan2017binary} devote on a further research on a new PSO approach called Modified Binary PSO (MBPSO) which applied dynamic inertia weight. It returned results show that MBPSO has the best performance on larger problems than their previous approaches. 
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|llll}
+\rowcolor[gray]{.4}
+\color{white}Paper    							  & \color{white}CI Technique & \color{white}Request     & \color{white}Resource    &\color{white}Objectives  \\ \hline 
+Bao et al. \cite{bao2016orthogonal}				  & GA       				  & Service  				 & VM 						& QoS factors	\\ \hline
+Tan et al. \cite{tan2016optimization,tan2016particle, tan2017binary}  & GA and PSO  	& Service        & Server                   &Cost, Latency  \\
+\end{tabular}
+\end{center}
+\caption{Service Allocation Optimization}
+\label{Service}
+\end{table}
+
+\subsection{Cloud Broker based Resource Allocation}
+\emph{Cloud Broker} is an intermediary between cloud users and cloud providers in CC that manages the workload allocation. Sometimes, clients can submit their requests to the cloud broker for multiple reasons. On one hand, cloud broker matches the requests with the best offers of cloud provider in order to maximize profit. On the other hand, cloud customers are satisfied with the better offerings, professional solutions and higher performance. In practice, the cloud brokers are responsible for efficient allocation of the customer requests into pre-booked resources in order to optimize the profit, often coupled with some other QoS requirements, such as response time, user satisfaction.
+
+\subsubsection{Cloud Brokering}
+The cloud community enthusiastically welcomed the concept of cloud brokering, since cloud brokering contributes many resource allocation problems and challenges to investigate and solve. Cloud brokering focuses on the development of brokering and multi-cloud platforms, and provider optimization solutions for the cloud users. From the perspective of resource allocation, a cloud broker normally act as a intermediary in the process of workload submission, that is, the process of allocating the requests from multiple cloud users to the offers from multiple cloud providers. The requests can be different based on the usage of cloud business model, i.e. application requests for SaaS, or VM requests for IaaS. The reviewed literatures about cloud brokering problem are concluded in Table \ref{Broker}. 
+
+Gaetano et al. \cite{anastasi2014qbrokage} propose a GA approach for cloud brokering to find IaaS resources for optimizing the QoS satisfaction include cost, ram, storage, and location, the hypothesis or solution is described by a vector based representation called Chromosome which the index represents a request and the corresponding value represents the assigned VM. A set of experiments is performed for evaluating the validation, tuning and scalability of GA approach. However, the result shows that only cost objective is optimized while the ram and storage satisfaction are not optimized. But it still can be noticed that the cost-effectiveness for multiple providers. 
+
+Yacine et al. \cite{kessaci2013pareto} solve cloud brokering problem by using Multi-Objectives Particle Swarm Optimization (MOPSO). They model the allocation problem by setting clients’ request and VM as the particle position, then produce a set of Pareto solutions. After comparison with NSGA-II and random search algorithm, the result shows that MOPSO achieve the best Pareto solution.  
+
+Some hybrid Algorithms are proposed to improve the effectiveness with a better global optimal result, such as, Max-Min Ant (MMAS) \cite{stutzle2000max} + GA \cite{hajjem2016mmas} and Simulated Annealing (SA) + GA \cite{iturriaga2013parallel}. For the MMAS + GA approach, the mapping between requests and VMs are modeled as a graph, where the set of nodes represents the requests and the set of edges describes the mapping, then applying the GA on the solutions generated by MMAS. SA + GA uses GA to model the mapping solution and parallelly employed SA as an operator to exploit the search space regions. So GA manages the evolution of a population, and a SA operator called migration is responsible for managing a set of different populations and exchanging individuals among the populations. Lotfi and Salah \cite{hajjem2016mmas} devote a MMAS+GA for allocation of VM resources to satisfy the users’ request which is composed of a set of tasks to be executed, objectives of resource allocation are minimizing the execution time and cost. They set up the experiment based on the a benchmark dataset from research \cite{HCSP} which is a matrix mapping the execution time between different task types and VMs. They demonstrate the effectiveness and efficiency among GA, MMAS and MMAS+GA, the result shows that the hybrid approach has the best solution, the GA perform slightly inferior, and the MMAS doesn’t dominate any solution. However, the MMAS+GA has the highest execution time, and the MMAS computes fastest. Santiago et al. \cite{iturriaga2013parallel} proposed another hybrid approach that combines the SA and GA in parallel to solve the cloud brokering problem by optimizing the profit and makespan. After a set of experiment with a fixed 90s execution time. Then they compare to a greedy approach on the performance, the profit result improved significantly with an up to 138\% and average 17.8\% to 43.3\% improvement. In terms of makespan result, the improvement is between 4.5\% and 17.7\%.
+
+
+%\includegraphics[width = 1\textwidth]{Table2.jpeg}
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[b]{|l|llll}
+\rowcolor[gray]{.4}
+\color{white}Paper    							  & \color{white}CI Technique & \color{white}Request     & \color{white}Resource    &\color{white}Objectives  \\ \hline 
+Gaetano et al. \cite{anastasi2014qbrokage}   	  & GA       				  & Application				 & VM 						& QoS satisfaction	\\ \hline
+Yacine et al. \cite{kessaci2013pareto}   	      & MOPSO 					  & Internet of Things       & VM 						& Response time, Energy  \\ \hline
+Lotfi and Salah \cite{hajjem2016mmas}       	  & MMAS + GA     			  & Service  			     & VM  						& Execution time, Cost  \\ \hline
+Santiago et al. \cite{iturriaga2013parallel} 	  & SA + GA 				  & VM Request      		 & VM 						& Profit, Makespan  \\ 
+\end{tabular}
+\end{center}
+\caption{Cloud Brokering Optimization}
+\label{Broker}
+\end{table}
+
+\subsection{Summary}
+\subsubsection{CI Approaches}
+Different CI Algorithms are proposed to solve the CC resource allocation problems with the expectation for efficiency and effectiveness, such as GA, PSO, SA and hybrid.
+
+GA is a well known heuristic algorithm that can stochastic search near-optimal solutions in large search spaces iteratively. GA manages a set of solutions called chromosomes, then evolves the chromosomes during the iterations until reach the expected solution. For most resource allocation problems are mapping the requests to the resources, GA chromosomes can present the mapping clearly. GA also can solve multi objective problems by search a set of named non-dominated solutions \cite{anastasi2014qbrokage, tan2016optimization, zhao2011multi}. However, one major limitation of GA is the time consuming since the a number of fitness calculation is performed for each iteration. 
+
+PSO is a biologically inspired powerful optimization algorithm that mimics the social behaviors of bird flocking to search the solution \cite{kennedy2011particle}. PSO also uses vector-based solutions called particles, so the same mapping problem can be easily modeled by particle. PSO can solve multi objective problems by finding a set of Pareto optimal set \cite{reyes2006multi}. Compared to GA, PSO is easier to setup with fewer parameters, while the configuration of GA parameter may take much more effort, hence PSO also has a faster optimization speed \cite{bai2010analysis}. 
+
+Many Hybrid Algorithms are constructed by adopting both advantages from different algorithms to improve the performance. A MMAS and a GA are combined by applying the MMAS solutions to GA \cite{hajjem2016mmas}, which gives better results with more execution time. A parallel hybrid EA + SA is proposed by using SA as an operator for exploiting promising search space regions \cite{iturriaga2013parallel}, which produce better results in an affordable amount of time. Another hybrid algorithm is applying the CSO on the GA selected solutions than perform the GA evolution, the result shows that the hybrid performs better than GA and CSO for an online problem \cite{sharma2016demand}. The authors \cite{ramezani2016multi} use a fuzzy rule to select the PSO inertia weights, which achieves a better global optimal.
+
+\subsubsection{Objectives}
+In summary, resource allocation objectives can be classified into three groups: \emph{Performance, Financial} and \emph{environmental} groups. The summary of objectives and corresponding relation of cloud actors are in the table as follows (See Table \ref{Obj}).
+
+The standard objectives of resource allocation is performance related, cloud user often tried to optimize the response time for end user and the throughput for their services in order to provide a better QoS in this competitive market. These objectives can be further defined as makespan witch denotes to the maximum completion time of a batch of tasks. Another group of objectives are cost-related, on the cloud user perspective, cloud users are interested in providing a better QoS with a lower deployment cost, on the cloud provider hand, they aim to maximize their profit by minimizing the operation cost such as power and energy cost. Recently, some emerging objectives can be grouped into environmental objectives, witch driven by government policies. The main contribution is to minimize the environmental impact by minimizing the power usage and $CO_2$ emission. In addition, some other objectives are concerned by cloud providers when maintaining the data center, i.e. resource utilization and VM migration number are directly related to the maintenance cost.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}[b]{|l|l|l}
+\rowcolor[gray]{.4}
+\color{white}Objective Groups    				  & \color{white}Objectives & \color{white}Cloud Actors \\ \hline 
+Performance 									  & Response Time, Throughput, Makespan  & Cloud User, Cloud Broker	\\ \hline
+Financial 					                      & Cost, Profit, Price     & Cloud User, Cloud Broker and Cloud Provider \\ \hline
+Environmental 				                      & Power, $CO_2$ Emissions, Energy	& Cloud Provider      		 \\ \hline
+Others											  & Resource Utilization, VM Migration Number& Cloud Provider\\
+
+\end{tabular}
+\end{center}
+\caption{Objective Classification}
+\label{Obj}
+\end{table}
+
+
+\section{Challenges for Future Scope}
+CC is still not a mature field, and presents many opportunities and challenges for the research community. After reviewing recent researches, we identified some research challenges and gaps for the future scopes. These unexplored territories include: \emph{auxiliary objectives, coherent cloud optimization simulator or framework, Hybrid algorithms, problem scalability}, and \emph{cross-layer optimization}
+
+\subsection{Auxiliary Objectives}
+CC resource allocation optimization still presents many unexplored areas. Another interesting domain is auxiliary objectives for the optimization. The existing objectives can be divided into three groups, that is, performance, finance and environment. There is still a gap on auxiliary objectives resulting from shared and highly-distributed cloud environments, for example, reliability for allocating on heterogeneous infrastructural resources, availability for distributed resources, security for multi-tenancy distribution, and data storage for legal compliance.  
+
+\subsection{Coherent Simulator and Framework}
+Despite lots of cross-layer CC resource allocation optimization problem has been studied, there is still no coherent simulator or framework to leverage the existing approaches. Some potential candidates can be CloudSim \cite{calheiros2011cloudsim}, CloudAnalyst \cite{wickremasinghe2010cloudanalyst}, GreenCloud \cite{kliazovich2010greencloud} and iCanCloud \cite{nunez2012icancloud}. CloudSim enable seamless simulating of CC resource allocation from service application layer to infrastructure layer, researcher can model their problem without considering about low level infrastructure details. CloudAnalyst is a UI based simulator that enables researchers to evaluate the experiments of geographical distribution workload-server allocation problems. GreenCloud provides researchers a simulation environment for energy-aware CC data centers with a focus on communications. iCanCloud allows researchers to predict trade-off between cost and performance by executing applications in specific hardware. 
+
+\subsection{Hybridization}
+Hybrid algorithms are very common in real-world optimization problems, there are still many more hybrid algorithms can be constructed in order to improve the performance. The combination can be embedded an algorithm in the middle of another algorithm \cite{sharma2016demand}, or just running after another algorithm \cite{hajjem2016mmas}. Another hybrid approach is to adopt some specialized operators for another algorithm \cite{iturriaga2013parallel}. Most of hybrid approach can be easier when they share very similar solution encoding. However, this may introduce more challenges on the algorithm execution time due to the fact of complexity of hybrid algorithm.
+
+\subsection{Scalability}
+Another challenge for CI community is very large scaled optimization problem with more than 10,000 users. Even though these large scaled problems are only concerned by large cloud providers, such as Google and Amazon, some the real world problems with several thousands of users still need to be solved efficiently and quickly. Additionally, online problems normally constrain the solution execution time, so future algorithms should perform more efficiently while the accuracy is guaranteed.   
+
+\subsection{Cross-layer optimization}
+There still some cross-layer CC problems can be considered in the future, that is, consider the problems cross multiple cloud layers. For example, some cloud providers may manages hardware, infrastructure, platform and software layer together and provide SaaS to the end users, they many encounter more challenges since they manages multiple layers and concerns more objectives. Research \cite{iturriaga2013parallel} solved a cloud brokering problem that optimally allocates VM requests to VM, and studies \cite{tan2016optimization,tan2016particle, tan2017binary} also consider a service allocation problem between service and geographically distributed servers. A future study may propose a mechanism that combines these two problems into two steps, the first step optimizes the the allocation between VM and services, and the second step allocates the VM to geographically distributed server in order to minimize the latency. 
+
+\section{Conclusion}
+This survey reviews a cross layer range of CC resource allocation optimization using CI techniques. Apparently, CI techniques are applicable to both single objective and multi objectives resource allocation problem that exists at all layers of CC. However, there still lots of gaps and challenges for the research community, include algorithm performance, hybridization, exploration. Firstly, the performance of CI approaches for heavy load resource allocation problems is still not good enough in terms of executing efficiently and adapting dynamically, and it is a big challenge to find a good solutions for resource allocation in CC within a time frame. Secondly, there are still lots of opportunities for approach hybridization. CI tools can be hybridized with machine learning or mathematical programming for different purpose, such as, improving the accuracy and increasing the adaptability. Finally, CC is still a developing area, the evolving may impact existing problems and introduce many new problems. For example, cross-layer resource allocation optimization and auxiliary objectives. In conclusion, considering these gaps in CC resource allocation optimization, there are still many opportunities for CI communities to explore.  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The bibliography is stored in an external database file
+% in the BibTeX format (file_name.bib).  The bibliography is
+% created by the following command and it will appear in this
+% position in the document. You may, of course, create your
+% own bibliography by using thebibliography environment as in
+%
+% \begin{thebibliography}{12}
+% ...
+% \bibitem{itemreference} D. E. Knudsen.
+% {\em 1966 World Bnus Almanac.}
+% {Permafrost Press, Novosibirsk.}
+% ...
+% \end{thebibliography}
+
+% Here's where you specify the bibliography style file.
+% The full file name for the bibliography style file 
+% used for an ASME paper is asmems4.bst.
+\bibliographystyle{asmems4}
+
+% Here's where you specify the bibliography database file.
+% The full file name of the bibliography database for this
+% article is asme2e.bib. The name for your database is up
+% to you.
+\bibliography{asme2e}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\appendix       %%% starting appendix
+%\section*{Appendix A: Head of First Appendix}
+%Avoid Appendices if possible.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

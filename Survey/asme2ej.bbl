@@ -1,0 +1,276 @@
+\begin{thebibliography}{10}
+
+\bibitem{dillon2010cloud}
+Dillon, T., Wu, C., and Chang, E., 2010.
+\newblock ``Cloud computing: issues and challenges''.
+\newblock In Advanced Information Networking and Applications (AINA), 2010 24th
+  IEEE International Conference on, Ieee, pp.~27--33.
+
+\bibitem{endo2011resource}
+Endo, P.~T., de~Almeida~Palhares, A.~V., Pereira, N.~N., Goncalves, G.~E.,
+  Sadok, D., Kelner, J., Melander, B., and Mangs, J.-E., 2011.
+\newblock ``Resource allocation for distributed cloud: concepts and research
+  challenges''.
+\newblock {\em IEEE network, {\bf 25}}(4).
+
+\bibitem{jennings2015resource}
+Jennings, B., and Stadler, R., 2015.
+\newblock ``Resource management in clouds: Survey and research challenges''.
+\newblock {\em Journal of Network and Systems Management, {\bf 23}}(3), p.~567.
+
+\bibitem{guzek2015survey}
+Guzek, M., Bouvry, P., and Talbi, E.-G., 2015.
+\newblock ``A survey of evolutionary computation for resource management of
+  processing in cloud computing''.
+\newblock {\em IEEE Computational Intelligence Magazine, {\bf 10}}(2),
+  pp.~53--67.
+
+\bibitem{zhang2010cloud}
+Zhang, Q., Cheng, L., and Boutaba, R., 2010.
+\newblock ``Cloud computing: state-of-the-art and research challenges''.
+\newblock {\em Journal of internet services and applications, {\bf 1}}(1),
+  pp.~7--18.
+
+\bibitem{jadeja2012cloud}
+Jadeja, Y., and Modi, K., 2012.
+\newblock ``Cloud computing-concepts, architecture and challenges''.
+\newblock In Computing, Electronics and Electrical Technologies (ICCEET), 2012
+  International Conference on, IEEE, pp.~877--880.
+
+\bibitem{rodriguez2012summary}
+Rodr{\'\i}guez-Haro, F., Freitag, F., Navarro, L., Hern{\'a}nchez-s{\'a}nchez,
+  E., Far{\'\i}as-Mendoza, N., Guerrero-Ib{\'a}{\~n}ez, J.~A., and
+  Gonz{\'a}lez-Potes, A., 2012.
+\newblock ``A summary of virtualization techniques''.
+\newblock {\em Procedia Technology, {\bf 3}}, pp.~267--272.
+
+\bibitem{foster2008cloud}
+Foster, I., Zhao, Y., Raicu, I., and Lu, S., 2008.
+\newblock ``Cloud computing and grid computing 360-degree compared''.
+\newblock In Grid Computing Environments Workshop, 2008. GCE'08, Ieee,
+  pp.~1--10.
+
+\bibitem{parikh2013survey}
+Parikh, S.~M., 2013.
+\newblock ``A survey on cloud computing resource allocation techniques''.
+\newblock In Engineering (NUiCONE), 2013 Nirma University International
+  Conference on, IEEE, pp.~1--5.
+
+\bibitem{vaquero2008break}
+Vaquero, L.~M., Rodero-Merino, L., Caceres, J., and Lindner, M., 2008.
+\newblock ``A break in the clouds: towards a cloud definition''.
+\newblock {\em ACM SIGCOMM Computer Communication Review, {\bf 39}}(1),
+  pp.~50--55.
+
+\bibitem{gao2016energy}
+Gao, C., Wang, H., Zhai, L., Gao, Y., and Yi, S., 2016.
+\newblock ``An energy-aware ant colony algorithm for network-aware virtual
+  machine placement in cloud computing''.
+\newblock In Parallel and Distributed Systems (ICPADS), 2016 IEEE 22nd
+  International Conference on, IEEE, pp.~669--676.
+
+\bibitem{portaluri2016multi}
+Portaluri, G., and Giordano, S., 2016.
+\newblock ``Multi objective virtual machine allocation in cloud data centers''.
+\newblock In Cloud Networking (Cloudnet), 2016 5th IEEE International
+  Conference on, IEEE, pp.~107--112.
+
+\bibitem{IBM01}
+, 2010.
+\newblock ``Efficient modeling in ilog opl cplex development system''.
+\newblock In {\em White Paper}.
+
+\bibitem{pires2013multi}
+Pires, F.~L., and Bar{\'a}n, B., 2013.
+\newblock ``Multi-objective virtual machine placement with service level
+  agreement: A memetic algorithm approach''.
+\newblock In Proceedings of the 2013 IEEE/ACM 6th International Conference on
+  Utility and Cloud Computing, IEEE Computer Society, pp.~203--210.
+
+\bibitem{ahvar2016cacev}
+Ahvar, E., Ahvar, S., Mann, Z.~A., Crespi, N., Garcia-Alfaro, J., and Glitho,
+  R., 2016.
+\newblock ``Cacev: a cost and carbon emission-efficient virtual machine
+  placement method for green distributed clouds''.
+\newblock In Services Computing (SCC), 2016 IEEE International Conference on,
+  IEEE, pp.~275--282.
+
+\bibitem{sharma2016demand}
+Sharma, N.~K., and Guddeti, R. M.~R., 2016.
+\newblock ``On demand virtual machine allocation and migration at cloud data
+  center using hybrid of cat swarm optimization and genetic algorithm''.
+\newblock In Eco-friendly Computing and Communication Systems (ICECCS), 2016
+  Fifth International Conference on, IEEE, pp.~27--32.
+
+\bibitem{sundararajan2015constrained}
+Sundararajan, P.~K., Feller, E., Forgeat, J., and Mengshoel, O.~J., 2015.
+\newblock ``A constrained genetic algorithm for rebalancing of services in
+  cloud data centers''.
+\newblock In Cloud Computing (CLOUD), 2015 IEEE 8th International Conference
+  on, IEEE, pp.~653--660.
+
+\bibitem{park2006comon}
+Park, K., and Pai, V.~S., 2006.
+\newblock ``Comon: a mostly-scalable monitoring system for planetlab''.
+\newblock {\em ACM SIGOPS Operating Systems Review, {\bf 40}}(1), pp.~65--74.
+
+\bibitem{zhao2011multi}
+Zhao, J., Zeng, W., Liu, M., and Li, G., 2011.
+\newblock ``Multi-objective optimization model of virtual resources scheduling
+  under cloud computing and it's solution''.
+\newblock In Cloud and Service Computing (CSC), 2011 International Conference
+  on, IEEE, pp.~185--190.
+
+\bibitem{sotomayor2009virtual}
+Sotomayor, B., Montero, R.~S., Llorente, I.~M., and Foster, I., 2009.
+\newblock ``Virtual infrastructure management in private and hybrid clouds''.
+\newblock {\em IEEE Internet computing, {\bf 13}}(5).
+
+\bibitem{ramezani2016multi}
+Ramezani, F., Naderpour, M., and Lu, J., 2016.
+\newblock ``A multi-objective optimization model for virtual machine mapping in
+  cloud data centres''.
+\newblock In Fuzzy Systems (FUZZ-IEEE), 2016 IEEE International Conference on,
+  IEEE, pp.~1259--1265.
+
+\bibitem{aboolian2009location}
+Aboolian, R., Sun, Y., and Koehler, G.~J., 2009.
+\newblock ``A location--allocation problem for a web services provider in a
+  competitive market''.
+\newblock {\em European Journal of Operational Research, {\bf 194}}(1),
+  pp.~64--77.
+
+\bibitem{bao2016orthogonal}
+Bao, L., Zhao, F., Shen, M., Qi, Y., and Chen, P., 2016.
+\newblock ``An orthogonal genetic algorithm for qos-aware service
+  composition''.
+\newblock {\em The Computer Journal, {\bf 59}}(12), pp.~1857--1871.
+
+\bibitem{al2007discovering}
+Al-Masri, E., and Mahmoud, Q.~H., 2007.
+\newblock ``Discovering the best web service''.
+\newblock In Proceedings of the 16th international conference on World Wide
+  Web, ACM, pp.~1257--1258.
+
+\bibitem{al2008investigating}
+Al-Masri, E., and Mahmoud, Q.~H., 2008.
+\newblock ``Investigating web services on the world wide web''.
+\newblock In Proceedings of the 17th international conference on World Wide
+  Web, ACM, pp.~795--804.
+
+\bibitem{tan2016optimization}
+Tan, B., Ma, H., and Zhang, M., 2016.
+\newblock ``Optimization of location allocation of web services using a
+  modified non-dominated sorting genetic algorithm''.
+\newblock In Australasian Conference on Artificial Life and Computational
+  Intelligence, Springer, pp.~246--257.
+
+\bibitem{tan2016particle}
+Tan, B., Mei, Y., Ma, H., and Zhang, M., 2016.
+\newblock ``Particle swarm optimization for multi-objective web service
+  location allocation''.
+\newblock In European Conference on Evolutionary Computation in Combinatorial
+  Optimization, Springer, pp.~219--234.
+
+\bibitem{tan2017binary}
+Tan, B., Huang, H., Ma, H., and Zhang, M., 2017.
+\newblock ``Binary pso for web service location-allocation''.
+\newblock In Australasian Conference on Artificial Life and Computational
+  Intelligence, Springer, pp.~366--377.
+
+\bibitem{zheng2014investigating}
+Zheng, Z., Zhang, Y., and Lyu, M.~R., 2014.
+\newblock ``Investigating qos of real-world web services''.
+\newblock {\em IEEE Transactions on Services Computing, {\bf 7}}(1),
+  pp.~32--39.
+
+\bibitem{zheng2010distributed}
+Zheng, Z., Zhang, Y., and Lyu, M.~R., 2010.
+\newblock ``Distributed qos evaluation for real-world web services''.
+\newblock In Web Services (ICWS), 2010 IEEE International Conference on, IEEE,
+  pp.~83--90.
+
+\bibitem{anastasi2014qbrokage}
+Anastasi, G.~F., Carlini, E., Coppola, M., and Dazzi, P., 2014.
+\newblock ``Qbrokage: A genetic approach for qos cloud brokering''.
+\newblock In Cloud Computing (CLOUD), 2014 IEEE 7th International Conference
+  on, IEEE, pp.~304--311.
+
+\bibitem{kessaci2013pareto}
+Kessaci, Y., Melab, N., and Talbi, E.-G., 2013.
+\newblock ``A pareto-based genetic algorithm for optimized assignment of vm
+  requests on a cloud brokering environment''.
+\newblock In Evolutionary Computation (CEC), 2013 IEEE Congress on, IEEE,
+  pp.~2496--2503.
+
+\bibitem{stutzle2000max}
+St{\"u}tzle, T., and Hoos, H.~H., 2000.
+\newblock ``Max--min ant system''.
+\newblock {\em Future generation computer systems, {\bf 16}}(8), pp.~889--914.
+
+\bibitem{hajjem2016mmas}
+Hajjem, L., and Benabdallah, S., 2016.
+\newblock ``An mmas-ga for resource allocation in multi-cloud systems''.
+\newblock In Internet Technology and Secured Transactions (ICITST), 2016 11th
+  International Conference for, IEEE, pp.~421--426.
+
+\bibitem{iturriaga2013parallel}
+Iturriaga, S., Nesmachnow, S., Dorronsoro, B., Talbi, E.-G., and Bouvry, P.,
+  2013.
+\newblock ``A parallel hybrid evolutionary algorithm for the optimization of
+  broker virtual machines subletting in cloud systems''.
+\newblock In P2P, Parallel, Grid, Cloud and Internet Computing (3PGCIC), 2013
+  Eighth International Conference on, IEEE, pp.~594--599.
+
+\bibitem{HCSP}
+HCSP, 2000.
+\newblock ``Heterogeneous computing scheduling problem''.
+\newblock In {\em
+  https://www.fing.edu.uy/inco/grupos/cecal/hpc/HCSP/index.htm}.
+
+\bibitem{kennedy2011particle}
+Kennedy, J., 2011.
+\newblock ``Particle swarm optimization''.
+\newblock In {\em Encyclopedia of machine learning}. Springer, pp.~760--766.
+
+\bibitem{reyes2006multi}
+Reyes-Sierra, M., and Coello, C.~C., 2006.
+\newblock ``Multi-objective particle swarm optimizers: A survey of the
+  state-of-the-art''.
+\newblock {\em International journal of computational intelligence research,
+  {\bf 2}}(3), pp.~287--308.
+
+\bibitem{bai2010analysis}
+Bai, Q., 2010.
+\newblock ``Analysis of particle swarm optimization algorithm''.
+\newblock {\em Computer and information science, {\bf 3}}(1), p.~180.
+
+\bibitem{calheiros2011cloudsim}
+Calheiros, R.~N., Ranjan, R., Beloglazov, A., De~Rose, C.~A., and Buyya, R.,
+  2011.
+\newblock ``Cloudsim: a toolkit for modeling and simulation of cloud computing
+  environments and evaluation of resource provisioning algorithms''.
+\newblock {\em Software: Practice and experience, {\bf 41}}(1), pp.~23--50.
+
+\bibitem{wickremasinghe2010cloudanalyst}
+Wickremasinghe, B., Calheiros, R.~N., and Buyya, R., 2010.
+\newblock ``Cloudanalyst: A cloudsim-based visual modeller for analysing cloud
+  computing environments and applications''.
+\newblock In Advanced Information Networking and Applications (AINA), 2010 24th
+  IEEE International Conference on, IEEE, pp.~446--452.
+
+\bibitem{kliazovich2010greencloud}
+Kliazovich, D., Bouvry, P., Audzevich, Y., and Khan, S.~U., 2010.
+\newblock ``Greencloud: a packet-level simulator of energy-aware cloud
+  computing data centers''.
+\newblock In Global Telecommunications Conference (GLOBECOM 2010), 2010 IEEE,
+  IEEE, pp.~1--5.
+
+\bibitem{nunez2012icancloud}
+N{\'u}{\~n}ez, A., V{\'a}zquez-Poletti, J.~L., Caminero, A.~C.,
+  Casta{\~n}{\'e}, G.~G., Carretero, J., and Llorente, I.~M., 2012.
+\newblock ``icancloud: A flexible and scalable cloud infrastructure
+  simulator''.
+\newblock {\em Journal of Grid Computing, {\bf 10}}(1), pp.~185--209.
+
+\end{thebibliography}

@@ -15,27 +15,27 @@ public class CBOproblem implements Problem {
 	public CBOproblem() {
 		super();
 		// problem size define same with data generator
-//		int a=10;
-//		int f=30;
-//		int u=30;
-//		int v=50;
-//		LoadData l=new LoadData(a,f,u,v);
-//		this.napplications=a;
-//		this.nfunctions=f;
-//		this.nusers=u;
-//		this.nVMs=v;
-//		this.Belong=l.readBelong();
-//		this.Task=l.readTask();
-//		this.Frequency=l.readFrequency();
-//		this.Latency=l.readLatency();
-//		this.Computing=l.readComputing();
-//		this.Vram=l.readVram();
-//		this.Vbw=l.readVbw();
-//		this.Price=l.readPrice();
-//		this.Acpu=l.readAcpu();
-//		this.Aram=l.readAram();
-//		this.Abw=l.readAbw();
-		createExampleData();
+		int a=4;
+		int f=10;
+		int u=10;
+		int v=20;
+		LoadData l=new LoadData(a,f,u,v);
+		this.napplications=a;
+		this.nfunctions=f;
+		this.nusers=u;
+		this.nVMs=v;
+		this.Belong=l.readBelong();
+		this.Task=l.readTask();
+		this.Frequency=l.readFrequency();
+		this.Latency=l.readLatency();
+		this.Computing=l.readComputing();
+		this.Vram=l.readVram();
+		this.Vbw=l.readVbw();
+		this.Price=l.readPrice();
+		this.Acpu=l.readAcpu();
+		this.Aram=l.readAram();
+		this.Abw=l.readAbw();
+		//createExampleData();
 		// TODO Auto-generated constructor stub
 	}
 

@@ -17,10 +17,10 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 		
-		int a=10;
-		int f=30;
-		int u=30;
-		int v=50;
+		int a=4;
+		int f=10;
+		int u=10;
+		int v=20;
 		new DataGenerator(a,f,u,v);
 		
 	}
@@ -171,7 +171,7 @@ public class DataGenerator {
 		double[][] latency = new double[u][v];
 		try {
 			InputStreamReader read = new InputStreamReader(new FileInputStream(
-					"CBO/rtMatrix.txt"), "UTF-8");
+					"CBO/datasets/rtMatrix.txt"), "UTF-8");
 			BufferedReader br = new BufferedReader(read);
 			for (int i = 0; i < u; i++) {
 				String line =br.readLine();

@@ -26,7 +26,8 @@ import org.moeaframework.analysis.plot.Plot;
 public class RunCBOproblem {
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<40;i++){
+		for(int i=0;i<5;i++){
+			System.out.println("run: "+i);
 			run();
 		}
 	}
@@ -83,6 +84,10 @@ public class RunCBOproblem {
 			.withAlgorithm("GA")
 			.withProblemClass(CBOproblem.class)
 			.withProperty("populationSize", 100)
+			.withProperty("sbx.rate", 0.95)
+			.withProperty("sbx.distributionIndex", 15.0)
+			.withProperty("pm.rate", 0.05)
+			.withProperty("pm.distributionIndex", 20.0)
 			.distributeOnAllCores()
 			.withMaxEvaluations(10000)
 			.distributeOnAllCores()
@@ -106,39 +111,32 @@ public class RunCBOproblem {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/NSGA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/NSGA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 			System.out.println("GA:");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/GA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/GA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 			
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/NSGA1time",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/NSGA3time",accumulator.get("Elapsed Time", i).toString()+"\n");
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/GA1time",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/GA3time",accumulator1.get("Elapsed Time", i).toString()+"\n");
 				}		
 
-			//Plot p =new Plot();
-			//p.add("Radom",result1);
-			//p.add("NSGAII", result);
-			// p.scatter("NSGAII", objective1, objective2);
-			//p.scatter("random", objective1_1, objective1_2);
-			//p.scatter("GA", objective1_1, objective1_2);
-			//p.setXLabel("Cost");
-			//p.setYLabel("Response time");
-			//p.add("NSGAII", result,0,1);
-			//p.add("GA",result2);
-			//p.add("random",result3);
-		
-			//p.show();
+//			Plot p =new Plot();
+//			p.scatter("NSGAII", objective1, objective2);
+//			//p.scatter("GA", objective1_1, objective1_2);
+//			p.setXLabel("Cost");
+//			p.setYLabel("Response time");
+//			p.show();
 	}
 	
 }

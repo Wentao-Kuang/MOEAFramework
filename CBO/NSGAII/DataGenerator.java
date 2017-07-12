@@ -17,11 +17,11 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 		
-		int a=10;
-		int f=20;
-		int u=20;
-		int l=20;
-		int v=3;
+		int a=25;
+		int f=60;
+		int u=60;
+		int l=60;
+		int v=7;
 		new DataGenerator(a,f,u,l,v);
 		
 	}
@@ -92,6 +92,10 @@ public class DataGenerator {
 				Belong[l][v]=1;
 				Belong[l][v+1]=1;
 				Belong[l][v+2]=1;
+				Belong[l][v+3]=1;
+				Belong[l][v+4]=1;
+				Belong[l][v+5]=1;
+				Belong[l][v+6]=1;
 				v=v+nVMs;
 			}
 		

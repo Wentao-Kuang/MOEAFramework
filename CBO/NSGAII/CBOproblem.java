@@ -15,11 +15,11 @@ public class CBOproblem implements Problem {
 	public CBOproblem() {
 		super();
 		// problem size define same with data generator
-		int a=10;
-		int f=20;
-		int u=20;
-		int l=20;
-		int v=3;
+		int a=25;
+		int f=60;
+		int u=60;
+		int l=60;
+		int v=7;
 		LoadData load=new LoadData(a,f,u,l,v);
 		this.napplications=a;
 		this.nfunctions=f;

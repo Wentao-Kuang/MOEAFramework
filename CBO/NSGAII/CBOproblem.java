@@ -15,26 +15,28 @@ public class CBOproblem implements Problem {
 	public CBOproblem() {
 		super();
 		// problem size define same with data generator
-		int a=4;
-		int f=10;
-		int u=10;
-		int v=20;
-		LoadData l=new LoadData(a,f,u,v);
+		int a=10;
+		int f=20;
+		int u=20;
+		int l=20;
+		int v=3;
+		LoadData load=new LoadData(a,f,u,l,v);
 		this.napplications=a;
 		this.nfunctions=f;
 		this.nusers=u;
+		this.nlocations=l;
 		this.nVMs=v;
-		this.Belong=l.readBelong();
-		this.Task=l.readTask();
-		this.Frequency=l.readFrequency();
-		this.Latency=l.readLatency();
-		this.Computing=l.readComputing();
-		this.Vram=l.readVram();
-		this.Vbw=l.readVbw();
-		this.Price=l.readPrice();
-		this.Acpu=l.readAcpu();
-		this.Aram=l.readAram();
-		this.Abw=l.readAbw();
+		this.Belong=load.readBelong();
+		this.Task=load.readTask();
+		this.Frequency=load.readFrequency();
+		this.Latency=load.readLatency();
+		this.Computing=load.readComputing();
+		this.Vram=load.readVram();
+		this.Vbw=load.readVbw();
+		this.Price=load.readPrice();
+		this.Acpu=load.readAcpu();
+		this.Aram=load.readAram();
+		this.Abw=load.readAbw();
 		//createExampleData();
 		// TODO Auto-generated constructor stub
 	}
@@ -55,7 +57,12 @@ public class CBOproblem implements Problem {
 	private int nusers;
 
 	/**
-	 * number of VMs "v"
+	 * number of location
+	 */
+	private int nlocations;
+	
+	/**
+	 * number of VMs "v" in each location
 	 */
 	private int nVMs;
 
@@ -167,8 +174,8 @@ public class CBOproblem implements Problem {
 		double cost = 0.0;
 		for (int a = 0; a < napplications; a++) {//application loop
 			for (int f = 0; f < nfunctions; f++) {// functions loop
-				for (int v = 0; v < nVMs; v++) {// VMs loop
-					if (s[(a) * nVMs + v] == false||Belong[a][f]==0)
+				for (int v = 0; v < nVMs*nlocations; v++) {// VMs loop
+					if (s[a * nVMs*nlocations + v] == false)
 						continue;
 					else {
 						for (int u = 0; u < nusers; u++) {
@@ -204,17 +211,19 @@ public class CBOproblem implements Problem {
 		double response = 0.0;
 		for (int a = 0; a < napplications; a++) {//application loop
 			for (int f = 0; f < nfunctions; f++) {// functions loop
-				for (int v = 0; v < nVMs; v++) {// VMs loop
-					if (s[(a) * nVMs + v] == false||Belong[a][f]==0)
+				for (int v = 0; v < nVMs*nlocations; v++) {// VMs loop
+					if (s[(a) * nVMs*nlocations + v] == false)
 						continue;
 					else {
 						for (int u = 0; u < nusers; u++) {
 							double e = 0;// execution time
-							double l = 0;// latency
+							double la = 0;// latency
 							e = (double) Frequency[u][f]*Task[a][f]
 									/ (double) Computing[v];
-							l=Latency[u][v]*Frequency[u][f];
-							response += l+e;
+							for(int l=0;l<nlocations;l++){
+							la=Latency[u][l]*Frequency[u][f];
+							}
+							response += la+e;
 							/**
 							 System.out.println("a: "+a+" f: "+f+" u: "+u+" v: "+v);
 							 System.out.println("Belong:"+ Belong[a][f]);
@@ -309,7 +318,7 @@ public class CBOproblem implements Problem {
 	@Override
 	public Solution newSolution() {
 		Solution solution = new Solution(1, 2, 3);
-		solution.setVariable(0, EncodingUtils.newBinary(napplications * nVMs));
+		solution.setVariable(0, EncodingUtils.newBinary(napplications * nVMs*nlocations));
 		return solution;
 	}
 

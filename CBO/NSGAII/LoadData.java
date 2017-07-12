@@ -9,12 +9,14 @@ public class LoadData {
 	private int a;
 	private int f;
 	private int u;
+	private int l;
 	private int v;
-	public LoadData(int napplications, int nfunctions, int nusers, int nVMs){
+	public LoadData(int napplications, int nfunctions, int nusers, int nlocations, int nVMs){
 		this.a=napplications;
 		this.f=nfunctions;
 		this.u=nusers;
 		this.v=nVMs;
+		this.l=nlocations;
 		//System.out.println(Arrays.deepToString(readIntMatrix("CBO/Belong", napplications, nfunctions)));
 		//System.out.println(Arrays.deepToString(readIntMatrix("CBO/Task", napplications, nfunctions)));
 		//System.out.println(Arrays.deepToString(readIntMatrix("CBO/Frequency", u, a)));
@@ -22,22 +24,23 @@ public class LoadData {
 	}
 	
 	public static void main(String[] args) {
-		int a=10;
-		int f=30;
-		int u=30;
-		int v=50;
-//		LoadData l=new LoadData(a,f,u,v);
-//		System.out.println(Arrays.deepToString(l.readLatency()));
-//		System.out.println(Arrays.deepToString(l.readBelong()));
-//		System.out.println(Arrays.deepToString(l.readTask()));
-//		System.out.println(Arrays.deepToString(l.readFrequency()));
-//		System.out.println(Arrays.toString(l.readComputing()));
-//		System.out.println(Arrays.toString(l.readVram()));
-//		System.out.println(Arrays.toString(l.readVbw()));
-//		System.out.println(Arrays.toString(l.readPrice()));
-//		System.out.println(Arrays.toString(l.readAcpu()));
-//		System.out.println(Arrays.toString(l.readAram()));
-//		System.out.println(Arrays.toString(l.readAbw()));
+		int a=5;
+		int f=10;
+		int u=10;
+		int l=10;
+		int v=3;
+		LoadData load=new LoadData(a,f,u,l,v);
+		System.out.println("Latency: "+Arrays.deepToString(load.readLatency()));
+		System.out.println("Belong: "+Arrays.deepToString(load.readBelong()));
+		System.out.println("Task: "+Arrays.deepToString(load.readTask()));
+		System.out.println("Frequency: "+Arrays.deepToString(load.readFrequency()));
+		System.out.println("Computing: "+Arrays.toString(load.readComputing()));
+		System.out.println("Vram: "+Arrays.toString(load.readVram()));
+		System.out.println("Vbw: "+Arrays.toString(load.readVbw()));
+		System.out.println("Price: "+Arrays.toString(load.readPrice()));
+		System.out.println("Acpu: "+Arrays.toString(load.readAcpu()));
+		System.out.println("Aram: "+Arrays.toString(load.readAram()));
+		System.out.println("Abw: "+Arrays.toString(load.readAbw()));
 	}
 	
 	/**
@@ -45,7 +48,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readBelong(){
-		return readIntMatrix("CBO/datasets/Belong",a,f);
+		return readIntMatrix("CBO/datasets/Belong",l,v*l);
 	}
 	
 	/**
@@ -69,7 +72,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readComputing(){
-		return readIntVector("CBO/datasets/Computing",v);
+		return readIntVector("CBO/datasets/Computing",v*l);
 	}
 	
 	/**
@@ -77,7 +80,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readVram(){
-		return readIntVector("CBO/datasets/Vram",v);
+		return readIntVector("CBO/datasets/Vram",v*l);
 	}
 	
 	/**
@@ -85,7 +88,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readVbw(){
-		return readIntVector("CBO/datasets/Vbw",v);
+		return readIntVector("CBO/datasets/Vbw",v*l);
 	}
 	
 	/**
@@ -93,7 +96,7 @@ public class LoadData {
 	 * @return
 	 */
 	public double[] readPrice(){
-		return readDoubleVector("CBO/datasets/Price",v);
+		return readDoubleVector("CBO/datasets/Price",v*l);
 	}
 	
 	/**
@@ -129,7 +132,7 @@ public class LoadData {
 	 * @return
 	 */
 	public double[][] readLatency() {
-		return readDoubleMatrix("CBO/datasets/Latency",u,v);
+		return readDoubleMatrix("CBO/datasets/Latency",u,l);
 	}
 	
 	

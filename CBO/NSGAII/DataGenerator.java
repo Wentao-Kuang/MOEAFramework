@@ -17,11 +17,12 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 		
-		int a=4;
-		int f=10;
-		int u=10;
-		int v=20;
-		new DataGenerator(a,f,u,v);
+		int a=10;
+		int f=20;
+		int u=20;
+		int l=20;
+		int v=3;
+		new DataGenerator(a,f,u,l,v);
 		
 	}
 	
@@ -31,25 +32,26 @@ public class DataGenerator {
 	 * @param nfunction
 	 * @param nusers
 	 */
-	public DataGenerator(int napplications, int nfunctions, int nusers, int nVMs){
+	public DataGenerator(int napplications, int nfunctions, int nusers,int nlocations, int nVMs){
 		
 		System.out.println("Initializing data generator");
-		System.out.println("Application Num: "+napplications+" ; Functions Num: "+nfunctions+" ; Usergroups Num: "+nusers+" ; VMs Num: "+nVMs);
+		System.out.println("Application Num: "+napplications+" ; Functions Num: "+nfunctions+" ; Usergroups Num: "+nusers+"Locations Num: "+nlocations+" ; VMs Num: "+nVMs);
 		//generate belonging and task size matrix
 		applicationGen(napplications, nfunctions);
 		//generate frequency matrix
 		frequencyGen(nusers, nfunctions);
 		//generate VM information
-		VMGen(nVMs);
+		VMGen(nVMs*nlocations,nVMs);
 		//generate application requirement
 		AGen(napplications);
+		VLGen(nlocations,nVMs);
 		//resize latency data
-		latencyResize(nusers,nVMs);
+		latencyResize(nusers,nlocations);
 	}
 	
 
 	//predefined VM types
-	private int[][] VMtypes = new int[][]{{3500,16,1000},{3000,8,1000},{2500,4,1000},{2000,8,1250},{1500,4,1000},{1000,2,750},{500,1,500}};
+	private int[][] VMtypes = new int[][]{{3500,16,1250},{3000,8,1000},{2500,4,1000},{2000,8,1250},{1500,4,1000},{1000,2,750},{500,1,500}};
 	private double[][] VMprice = new double[][]{{0.398,0.618},{0.199,0.309},{0.100,0.155},{0.094,0.162},{0.047,0.081},{0.023,0.041},{0.012,0.020}};
 	
 	//predefined application requirements
@@ -80,20 +82,41 @@ public class DataGenerator {
 	}
 	
 	/**
+	 * VM location generator
+	 * @param nVMs,nLocations
+	 */
+	public void VLGen(int nlocations, int nVMs){
+		int[][] Belong = new int[nlocations][nVMs*nlocations];
+		int v=0;
+			for (int l = 0; l < nlocations; l++) {
+				Belong[l][v]=1;
+				Belong[l][v+1]=1;
+				Belong[l][v+2]=1;
+				v=v+nVMs;
+			}
+		
+		System.out.println("Belong: "+Arrays.deepToString(Belong));
+		//write data to file
+		writeIntMatrix("CBO/datasets/Belong", Belong);
+	}
+	
+	
+	/**
 	 * predefined VM data generator
 	 * @param nVMs
 	 */
-	public void VMGen(int nVMs){
+	public void VMGen(int nVMs,int types){
 		int[] Computing = new int[nVMs];
 		int[] Vram = new int[nVMs];
 		int[] Vbw = new int[nVMs];
 		double[] Price = new double[nVMs];
-		for(int v=0;v<nVMs;v++){
-			int index = ThreadLocalRandom.current().nextInt(0, VMtypes.length);
-			Computing[v]=VMtypes[index][0];
-			Vram[v]=VMtypes[index][1];
-			Vbw[v]=VMtypes[index][2];
-			Price[v]=ThreadLocalRandom.current().nextDouble(VMprice[index][0],VMprice[index][1]);
+		for(int v=0;v<nVMs;v=v+types){
+			for(int t=0;t<types;t++){
+			Computing[v+t]=VMtypes[t][0];
+			Vram[v+t]=VMtypes[t][1];
+			Vbw[v+t]=VMtypes[t][2];
+			Price[v+t]=ThreadLocalRandom.current().nextDouble(VMprice[t][0],VMprice[t][1]);
+			}
 		}
 		System.out.println("VMcpu:"+Arrays.toString(Computing));
 		System.out.println("VMram: "+Arrays.toString(Vram));
@@ -139,7 +162,7 @@ public class DataGenerator {
 		System.out.println("Belong: "+Arrays.deepToString(Belong));
 		System.out.println("Task: "+Arrays.deepToString(Task));
 		//write data to file
-		writeIntMatrix("CBO/datasets/Belong", Belong);
+		//writeIntMatrix("CBO/datasets/Belong", Belong);
 		writeIntMatrix("CBO/datasets/Task", Task);
 	}
 	

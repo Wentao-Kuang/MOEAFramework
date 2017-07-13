@@ -111,24 +111,24 @@ public class RunCBOproblem {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/NSGA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/NSGA4",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 			System.out.println("GA:");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/GA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/GA4",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 			
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/NSGA3time",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/NSGA4time",accumulator.get("Elapsed Time", i).toString()+"\n");
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/GA3time",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/GA4time",accumulator1.get("Elapsed Time", i).toString()+"\n");
 				}		
 
 //			Plot p =new Plot();

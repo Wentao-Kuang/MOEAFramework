@@ -1,5 +1,4 @@
 Version: %VERSION%
-Release Date: %DATE%
 
 ----------------------------------------
 Modified MOEA framework for Cloud Brokering Optimization Problem
@@ -36,4 +35,3 @@ of the GNU Lesser General Public License.  Please see the LICENSE file for
 details.
 
 The MOEA Framework - <http://www.moeaframework.org/>
-    

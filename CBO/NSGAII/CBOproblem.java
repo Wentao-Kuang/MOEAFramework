@@ -15,10 +15,10 @@ public class CBOproblem implements Problem {
 	public CBOproblem() {
 		super();
 		// problem size define same with data generator
-		int a=25;
-		int f=60;
-		int u=60;
-		int l=60;
+		int a=30;
+		int f=80;
+		int u=80;
+		int l=80;
 		int v=7;
 		LoadData load=new LoadData(a,f,u,l,v);
 		this.napplications=a;
@@ -60,7 +60,7 @@ public class CBOproblem implements Problem {
 	 * number of location
 	 */
 	private int nlocations;
-	
+
 	/**
 	 * number of VMs "v" in each location
 	 */
@@ -166,7 +166,7 @@ public class CBOproblem implements Problem {
 
 	/**
 	 * calculate the cost fitness
-	 * 
+	 *
 	 * @param a
 	 * @return
 	 */
@@ -203,7 +203,7 @@ public class CBOproblem implements Problem {
 
 	/**
 	 * calculate the response time fitness
-	 * 
+	 *
 	 * @param a
 	 * @return
 	 */
@@ -262,8 +262,8 @@ public class CBOproblem implements Problem {
 
 		return b;
 	}
-	
-	
+
+
 	/**
 	 * constraint 2, VM constraint: each VM can be deployed at most once.
 	 */
@@ -276,7 +276,7 @@ public class CBOproblem implements Problem {
 			}
 			if(sum > 1) b =false;
 		}
-		
+
 		return b;
 	}
 	/**
@@ -298,7 +298,7 @@ public class CBOproblem implements Problem {
 		}
 		return b;
 	}
-	
+
 
 	@Override
 	public void evaluate(Solution solution) {
@@ -332,22 +332,22 @@ public class CBOproblem implements Problem {
 				false, false, false,false, false, false, false, false, false, false,
 				false, false, false,false,false, false, false, false, false, false,
 				false, false, false,false };
-		
+
 		//testing the Cost fitness function
 		//System.out.println(c.caculateCost(s));
-		
+
 		//testing the response time fitness function
 		//System.out.println(c.caculateResponse(s));
-		
+
 		//testing the application deployment constraint
 		//System.out.println(c.constraint1(s));
-		
+
 		//testing the VM constraint
 		//System.out.println(c.constraint2(s));
-		
+
 		//testing application deployment requirement constraint
 		//System.out.println(c.constraint3(s));
-		
+
 	}
 
 	@Override

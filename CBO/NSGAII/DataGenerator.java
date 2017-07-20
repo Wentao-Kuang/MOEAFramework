@@ -13,19 +13,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class DataGenerator {
 
-	
+
 	//test
 	public static void main(String[] args) {
-		
-		int a=25;
-		int f=60;
-		int u=60;
-		int l=60;
+
+		int a=30;
+		int f=80;
+		int u=80;
+		int l=80;
 		int v=7;
 		new DataGenerator(a,f,u,l,v);
-		
+
 	}
-	
+
 	/**
 	 * initialization
 	 * @param napplications
@@ -33,7 +33,7 @@ public class DataGenerator {
 	 * @param nusers
 	 */
 	public DataGenerator(int napplications, int nfunctions, int nusers,int nlocations, int nVMs){
-		
+
 		System.out.println("Initializing data generator");
 		System.out.println("Application Num: "+napplications+" ; Functions Num: "+nfunctions+" ; Usergroups Num: "+nusers+"Locations Num: "+nlocations+" ; VMs Num: "+nVMs);
 		//generate belonging and task size matrix
@@ -48,17 +48,17 @@ public class DataGenerator {
 		//resize latency data
 		latencyResize(nusers,nlocations);
 	}
-	
+
 
 	//predefined VM types
 	private int[][] VMtypes = new int[][]{{3500,16,1250},{3000,8,1000},{2500,4,1000},{2000,8,1250},{1500,4,1000},{1000,2,750},{500,1,500}};
 	private double[][] VMprice = new double[][]{{0.398,0.618},{0.199,0.309},{0.100,0.155},{0.094,0.162},{0.047,0.081},{0.023,0.041},{0.012,0.020}};
-	
+
 	//predefined application requirements
 	private int[] CPU = new int[]{3500,3250,3000,2750,2500,2250,2000,1750,1500,1250,1000,750,500};
 	private int[] ram = new int[]{1,2,4,8,16};
 	private int[] bw = new int[]{500,750,1000,1250};
-	
+
 	/**
 	 * predefined application generator
 	 * @param napplications
@@ -80,7 +80,7 @@ public class DataGenerator {
 		writeIntVector("CBO/datasets/Aram", Aram);
 		writeIntVector("CBO/datasets/Abw", Abw);
 	}
-	
+
 	/**
 	 * VM location generator
 	 * @param nVMs,nLocations
@@ -98,13 +98,13 @@ public class DataGenerator {
 				Belong[l][v+6]=1;
 				v=v+nVMs;
 			}
-		
+
 		System.out.println("Belong: "+Arrays.deepToString(Belong));
 		//write data to file
 		writeIntMatrix("CBO/datasets/Belong", Belong);
 	}
-	
-	
+
+
 	/**
 	 * predefined VM data generator
 	 * @param nVMs
@@ -132,13 +132,13 @@ public class DataGenerator {
 		writeIntVector("CBO/datasets/Vbw", Vbw);
 		writeDoubleVector("CBO/datasets/Price", Price);
 	}
-	
+
 	/**
 	 * Function Task size and belong generator
 	 * @param napplications
 	 * @param nfunctions
 	 */
-	
+
 	public void applicationGen(int napplications, int nfunctions) {
 		int[][] Belong = new int[napplications][nfunctions];
 		int[][] Task = new int[napplications][nfunctions];
@@ -169,7 +169,7 @@ public class DataGenerator {
 		//writeIntMatrix("CBO/datasets/Belong", Belong);
 		writeIntMatrix("CBO/datasets/Task", Task);
 	}
-	
+
 	/**
 	 * function invocation frequency generator
 	 * @param nusers
@@ -185,8 +185,8 @@ public class DataGenerator {
 		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
 		writeIntMatrix("CBO/datasets/Frequency", Frequency);
 	}
-	
-	
+
+
 	/**
 	 * resize the rtMatrix based on u and v, than generate new latency matrix
 	 * @param filename
@@ -219,8 +219,8 @@ public class DataGenerator {
 		writeDoubleMatrix("CBO/datasets/Latency",latency);
 		return latency;
 	}
-	
-	
+
+
 	/**
 	 * sum the column of a matrix to make sure each col have non-null value.
 	 * @return
@@ -238,7 +238,7 @@ public class DataGenerator {
 		}
 		return b;
 	}
-	
+
 	/**
 	 * Write vector to file
 	 * @param filename
@@ -284,7 +284,7 @@ public class DataGenerator {
 	 * @param filename
 	 * @param matrix
 	 */
-	
+
 	public void writeIntMatrix(String filename, int[][] matrix) {
 		try {
 			OutputStreamWriter write = new OutputStreamWriter(
@@ -304,8 +304,8 @@ public class DataGenerator {
 	}
 
 
-	
-	
+
+
 	public void writeDoubleMatrix(String filename, double[][] matrix) {
 		try {
 			OutputStreamWriter write = new OutputStreamWriter(

@@ -16,7 +16,7 @@ import org.moeaframework.util.io.CommentedLineReader;
 import org.moeaframework.Executor;
 import org.moeaframework.Instrumenter;
 import org.moeaframework.core.EpsilonBoxDominanceArchive;
-import org.moeaframework.core.NondominatedPopulation; 
+import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Population;
 import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.EncodingUtils;
@@ -26,12 +26,12 @@ import org.moeaframework.analysis.plot.Plot;
 public class RunCBOproblem {
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<5;i++){
+		for(int i=0;i<29;i++){
 			System.out.println("run: "+i);
 			run();
 		}
 	}
-	
+
 	static void writeResults(String filename,String line){
 		try {
 			Writer output;
@@ -42,9 +42,9 @@ public class RunCBOproblem {
 			System.err.println("Writing data error");
 			// why does the catch need its own curly?
 		}
-		
+
 	}
-	
+
 	static void run(){
 		/**
 		 * NSGAII
@@ -53,7 +53,7 @@ public class RunCBOproblem {
 			.withProblemClass(CBOproblem.class)
 			.withFrequency(10000)
 			.attachElapsedTimeCollector();
-			
+
 			NondominatedPopulation result = new Executor()
 			.withAlgorithm("NSGAII")
 			.withProblemClass(CBOproblem.class)
@@ -66,20 +66,20 @@ public class RunCBOproblem {
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
 			.withMaxEvaluations(10000)
-			.run();		
+			.run();
 
-			
-			
+
+
 			/**
 			 * GA
 			 */
-			
+
 			Instrumenter instrumenter1 = new Instrumenter()
 			.withProblemClass(CBOproblem.class)
 			.withFrequency(10000)
 			.attachElapsedTimeCollector();
-			
-			
+
+
 			NondominatedPopulation result1 = new Executor()
 			.withAlgorithm("GA")
 			.withProblemClass(CBOproblem.class)
@@ -93,12 +93,12 @@ public class RunCBOproblem {
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter1)
 			.run();
-			
-			
+
+
 			Accumulator accumulator = instrumenter.getLastAccumulator();
-			
+
 			Accumulator accumulator1 = instrumenter1.getLastAccumulator();
-			
+
 			double[] objective1=new double[result.size()];
 			double[] objective2=new double[result.size()];
 			double[] objective1_1=new double[result1.size()];
@@ -111,25 +111,25 @@ public class RunCBOproblem {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/NSGA4",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/NSGA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 			System.out.println("GA:");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/GA4",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/GA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
-			
+
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/NSGA4time",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/NSGA5time",accumulator.get("Elapsed Time", i).toString()+"\n");
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/GA4time",accumulator1.get("Elapsed Time", i).toString()+"\n");
-				}		
+				  writeResults("CBO/results/GA5time",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				}
 
 //			Plot p =new Plot();
 //			p.scatter("NSGAII", objective1, objective2);
@@ -138,6 +138,5 @@ public class RunCBOproblem {
 //			p.setYLabel("Response time");
 //			p.show();
 	}
-	
+
 }
-	

@@ -16,6 +16,7 @@
  * along with the MOEA Framework.  If not, see <http://www.gnu.org/licenses/>.
  */
 import org.moeaframework.Executor;
+import org.moeaframework.analysis.plot.Plot;
 import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 
@@ -29,7 +30,7 @@ public class Example1 {
 		//configure and run this experiment
 		NondominatedPopulation result = new Executor()
 				.withProblem("UF1")
-				.withAlgorithm("NSGAII")
+				.withAlgorithm("OMOPSO")
 				.withMaxEvaluations(10000)
 				.run();
 		
@@ -41,6 +42,29 @@ public class Example1 {
 					solution.getObjective(0),
 					solution.getObjective(1));
 		}
+		
+		
+		
+		NondominatedPopulation result1 = new Executor()
+		.withProblem("UF1")
+		.withAlgorithm("NSGAII")
+		.withMaxEvaluations(10000)
+		.run();
+
+		//display the results
+		System.out.format("Objective1  Objective2%n");
+
+		for (Solution solution : result1) {
+			System.out.format("%.4f      %.4f%n",
+			solution.getObjective(0),
+			solution.getObjective(1));
+		}
+		
+		Plot p =new Plot();
+		p.add("NSGAII",result1);
+		p.add("MOPSO",result);
+		//p.scatter("GA", objective1_1, objective1_2);
+		p.show();
 	}
 
 }

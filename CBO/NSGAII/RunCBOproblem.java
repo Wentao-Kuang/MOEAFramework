@@ -26,7 +26,7 @@ import org.moeaframework.analysis.plot.Plot;
 public class RunCBOproblem {
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<29;i++){
+		for(int i=0;i<1;i++){
 			System.out.println("run: "+i);
 			run();
 		}
@@ -81,13 +81,9 @@ public class RunCBOproblem {
 
 
 			NondominatedPopulation result1 = new Executor()
-			.withAlgorithm("GA")
+			.withAlgorithm("OMOPSO")
 			.withProblemClass(CBOproblem.class)
 			.withProperty("populationSize", 100)
-			.withProperty("sbx.rate", 0.95)
-			.withProperty("sbx.distributionIndex", 15.0)
-			.withProperty("pm.rate", 0.05)
-			.withProperty("pm.distributionIndex", 20.0)
 			.distributeOnAllCores()
 			.withMaxEvaluations(10000)
 			.distributeOnAllCores()
@@ -111,24 +107,24 @@ public class RunCBOproblem {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/NSGA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/NSGA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 			System.out.println("GA:");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/GA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/GA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
 			}
 
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/NSGA5time",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/NSGA1time",accumulator.get("Elapsed Time", i).toString()+"\n");
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/GA5time",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/GA1time",accumulator1.get("Elapsed Time", i).toString()+"\n");
 				}
 
 //			Plot p =new Plot();

@@ -17,10 +17,10 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 
-		int a=30;
-		int f=80;
-		int u=80;
-		int l=80;
+		int a=40;
+		int f=100;
+		int u=100;
+		int l=100;
 		int v=7;
 		new DataGenerator(a,f,u,l,v);
 

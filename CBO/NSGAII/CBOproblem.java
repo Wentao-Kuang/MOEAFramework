@@ -15,10 +15,17 @@ public class CBOproblem implements Problem {
 	public CBOproblem() {
 		super();
 		// problem size define same with data generator
+<<<<<<< HEAD
 		int a=10;
 		int f=20;
 		int u=20;
 		int l=20;
+=======
+		int a=40;
+		int f=100;
+		int u=100;
+		int l=100;
+>>>>>>> branch 'master' of https://github.com/kuangwt1988/MOEAFramework.git
 		int v=7;
 		LoadData load=new LoadData(a,f,u,l,v);
 		this.napplications=a;

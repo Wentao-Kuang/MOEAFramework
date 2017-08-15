@@ -7,13 +7,11 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 public class LoadData {
 	private int a;
-	private int f;
 	private int u;
 	private int l;
 	private int v;
-	public LoadData(int napplications, int nfunctions, int nusers, int nlocations, int nVMs){
+	public LoadData(int napplications, int nusers, int nlocations, int nVMs){
 		this.a=napplications;
-		this.f=nfunctions;
 		this.u=nusers;
 		this.v=nVMs;
 		this.l=nlocations;
@@ -24,12 +22,11 @@ public class LoadData {
 	}
 	
 	public static void main(String[] args) {
-		int a=5;
-		int f=10;
-		int u=10;
-		int l=10;
-		int v=3;
-		LoadData load=new LoadData(a,f,u,l,v);
+		int a=10;
+		int u=20;
+		int l=20;
+		int v=7;
+		LoadData load=new LoadData(a,u,l,v);
 		System.out.println("Latency: "+Arrays.deepToString(load.readLatency()));
 		System.out.println("Belong: "+Arrays.deepToString(load.readBelong()));
 		System.out.println("Task: "+Arrays.deepToString(load.readTask()));
@@ -55,8 +52,8 @@ public class LoadData {
 	 * read Task Matrix
 	 * @return
 	 */
-	public int[][] readTask(){
-		return readIntMatrix("CBO/datasets/Task",a,f);
+	public double[][] readTask(){
+		return readDoubleMatrix("CBO/datasets/tasks",a,u);
 	}
 	
 	/**
@@ -64,7 +61,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readFrequency(){
-		return readIntMatrix("CBO/datasets/Frequency",u,f);
+		return readIntMatrix("CBO/datasets/Frequency",a,u);
 	}
 	
 	/**

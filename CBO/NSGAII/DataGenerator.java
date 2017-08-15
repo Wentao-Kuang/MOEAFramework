@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,13 +18,12 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 
-		int a=40;
-		int f=100;
-		int u=100;
-		int l=100;
+		int a=10;
+		int u=20;
+		int l=20;
 		int v=7;
-		new DataGenerator(a,f,u,l,v);
-
+		new DataGenerator(a,u,l,v);
+		//workloadGen(100,40);
 	}
 
 	/**
@@ -32,14 +32,14 @@ public class DataGenerator {
 	 * @param nfunction
 	 * @param nusers
 	 */
-	public DataGenerator(int napplications, int nfunctions, int nusers,int nlocations, int nVMs){
+	public DataGenerator(int napplications, int nusers,int nlocations, int nVMs){
 
 		System.out.println("Initializing data generator");
-		System.out.println("Application Num: "+napplications+" ; Functions Num: "+nfunctions+" ; Usergroups Num: "+nusers+"Locations Num: "+nlocations+" ; VMs Num: "+nVMs);
+		System.out.println("Application Num: "+napplications+" Usergroups Num: "+nusers+"Locations Num: "+nlocations+" ; VMs Num: "+nVMs);
 		//generate belonging and task size matrix
-		applicationGen(napplications, nfunctions);
+		//applicationGen(napplications, nfunctions);
 		//generate frequency matrix
-		frequencyGen(nusers, nfunctions);
+		//frequencyGen(nusers, nfunctions);
 		//generate VM information
 		VMGen(nVMs*nlocations,nVMs);
 		//generate application requirement
@@ -47,6 +47,7 @@ public class DataGenerator {
 		VLGen(nlocations,nVMs);
 		//resize latency data
 		latencyResize(nusers,nlocations);
+		workloadGen(nusers,napplications);
 	}
 
 
@@ -185,7 +186,52 @@ public class DataGenerator {
 		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
 		writeIntMatrix("CBO/datasets/Frequency", Frequency);
 	}
-
+	
+	/**
+	 * function invocation frequency and function workload generator
+	 * @param nusers
+	 * @param nfunctions
+	 */
+	public void workloadGen(int nusers, int napplications){
+		int[][] frequency=new int[nusers][napplications];
+		double[][] workload= new double[nusers][napplications];
+		try (BufferedReader br = new BufferedReader(new FileReader("/Users/kuangwentao/Documents/workspace/MOEAFramework/CBO/datasets/workload.txt"))) {
+        	String line;
+        	for(int u=0; u<nusers; u++){
+        		for(int f=0; f<napplications;f++){
+        			if((line = br.readLine()) != null) {
+        				String[] tokens= line.split(",");
+        				double[] intarray=new double[tokens.length];
+        				for(int a=0;a<tokens.length;a++){
+        					intarray[a]=Double.parseDouble(tokens[a].trim().equals("null")?"0.0":tokens[a].trim());
+        				}
+        				int count=0;
+        				double sum=0;
+        				for(double num:intarray){
+        					if(num==0.0){
+        						continue;
+        					}else{
+        						count++;
+        						sum+=num;
+        					}
+        				}
+        				frequency[u][f]=count;
+        				workload[u][f]=sum;
+        			}else{
+        				System.err.println("not enough workload data");
+        				break;
+        			}
+        		}
+        		
+        	}
+        	System.out.println(Arrays.deepToString(frequency));
+        	writeIntMatrix("CBO/datasets/Frequency", frequency);
+        	System.out.println(Arrays.deepToString(workload));
+        	writeDoubleMatrix("CBO/datasets/tasks", workload);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
 
 	/**
 	 * resize the rtMatrix based on u and v, than generate new latency matrix

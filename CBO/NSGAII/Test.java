@@ -10,9 +10,9 @@ public class Test {
 		CBOproblem problem = new CBOproblem();
 		Population trueParetoFront = new Population();
 
-		for (int i = 0;  i< 1000; i++) {
-		    trueParetoFront.add(problem.generate());
-		}
+//		for (int i = 0;  i< 1000; i++) {
+//		    trueParetoFront.add(problem.generate());
+//		}
 	}
 }
 

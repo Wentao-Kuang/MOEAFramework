@@ -17,14 +17,12 @@ public class CBOproblem implements Problem {
 		// problem size define same with data generator
 
 
-		int a=40;
-		int f=100;
-		int u=100;
-		int l=100;
+		int a=10;
+		int u=20;
+		int l=20;
 		int v=7;
-		LoadData load=new LoadData(a,f,u,l,v);
+		LoadData load=new LoadData(a,u,l,v);
 		this.napplications=a;
-		this.nfunctions=f;
 		this.nusers=u;
 		this.nlocations=l;
 		this.nVMs=v;
@@ -48,10 +46,6 @@ public class CBOproblem implements Problem {
 	 */
 	private int napplications;
 
-	/**
-	 * number of functions "f"
-	 */
-	private int nfunctions;
 
 	/**
 	 * number of User groups "u"
@@ -109,7 +103,7 @@ public class CBOproblem implements Problem {
 	 * Entry {@code Task[u][f]} is the function task size matrix from including
 	 * functions {@code f} in application {@code a}.
 	 */
-	private int[][] Task;
+	private double[][] Task;
 
 	/**
 	 * Entry {@code Frequency[u][f]} is the function invocation frequency matrix
@@ -134,7 +128,6 @@ public class CBOproblem implements Problem {
 		int u = 3;
 		int v = 10;
 		napplications = a;
-		nfunctions = f;
 		nusers = u;
 		nVMs = v;
 
@@ -160,7 +153,7 @@ public class CBOproblem implements Problem {
 		Abw = new int[] { 600, 500, 1000 };
 		// Input matrix
 		Belong = new int[][] { { 1, 0, 0 }, { 0, 0, 1 }, { 0, 1, 1 } };
-		Task = new int[][] { { 4500, 0, 0 }, { 0, 0, 2500 }, { 0, 1500, 2500 } };
+		//Task = new int[][] { { 4500, 0, 0 }, { 0, 0, 2500 }, { 0, 1500, 2500 } };
 		Frequency = new int[][] { { 103, 25, 30 }, { 13, 5, 24 },
 				{ 67, 19, 75 } };
 		Latency = new double[][] { { 3.454, 5.556, 0 , 2.222, 0, 2.500, 1.434, 1.135, 2.044, 2.444}, {2.135, 0, 0, 1.55, 2.944 , 0.434, 5.135, 0.044 , 6.22, 2.33}, {4.044 , 0, 1.15, 2, 1.4, 4.135, 2.144, 0, 2.135, 0.044 }};
@@ -175,14 +168,13 @@ public class CBOproblem implements Problem {
 	public double caculateCost(boolean[] s) {
 		double cost = 0.0;
 		for (int a = 0; a < napplications; a++) {//application loop
-			for (int f = 0; f < nfunctions; f++) {// functions loop
 				for (int v = 0; v < nVMs*nlocations; v++) {// VMs loop
 					if (s[a * nVMs*nlocations + v] == false)
 						continue;
 					else {
 						for (int u = 0; u < nusers; u++) {
 							double e = 0;// execution time
-							e = (double) Frequency[u][f]*Task[a][f]
+							e = Task[a][u]
 									/ (double) Computing[v];
 							cost += e * Price[v];
 							/**
@@ -198,7 +190,6 @@ public class CBOproblem implements Problem {
 						}
 					}
 				}
-			}
 		}
 		return cost / 3600;
 	}
@@ -212,7 +203,6 @@ public class CBOproblem implements Problem {
 	public double caculateResponse(boolean[] s) {
 		double response = 0.0;
 		for (int a = 0; a < napplications; a++) {//application loop
-			for (int f = 0; f < nfunctions; f++) {// functions loop
 				for (int v = 0; v < nVMs*nlocations; v++) {// VMs loop
 					if (s[(a) * nVMs*nlocations + v] == false)
 						continue;
@@ -220,10 +210,10 @@ public class CBOproblem implements Problem {
 						for (int u = 0; u < nusers; u++) {
 							double e = 0;// execution time
 							double la = 0;// latency
-							e = (double) Frequency[u][f]*Task[a][f]
+							e = (double) Task[a][u]
 									/ (double) Computing[v];
 							for(int l=0;l<nlocations;l++){
-							la=Latency[u][l]*Frequency[u][f];
+							la=Latency[u][l]*Frequency[a][u];
 							}
 							response += la+e;
 							/**
@@ -239,7 +229,6 @@ public class CBOproblem implements Problem {
 							 System.out.println("Response:"+response);
 							 */
 						}
-					}
 				}
 			}
 		}
@@ -382,15 +371,15 @@ public class CBOproblem implements Problem {
 		return 1;
 	}
 
-	public Solution generate() {
-		Solution solution = newSolution();
-
-		for (int i = 0; i < nfunctions * nVMs; i++) {
-			((BinaryVariable) solution.getVariable(0)).set(i,
-					PRNG.nextBoolean());
-		}
-		evaluate(solution);
-		return solution;
-	}
+//	public Solution generate() {
+//		Solution solution = newSolution();
+//
+//		for (int i = 0; i < nfunctions * nVMs; i++) {
+//			((BinaryVariable) solution.getVariable(0)).set(i,
+//					PRNG.nextBoolean());
+//		}
+//		evaluate(solution);
+//		return solution;
+//	}
 
 }

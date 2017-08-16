@@ -18,9 +18,9 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 
-		int a=10;
-		int u=20;
-		int l=20;
+		int a=40;
+		int u=150;
+		int l=150;
 		int v=7;
 		new DataGenerator(a,u,l,v);
 		//workloadGen(100,40);
@@ -186,7 +186,7 @@ public class DataGenerator {
 		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
 		writeIntMatrix("CBO/datasets/Frequency", Frequency);
 	}
-	
+
 	/**
 	 * function invocation frequency and function workload generator
 	 * @param nusers
@@ -195,7 +195,7 @@ public class DataGenerator {
 	public void workloadGen(int nusers, int napplications){
 		int[][] frequency=new int[nusers][napplications];
 		double[][] workload= new double[nusers][napplications];
-		try (BufferedReader br = new BufferedReader(new FileReader("/Users/kuangwentao/Documents/workspace/MOEAFramework/CBO/datasets/workload.txt"))) {
+		try (BufferedReader br = new BufferedReader(new FileReader("CBO/datasets/workload.txt"))) {
         	String line;
         	for(int u=0; u<nusers; u++){
         		for(int f=0; f<napplications;f++){
@@ -222,7 +222,7 @@ public class DataGenerator {
         				break;
         			}
         		}
-        		
+
         	}
         	System.out.println(Arrays.deepToString(frequency));
         	writeIntMatrix("CBO/datasets/Frequency", frequency);

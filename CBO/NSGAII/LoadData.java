@@ -20,11 +20,11 @@ public class LoadData {
 		//System.out.println(Arrays.deepToString(readIntMatrix("CBO/Frequency", u, a)));
 		//System.out.println(Arrays.toString(readDoubleVector("CBO/Price",nVMs)));
 	}
-	
+
 	public static void main(String[] args) {
-		int a=10;
-		int u=20;
-		int l=20;
+		int a=40;
+		int u=150;
+		int l=150;
 		int v=7;
 		LoadData load=new LoadData(a,u,l,v);
 		System.out.println("Latency: "+Arrays.deepToString(load.readLatency()));
@@ -39,7 +39,7 @@ public class LoadData {
 		System.out.println("Aram: "+Arrays.toString(load.readAram()));
 		System.out.println("Abw: "+Arrays.toString(load.readAbw()));
 	}
-	
+
 	/**
 	 * read Belong Matrix
 	 * @return
@@ -47,7 +47,7 @@ public class LoadData {
 	public int[][] readBelong(){
 		return readIntMatrix("CBO/datasets/Belong",l,v*l);
 	}
-	
+
 	/**
 	 * read Task Matrix
 	 * @return
@@ -55,7 +55,7 @@ public class LoadData {
 	public double[][] readTask(){
 		return readDoubleMatrix("CBO/datasets/tasks",a,u);
 	}
-	
+
 	/**
 	 * read Frequency Matrix
 	 * @return
@@ -63,7 +63,7 @@ public class LoadData {
 	public int[][] readFrequency(){
 		return readIntMatrix("CBO/datasets/Frequency",a,u);
 	}
-	
+
 	/**
 	 * read Computing Vector
 	 * @return
@@ -71,7 +71,7 @@ public class LoadData {
 	public int[] readComputing(){
 		return readIntVector("CBO/datasets/Computing",v*l);
 	}
-	
+
 	/**
 	 * read Vram Vector
 	 * @return
@@ -79,7 +79,7 @@ public class LoadData {
 	public int[] readVram(){
 		return readIntVector("CBO/datasets/Vram",v*l);
 	}
-	
+
 	/**
 	 * read Vbw Vector
 	 * @return
@@ -87,7 +87,7 @@ public class LoadData {
 	public int[] readVbw(){
 		return readIntVector("CBO/datasets/Vbw",v*l);
 	}
-	
+
 	/**
 	 * read Price Vector
 	 * @return
@@ -95,7 +95,7 @@ public class LoadData {
 	public double[] readPrice(){
 		return readDoubleVector("CBO/datasets/Price",v*l);
 	}
-	
+
 	/**
 	 * read Acpu vector
 	 * @return
@@ -103,7 +103,7 @@ public class LoadData {
 	public int[] readAcpu(){
 		return readIntVector("CBO/datasets/Acpu",a);
 	}
-	
+
 	/**
 	 * read Aram vector
 	 * @return
@@ -111,7 +111,7 @@ public class LoadData {
 	public int[] readAram(){
 		return readIntVector("CBO/datasets/Aram",a);
 	}
-	
+
 	/**
 	 * read Abw vector
 	 * @return
@@ -119,8 +119,8 @@ public class LoadData {
 	public int[] readAbw(){
 		return readIntVector("CBO/datasets/Abw",a);
 	}
-	
-	
+
+
 	/**
 	 * read latency matrix
 	 * @param filename
@@ -131,9 +131,9 @@ public class LoadData {
 	public double[][] readLatency() {
 		return readDoubleMatrix("CBO/datasets/Latency",u,l);
 	}
-	
-	
-	
+
+
+
 	/**
 	 * read int vector to file
 	 * @param filename
@@ -155,7 +155,7 @@ public class LoadData {
 		}
 		return vector;
 	}
-	
+
 	/**
 	 * read double vector
 	 * @param filename
@@ -177,8 +177,8 @@ public class LoadData {
 		}
 		return vector;
 	}
-	
-	
+
+
 	/**
 	 * read int matrix into file to store generated data
 	 * @param filename
@@ -203,7 +203,7 @@ public class LoadData {
 		}
 		return matrix;
 	}
-	
+
 	public double[][] readDoubleMatrix(String filename, int x, int y) {
 		double[][] matrix = new double[x][y];
 		try {

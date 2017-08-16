@@ -17,9 +17,9 @@ public class CBOproblem implements Problem {
 		// problem size define same with data generator
 
 
-		int a=10;
-		int u=20;
-		int l=20;
+		int a=40;
+		int u=150;
+		int l=150;
 		int v=7;
 		LoadData load=new LoadData(a,u,l,v);
 		this.napplications=a;

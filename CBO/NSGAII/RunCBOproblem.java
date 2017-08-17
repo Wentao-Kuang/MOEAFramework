@@ -107,7 +107,7 @@ public class RunCBOproblem {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("CBO/results/NSGA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/NSGA6",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
 			System.out.println("GA:");
@@ -116,20 +116,20 @@ public class RunCBOproblem {
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
 
-				writeResults("CBO/results/GA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("CBO/results/GA6",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
 
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("CBO/results/NSGA5time",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/NSGA6time",accumulator.get("Elapsed Time", i).toString()+"\n");
 
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
 
-				  writeResults("CBO/results/GA5time",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("CBO/results/GA6time",accumulator1.get("Elapsed Time", i).toString()+"\n");
 
 				}
 

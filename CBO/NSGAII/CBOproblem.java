@@ -8,6 +8,8 @@ import org.moeaframework.core.Solution;
 import org.moeaframework.core.variable.EncodingUtils;
 import org.moeaframework.core.variable.BinaryVariable;
 import org.moeaframework.problem.AbstractProblem;
+
+
 import java.util.Arrays;
 
 public class CBOproblem implements Problem {
@@ -17,9 +19,9 @@ public class CBOproblem implements Problem {
 		// problem size define same with data generator
 
 
-		int a=50;
-		int u=200;
-		int l=200;
+		int a=10;
+		int u=20;
+		int l=20;
 		int v=7;
 		LoadData load=new LoadData(a,u,l,v);
 		this.napplications=a;

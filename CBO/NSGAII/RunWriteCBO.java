@@ -9,6 +9,8 @@ import org.moeaframework.Executor;
 import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 
+import NSGAII.CBOproblem;
+
 public class RunWriteCBO {
 
 public static void main(String[] args) {

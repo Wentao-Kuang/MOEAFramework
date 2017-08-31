@@ -3,6 +3,8 @@ package NSGAII;
 import org.moeaframework.core.Population;
 import org.moeaframework.problem.DTLZ.DTLZ2;
 
+import NSGAII.CBOproblem;
+
 public class Test {
 
 	

@@ -55,6 +55,7 @@ import org.moeaframework.core.fitness.AdditiveEpsilonIndicatorFitnessEvaluator;
 import org.moeaframework.core.fitness.HypervolumeContributionFitnessEvaluator;
 import org.moeaframework.core.fitness.HypervolumeFitnessEvaluator;
 import org.moeaframework.core.fitness.IndicatorFitnessEvaluator;
+import org.moeaframework.core.operator.InjectedInitialization;
 import org.moeaframework.core.operator.RandomInitialization;
 import org.moeaframework.core.operator.TournamentSelection;
 import org.moeaframework.core.operator.UniformSelection;
@@ -69,6 +70,8 @@ import org.moeaframework.core.variable.RealVariable;
 import org.moeaframework.util.TypedProperties;
 import org.moeaframework.util.Vector;
 import org.moeaframework.util.weights.RandomGenerator;
+
+import PSO.NSGAIIpre;
 
 /**
  * A provider of standard algorithms. The following table contains all
@@ -269,7 +272,12 @@ public class StandardAlgorithms extends AlgorithmProvider {
 					name.equalsIgnoreCase("NSGA-II") ||
 					name.equalsIgnoreCase("NSGA2")) {
 				return newNSGAII(typedProperties, problem);
-			} else if (name.equalsIgnoreCase("NSGAIII") ||
+			}  else if (name.equalsIgnoreCase("MoNSGAII") ||
+					name.equalsIgnoreCase("MoNSGA-II") ||
+					name.equalsIgnoreCase("MoNSGA2")) {
+				return newMoNSGAII(typedProperties, problem);
+				}
+			else if (name.equalsIgnoreCase("NSGAIII") ||
 					name.equalsIgnoreCase("NSGA-III") ||
 					name.equalsIgnoreCase("NSGA3")) {
 				return newNSGAIII(typedProperties, problem);
@@ -387,6 +395,41 @@ public class StandardAlgorithms extends AlgorithmProvider {
 		return emoea;
 	}
 
+	/**
+	 * Returns a new {@link MoNSGAII} instance.
+	 * 
+	 * @param properties the properties for customizing the new {@code NSGAII}
+	 *        instance
+	 * @param problem the problem
+	 * @return a new {@code NSGAII} instance
+	 */
+	private Algorithm newMoNSGAII(TypedProperties properties, Problem problem) {
+		int populationSize = (int)properties.getDouble("populationSize", 100);
+		NSGAIIpre np=new NSGAIIpre();
+		NondominatedPopulation results= np.preNSGAII();
+		Initialization initialization = new InjectedInitialization(problem,
+				populationSize,results.get(0));
+		
+
+		NondominatedSortingPopulation population = 
+				new NondominatedSortingPopulation();
+
+		TournamentSelection selection = null;
+		
+		if (properties.getBoolean("withReplacement", true)) {
+			selection = new TournamentSelection(2, new ChainedComparator(
+					new ParetoDominanceComparator(),
+					new CrowdingComparator()));
+		}
+
+		Variation variation = OperatorFactory.getInstance().getVariation(null, 
+				properties, problem);
+
+		return new MoNSGAII(problem, population, null, selection, variation,
+				initialization);
+	}
+	
+	
 	/**
 	 * Returns a new {@link NSGAII} instance.
 	 * 
@@ -1165,7 +1208,7 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 */
 	private Algorithm newGeneticAlgorithm(TypedProperties properties, Problem problem) {
 		int populationSize = (int)properties.getDouble("populationSize", 100);
-		double[] weights = properties.getDoubleArray("weights", new double[] { 1.0 });
+		double[] weights = properties.getDoubleArray("weights", new double[] { 1.0,1.0 });
 		String method = properties.getString("method", "linear");
 		
 		AggregateObjectiveComparator comparator = null;

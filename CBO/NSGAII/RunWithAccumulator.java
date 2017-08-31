@@ -11,6 +11,8 @@ import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.PopulationIO;
 import org.moeaframework.util.ReferenceSetMerger;
 
+import NSGAII.CBOproblem;
+
 public class RunWithAccumulator {
 	
 	

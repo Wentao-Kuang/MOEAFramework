@@ -4,6 +4,7 @@
 	<classpathentry kind="src" path="CBOnoApplication"/>
 	<classpathentry kind="src" path="examples"/>
 	<classpathentry kind="src" path="CBO"/>
+	<classpathentry kind="src" path="PSO"/>
 	<classpathentry kind="lib" path="lib/commons-cli-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.1.jar"/>

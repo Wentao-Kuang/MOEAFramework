@@ -50,17 +50,17 @@ public class NSGAIIproblem implements Problem {
 	 * minCost
 	 */
 	private double minCost;
-	
+
 	/**
 	 * maxCost
 	 */
 	private double maxCost;
-	
+
 	/**
 	 * minResponse
 	 */
 	private double minResponse;
-	
+
 	/**
 	 * maxResponse
 	 */
@@ -188,7 +188,7 @@ public class NSGAIIproblem implements Problem {
 
 	/**
 	 * calculate the cost fitness
-	 * 
+	 *
 	 * @param a
 	 * @return
 	 */
@@ -222,7 +222,7 @@ public class NSGAIIproblem implements Problem {
 
 	/**
 	 * calculate the response time fitness
-	 * 
+	 *
 	 * @param a
 	 * @return
 	 */
@@ -286,7 +286,7 @@ public class NSGAIIproblem implements Problem {
 			if (sum > 1)
 				b = false;
 		}
-		 
+
 		return b;
 	}
 

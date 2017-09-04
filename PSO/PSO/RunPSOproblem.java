@@ -26,9 +26,10 @@ import NSGAII.CBOproblem;
 public class RunPSOproblem {
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<3;i++){
-			System.out.println("run: "+i);
+		for(int i=0;i<30;i++){
+
 			run();
+			System.out.println("run: "+(i+1));
 		}
 	}
 
@@ -53,7 +54,7 @@ public class RunPSOproblem {
 			.withProblemClass(NSGAIIproblem.class)
 			.withFrequency(5000)
 			.attachElapsedTimeCollector();
-			
+
 			NondominatedPopulation result = new Executor()
 			.withAlgorithm("NSGAII")
 			.withProblemClass(NSGAIIproblem.class)
@@ -93,7 +94,7 @@ public class RunPSOproblem {
 			.withInstrumenter(instrumenter1)
 			.run();
 
-			
+
 			/**
 			 * Random
 			 */
@@ -118,7 +119,7 @@ public class RunPSOproblem {
 			Accumulator accumulator = instrumenter.getLastAccumulator();
 
 			Accumulator accumulator1 = instrumenter1.getLastAccumulator();
-			
+
 			//Accumulator accumulator2 = instrumenter1.getLastAccumulator();
 
 			double[] objective1=new double[result.size()];
@@ -138,16 +139,16 @@ public class RunPSOproblem {
 				writeResults("PSO/results/NSGA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
-			System.out.println("GA");
+			System.out.println("SPEAII");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
 
-				writeResults("PSO/results/GA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("PSO/results/SPEA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
-			
+
 //			System.out.println("Random");
 //			for (Solution s : result2){
 //				objective2_1[result2.indexOf(s)]=s.getObjective(0);
@@ -167,10 +168,10 @@ public class RunPSOproblem {
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
 
-				  writeResults("PSO/results/GAtime3",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("PSO/results/SPEAtime3",accumulator1.get("Elapsed Time", i).toString()+"\n");
 
 				}
-			
+
 //			for (int i=0; i<accumulator2.size("NFE"); i++) {
 //				  System.out.println("Random:"+accumulator2.get("Elapsed Time", i).toString());
 //

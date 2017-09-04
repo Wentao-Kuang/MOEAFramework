@@ -136,7 +136,7 @@ public class RunPSOproblem {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("PSO/results/NSGA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("PSO/results/NSGA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
 			System.out.println("SPEAII");
@@ -145,7 +145,7 @@ public class RunPSOproblem {
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
 
-				writeResults("PSO/results/SPEA3",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("PSO/results/SPEA5",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
 
@@ -162,13 +162,13 @@ public class RunPSOproblem {
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("PSO/results/NSGAtime3",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("PSO/results/NSGAtime5",accumulator.get("Elapsed Time", i).toString()+"\n");
 
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
 				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
 
-				  writeResults("PSO/results/SPEAtime3",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("PSO/results/SPEAtime5",accumulator1.get("Elapsed Time", i).toString()+"\n");
 
 				}
 

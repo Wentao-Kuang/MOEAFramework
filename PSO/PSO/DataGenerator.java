@@ -18,9 +18,9 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 
-		int a=20;
-		int u=60;
-		int l=60;
+		int a=40;
+		int u=150;
+		int l=150;
 		int v=7;
 		new DataGenerator(a,u,l,v);
 		//workloadGen(100,40);
@@ -265,7 +265,7 @@ public class DataGenerator {
 		writeDoubleMatrix("PSO/datasets/Latency",latency);
 		return latency;
 	}
-	
+
 	/**
 	 * sum the column of a matrix to make sure each col have non-null value.
 	 * @return

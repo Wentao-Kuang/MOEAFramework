@@ -17,58 +17,51 @@ public class LoadData {
 	private int u;
 	private int l;
 	private int v;
-	private double[][] latency;
-	private int[] Computing;
-	private double[] Price;
-	private int[] Vram;
-	private int[] Vbw;
-	private int[] Acpu;
-	private int[] Aram;
-	private int[] Abw;
-	private int[][] Belong;
-	private double[][] Task;
-	private int[][] Frequency;
-	private double[][] Latency;
 
 	public LoadData(int napplications, int nusers, int nlocations, int nVMs) {
 		this.a = napplications;
 		this.u = nusers;
 		this.v = nVMs;
 		this.l = nlocations;
-		this.latency = readLatency();
-		// System.out.println("Latency: "+Arrays.deepToString(this.latency));
-		this.Belong = readBelong();
-		// System.out.println("Belong: "+Arrays.deepToString(this.Belong));
-		this.Task = readTask();
-		// System.out.println("Task: "+Arrays.deepToString(this.Task));
-		this.Frequency = readFrequency();
-		// System.out.println("Frequency: "+Arrays.deepToString(this.Frequency));
-		this.Computing = readComputing();
-		// System.out.println("Computing: "+Arrays.toString(this.Computing));
-		this.Vram = readVram();
-		// System.out.println("Vram: "+Arrays.toString(this.Vram));
-		this.Vbw = readVbw();
-		// System.out.println("Vbw: "+Arrays.toString(this.Vbw));
-		this.Price = readPrice();
-		// System.out.println("Price: "+Arrays.toString(this.Price));
-		this.Acpu = readAcpu();
-		// System.out.println("Acpu: "+Arrays.toString(this.Acpu));
-		this.Aram = readAram();
-		// System.out.println("Aram: "+Arrays.toString(this.Aram));
-		this.Abw = readAbw();
-		// System.out.println("Abw: "+Arrays.toString(this.Abw));
+//		this.latency = readLatency();
+//		System.out.println("Latency: "+Arrays.deepToString(this.latency));
+//		this.Belong = readBelong();
+//		System.out.println("Belong: "+Arrays.deepToString(this.Belong));
+//		this.Task = readTask();
+//		System.out.println("Task: "+Arrays.deepToString(this.Task));
+//		this.Frequency = readFrequency();
+//		System.out.println("Frequency: "+Arrays.deepToString(this.Frequency));
+//		this.Computing = readComputing();
+//		System.out.println("Computing: "+Arrays.toString(this.Computing));
+//		this.Vram = readVram();
+//		System.out.println("Vram: "+Arrays.toString(this.Vram));
+//		this.Vbw = readVbw();
+//		System.out.println("Vbw: "+Arrays.toString(this.Vbw));
+//		this.Price = readPrice();
+//		System.out.println("Price: "+Arrays.toString(this.Price));
+//		this.Acpu = readAcpu();
+//		System.out.println("Acpu: "+Arrays.toString(this.Acpu));
+//		this.Aram = readAram();
+//		System.out.println("Aram: "+Arrays.toString(this.Aram));
+//		this.Abw = readAbw();
+//		System.out.println("Abw: "+Arrays.toString(this.Abw));
+		
 	}
 
 	public static void main(String[] args) {
-		int a = 10;
-		int u = 20;
-		int l = 20;
-		int v = 7;
+		int a=20;
+		int u=60;
+		int l=60;
+		int v=7;
 		LoadData load = new LoadData(a, u, l, v);
 		load.minCost();
 		load.maxCost();
 		load.minResponse();
 		load.maxResponse();
+		System.out.println("minCost: "+load.readMinCost());
+		System.out.println("maxCost: "+load.readMaxCost());
+		System.out.println("minResponse: "+load.readMinResponse());
+		System.out.println("maxResponse: "+load.readMaxResponse());
 	}
 
 	/**
@@ -77,7 +70,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readBelong() {
-		return readIntMatrix("CBO/datasets/Belong", l, v * l);
+		return readIntMatrix("PSO/datasets/Belong", l, v * l);
 	}
 
 	/**
@@ -86,7 +79,7 @@ public class LoadData {
 	 * @return
 	 */
 	public double[][] readTask() {
-		return readDoubleMatrix("CBO/datasets/tasks", a, u);
+		return readDoubleMatrix("PSO/datasets/tasks", a, u);
 	}
 
 	/**
@@ -95,7 +88,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[][] readFrequency() {
-		return readIntMatrix("CBO/datasets/Frequency", a, u);
+		return readIntMatrix("PSO/datasets/Frequency", a, u);
 	}
 
 	/**
@@ -104,7 +97,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readComputing() {
-		return readIntVector("CBO/datasets/Computing", v * l);
+		return readIntVector("PSO/datasets/Computing", v * l);
 	}
 
 	/**
@@ -113,7 +106,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readVram() {
-		return readIntVector("CBO/datasets/Vram", v * l);
+		return readIntVector("PSO/datasets/Vram", v * l);
 	}
 
 	/**
@@ -122,7 +115,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readVbw() {
-		return readIntVector("CBO/datasets/Vbw", v * l);
+		return readIntVector("PSO/datasets/Vbw", v * l);
 	}
 
 	/**
@@ -131,7 +124,7 @@ public class LoadData {
 	 * @return
 	 */
 	public double[] readPrice() {
-		return readDoubleVector("CBO/datasets/Price", v * l);
+		return readDoubleVector("PSO/datasets/Price", v * l);
 	}
 
 	/**
@@ -140,7 +133,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readAcpu() {
-		return readIntVector("CBO/datasets/Acpu", a);
+		return readIntVector("PSO/datasets/Acpu", a);
 	}
 
 	/**
@@ -149,7 +142,7 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readAram() {
-		return readIntVector("CBO/datasets/Aram", a);
+		return readIntVector("PSO/datasets/Aram", a);
 	}
 
 	/**
@@ -158,8 +151,9 @@ public class LoadData {
 	 * @return
 	 */
 	public int[] readAbw() {
-		return readIntVector("CBO/datasets/Abw", a);
+		return readIntVector("PSO/datasets/Abw", a);
 	}
+	
 
 	/**
 	 * read latency matrix
@@ -170,10 +164,29 @@ public class LoadData {
 	 * @return
 	 */
 	public double[][] readLatency() {
-		return readDoubleMatrix("CBO/datasets/Latency", u, l);
+		return readDoubleMatrix("PSO/datasets/Latency", u, l);
 	}
 
+	public double readMinCost() {
+		return readDouble("PSO/datasets/minCost");
+	}
+	
+	public double readMaxCost() {
+		return readDouble("PSO/datasets/maxCost");
+	}
+	
+	public double readMaxResponse() {
+		return readDouble("PSO/datasets/maxResponse");
+	}
+	
+	public double readMinResponse() {
+		return readDouble("PSO/datasets/minResponse");
+	}
+	
 	public void minCost() {
+		double[] Price=readPrice();
+		int[] Computing=readComputing();
+		double[][] Task=readTask();
 		Integer[] priceRanks = new Integer[Price.length];
 		for (int i = 0; i < priceRanks.length; ++i) {
 			priceRanks[i] = i;
@@ -200,15 +213,49 @@ public class LoadData {
 			minCost += ((aTask[aTaskRanks[i]] / Computing[i]) * Price[priceRanks[Price.length
 					- i - 1]]) / 3600;
 		}
-		System.out.println("minCost= " + minCost);
-		
+		//System.out.println("minCost= " + minCost);
+		writeDouble("PSO/datasets/minCost",minCost);
 		
 	}
-
+	
 	public void maxCost() {
 		double[] p = readPrice();
 		int[] c = readComputing();
+		double[][] Task =readTask();
 		double[] priceRate = new double[p.length];
+		
+		for (int i = 0; i < p.length; i++) {
+			priceRate[i] = p[i] / c[i];
+		}
+		Arrays.sort(priceRate);
+		double[] aTask = new double[a];
+		for (int i = 0; i < a; i++) {
+			aTask[i] = 0;
+			for (int j = 0; j < u; j++) {
+				aTask[i] += Task[i][j];
+			}
+		}
+		Arrays.sort(aTask);
+		//System.out.println(Arrays.toString(aTask));
+		double maxCost = 0;
+		for (int i = 0; i < a; i++) {
+			for(int j= 0;j<priceRate.length;j++){
+				maxCost += (aTask[i] * priceRate[j]) / 3600;
+			}
+			//System.out.println(aTask[aTaskRanks[i]] );
+			//System.out.println(priceRate[priceRanks[priceRate.length - i]]);
+		}
+		//System.out.println("maxCost=: " + maxCost);
+		writeDouble("PSO/datasets/maxCost",maxCost);
+	}
+
+
+	public void preMaxCost() {
+		double[] p = readPrice();
+		int[] c = readComputing();
+		double[][] Task =readTask();
+		double[] priceRate = new double[p.length];
+		
 		for (int i = 0; i < p.length; i++) {
 			priceRate[i] = p[i] / c[i];
 		}
@@ -235,8 +282,8 @@ public class LoadData {
 		Arrays.sort(aTaskRanks, gc1);
 		double maxCost = 0;
 		for (int i = 1; i < a; i++) {
-			// System.out.println(aTask[aTaskRanks[i]] );
-			// System.out.println(priceRate[priceRanks[priceRate.length - i]]);
+			//System.out.println(aTask[aTaskRanks[i]] );
+			//System.out.println(priceRate[priceRanks[priceRate.length - i]]);
 			maxCost += (aTask[aTaskRanks[i]] * priceRate[priceRanks[priceRate.length
 					- i]]) / 3600;
 		}
@@ -244,22 +291,25 @@ public class LoadData {
 			// System.out.println(aTask[aTaskRanks[0]] );
 			// System.out.println(priceRate[priceRanks[priceRate.length - a -
 			// i]]);
-			maxCost += aTask[aTaskRanks[0]]
-					* priceRate[priceRanks[priceRate.length - a - i - 1]]
+			maxCost += (aTask[aTaskRanks[0]]
+					* priceRate[priceRanks[i]])
 					/ 3600;
 		}
-		System.out.println("maxCost=: " + maxCost);
-		writeDouble("CBO/datasets/maxCost",maxCost);
+		//System.out.println("maxCost=: " + maxCost);
+		writeDouble("PSO/datasets/maxCost",maxCost);
 	}
 
 	public void minResponse() {	
 		double minResponse=0;
-		System.out.println("minResponse=: " + 0);
-		writeDouble("CBO/datasets/maxCost",minResponse);
+		//System.out.println("minResponse=: " + 0);
+		writeDouble("PSO/datasets/minResponse",minResponse);
 	}
 
 	public void maxResponse() {
 		//System.out.println(maxExecution);
+		int[][] Frequency=readFrequency();
+		int[] Computing = readComputing();
+		double[][] Task =readTask();
 		double[][] t=readTask();
 		double[][] l=readLatency();
 		double maxExecution = 0;
@@ -274,7 +324,8 @@ public class LoadData {
 		maxExecution=maxExecution/3600;
 		maxLatency=maxLatency/3600;
 		double maxResponse=maxLatency+maxExecution;
-		System.out.println("maxResponse=: " + maxResponse);
+		//System.out.println("maxResponse=: " + maxResponse);
+		writeDouble("PSO/datasets/maxResponse",maxResponse);
 	}
 
 	/**
@@ -379,4 +430,21 @@ public class LoadData {
 			// why does the catch need its own curly?
 		}
 	}
+	
+	public double readDouble(String filename) {
+		double d = 0;
+		try {
+			InputStreamReader read = new InputStreamReader(new FileInputStream(
+					filename), "UTF-8");
+			BufferedReader br = new BufferedReader(read);
+			
+					d = Double.parseDouble(br.readLine());
+
+			read.close();
+		} catch (IOException e) {
+			System.err.println("Reading data error");
+		}
+		return d;
+	}
+	
 }

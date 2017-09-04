@@ -18,9 +18,9 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 
-		int a=10;
-		int u=20;
-		int l=20;
+		int a=20;
+		int u=60;
+		int l=60;
 		int v=7;
 		new DataGenerator(a,u,l,v);
 		//workloadGen(100,40);
@@ -77,9 +77,9 @@ public class DataGenerator {
 		System.out.println("Aram: "+Arrays.toString(Aram));
 		System.out.println("Abw: "+Arrays.toString(Abw));
 		//write data to file
-		writeIntVector("CBO/datasets/Acpu", Acpu);
-		writeIntVector("CBO/datasets/Aram", Aram);
-		writeIntVector("CBO/datasets/Abw", Abw);
+		writeIntVector("PSO/datasets/Acpu", Acpu);
+		writeIntVector("PSO/datasets/Aram", Aram);
+		writeIntVector("PSO/datasets/Abw", Abw);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class DataGenerator {
 
 		System.out.println("Belong: "+Arrays.deepToString(Belong));
 		//write data to file
-		writeIntMatrix("CBO/datasets/Belong", Belong);
+		writeIntMatrix("PSO/datasets/Belong", Belong);
 	}
 
 
@@ -128,10 +128,10 @@ public class DataGenerator {
 		System.out.println("VMbw: "+Arrays.toString(Vbw));
 		System.out.println("VMprice: "+Arrays.toString(Price));
 		//write data to file
-		writeIntVector("CBO/datasets/Computing", Computing);
-		writeIntVector("CBO/datasets/Vram", Vram);
-		writeIntVector("CBO/datasets/Vbw", Vbw);
-		writeDoubleVector("CBO/datasets/Price", Price);
+		writeIntVector("PSO/datasets/Computing", Computing);
+		writeIntVector("PSO/datasets/Vram", Vram);
+		writeIntVector("PSO/datasets/Vbw", Vbw);
+		writeDoubleVector("PSO/datasets/Price", Price);
 	}
 
 	/**
@@ -167,8 +167,8 @@ public class DataGenerator {
 		System.out.println("Belong: "+Arrays.deepToString(Belong));
 		System.out.println("Task: "+Arrays.deepToString(Task));
 		//write data to file
-		//writeIntMatrix("CBO/datasets/Belong", Belong);
-		writeIntMatrix("CBO/datasets/Task", Task);
+		//writeIntMatrix("PSO/datasets/Belong", Belong);
+		writeIntMatrix("PSO/datasets/Task", Task);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class DataGenerator {
 			}
 		}
 		System.out.println("Frequency: "+Arrays.deepToString(Frequency));
-		writeIntMatrix("CBO/datasets/Frequency", Frequency);
+		writeIntMatrix("PSO/datasets/Frequency", Frequency);
 	}
 
 	/**
@@ -195,7 +195,7 @@ public class DataGenerator {
 	public void workloadGen(int nusers, int napplications){
 		int[][] frequency=new int[nusers][napplications];
 		double[][] workload= new double[nusers][napplications];
-		try (BufferedReader br = new BufferedReader(new FileReader("CBO/datasets/workload.txt"))) {
+		try (BufferedReader br = new BufferedReader(new FileReader("PSO/datasets/workload.txt"))) {
         	String line;
         	for(int u=0; u<nusers; u++){
         		for(int f=0; f<napplications;f++){
@@ -225,9 +225,9 @@ public class DataGenerator {
 
         	}
         	System.out.println(Arrays.deepToString(frequency));
-        	writeIntMatrix("CBO/datasets/Frequency", frequency);
+        	writeIntMatrix("PSO/datasets/Frequency", frequency);
         	System.out.println(Arrays.deepToString(workload));
-        	writeDoubleMatrix("CBO/datasets/tasks", workload);
+        	writeDoubleMatrix("PSO/datasets/tasks", workload);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -244,7 +244,7 @@ public class DataGenerator {
 		double[][] latency = new double[u][v];
 		try {
 			InputStreamReader read = new InputStreamReader(new FileInputStream(
-					"CBO/datasets/rtMatrix.txt"), "UTF-8");
+					"PSO/datasets/rtMatrix.txt"), "UTF-8");
 			BufferedReader br = new BufferedReader(read);
 			for (int i = 0; i < u; i++) {
 				String line =br.readLine();
@@ -262,7 +262,7 @@ public class DataGenerator {
 			// why does the catch need its own curly?
 		}
 		System.out.println("Latency: "+Arrays.deepToString(latency));
-		writeDoubleMatrix("CBO/datasets/Latency",latency);
+		writeDoubleMatrix("PSO/datasets/Latency",latency);
 		return latency;
 	}
 	

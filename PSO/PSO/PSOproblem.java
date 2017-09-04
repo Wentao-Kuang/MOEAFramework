@@ -19,9 +19,9 @@ public class PSOproblem implements Problem {
 		// problem size define same with data generator
 
 
-		int a=5;
-		int u=10;
-		int l=10;
+		int a=20;
+		int u=60;
+		int l=60;
 		int v=7;
 		LoadData load=new LoadData(a,u,l,v);
 		this.napplications=a;
@@ -39,9 +39,33 @@ public class PSOproblem implements Problem {
 		this.Acpu=load.readAcpu();
 		this.Aram=load.readAram();
 		this.Abw=load.readAbw();
+		this.minCost = load.readMinCost();
+		this.maxCost = load.readMaxCost();
+		this.minResponse = load.readMinResponse();
+		this.maxResponse = load.readMaxResponse();
 		//createExampleData();
 		// TODO Auto-generated constructor stub
 	}
+
+	/**
+	 * minCost
+	 */
+	private double minCost;
+	
+	/**
+	 * maxCost
+	 */
+	private double maxCost;
+	
+	/**
+	 * minResponse
+	 */
+	private double minResponse;
+	
+	/**
+	 * maxResponse
+	 */
+	private double maxResponse;
 
 	/**
 	 * number of application "a"
@@ -310,11 +334,13 @@ public class PSOproblem implements Problem {
 		boolean[] s = threadhold(EncodingUtils.getReal(solution));
 		double cost = caculateCost(s);
 		double response = caculateResponse(s);
-		boolean c1 = constraint1(s);
-		boolean c2 = constraint2(s);
+		cost=(cost-minCost)/(maxCost-minCost);
+		response=(response-minResponse)/(maxResponse-minResponse);
+		//boolean c1 = constraint1(s);
+		//boolean c2 = constraint2(s);
 		//boolean c3 = constraint3(s);
-		solution.setConstraint(0, c1 ? 0.0 : 1.1);
-		solution.setConstraint(1, c2?0.0:1.1);
+		//solution.setConstraint(0, c1 ? 0.0 : 1.1);
+		//solution.setConstraint(1, c2?0.0:1.1);
 		//solution.setConstraint(2, c3?0.0:1.1);
 		solution.setObjective(0, cost);
 		solution.setObjective(1, response);
@@ -323,7 +349,7 @@ public class PSOproblem implements Problem {
 	@Override
 	public Solution newSolution() {
 		int numberOfVariables=napplications * nVMs*nlocations;
-		Solution solution = new Solution(numberOfVariables,2,2);
+		Solution solution = new Solution(numberOfVariables,2);
 		solution.setVariable(0, new RealVariable(0.0, 1.0));
 		for (int i = 1; i < numberOfVariables; i++) {
 			solution.setVariable(i, new RealVariable(0.0, 1.0));

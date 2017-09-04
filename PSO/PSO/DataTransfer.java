@@ -12,7 +12,7 @@ public class DataTransfer {
 		int workloadSize = 500;
         String[][] workload=new String[10000][workloadSize];
 		for(int j=1;j<=1250;j++){
-        String csvFile = "/Users/kuangwentao/Documents/workspace/MOEAFramework/CBO/datasets/Workload/"+j+".csv";
+        String csvFile = "/Users/kuangwentao/Documents/workspace/MOEAFramework/PSO/datasets/Workload/"+j+".csv";
         String line = "";
         String cvsSplitBy = ";";
         
@@ -32,7 +32,7 @@ public class DataTransfer {
             e.printStackTrace();
         }
 	  }
-		 String filename="/Users/kuangwentao/Documents/workspace/MOEAFramework/CBO/datasets/workload.txt";
+		 String filename="/Users/kuangwentao/Documents/workspace/MOEAFramework/PSO/datasets/workload.txt";
 		 try {
 		        BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
 

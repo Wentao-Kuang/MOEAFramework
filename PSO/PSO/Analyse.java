@@ -7,22 +7,22 @@ public class Analyse {
 	public static void main(String[] args) {
 		
 	
-	String[] algorithms = { "NSGAII", "SMPSO","OMOPSO" };
+	String[] algorithms = { "NSGAII", "GA" };
 	         
 	//setup the experiment
 	Executor executor = new Executor()
-	    .withProblemClass(PSOproblem.class)
-	    .withMaxEvaluations(50000);
+	    .withProblemClass(NSGAIIproblem.class)
+	    .withMaxEvaluations(1000);
 	         
 	Analyzer analyzer = new Analyzer()
-	    .withProblemClass(PSOproblem.class)
+	    .withProblemClass(NSGAIIproblem.class)
 	    .includeHypervolume()
 	    .showStatisticalSignificance();
 	 
 	//run each algorithm for 50 seeds
 	for (String algorithm : algorithms) {
 	    analyzer.addAll(algorithm, 
-	        executor.withAlgorithm(algorithm).runSeeds(30));
+	        executor.withAlgorithm(algorithm).runSeeds(200));
 	}
 	 
 	//print the results

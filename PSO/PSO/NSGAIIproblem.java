@@ -17,10 +17,10 @@ public class NSGAIIproblem implements Problem {
 		super();
 		// problem size define same with data generator
 
-		int a = 10;
-		int u = 20;
-		int l = 20;
-		int v = 7;
+		int a=20;
+		int u=60;
+		int l=60;
+		int v=7;
 		LoadData load = new LoadData(a, u, l, v);
 		this.napplications = a;
 		this.nusers = u;
@@ -37,9 +37,34 @@ public class NSGAIIproblem implements Problem {
 		this.Acpu = load.readAcpu();
 		this.Aram = load.readAram();
 		this.Abw = load.readAbw();
+		this.minCost = load.readMinCost();
+		this.maxCost = load.readMaxCost();
+		this.minResponse = load.readMinResponse();
+		this.maxResponse = load.readMaxResponse();
+
 		// createExampleData();
 		// TODO Auto-generated constructor stub
 	}
+
+	/**
+	 * minCost
+	 */
+	private double minCost;
+	
+	/**
+	 * maxCost
+	 */
+	private double maxCost;
+	
+	/**
+	 * minResponse
+	 */
+	private double minResponse;
+	
+	/**
+	 * maxResponse
+	 */
+	private double maxResponse;
 
 	/**
 	 * number of application "a"
@@ -121,10 +146,10 @@ public class NSGAIIproblem implements Problem {
 	 */
 	public void createExampleData() {
 
-		int a = 3;
-		int f = 3;
-		int u = 3;
-		int v = 10;
+		int a=15;
+		int u=40;
+		int l=40;
+		int v=7;
 		napplications = a;
 		nusers = u;
 		nVMs = v;
@@ -214,8 +239,7 @@ public class NSGAIIproblem implements Problem {
 					deployCounter++;
 					for (int u = 0; u < nusers; u++) {
 						e += (double) Task[a][u] / (double) Computing[v];
-						la += Latency[u][v / nVMs]
-								* Frequency[a][u];
+						la += Latency[u][v / nVMs] * Frequency[a][u];
 					}
 				}
 			}
@@ -226,7 +250,7 @@ public class NSGAIIproblem implements Problem {
 			response += (la + e) / deployCounter;
 
 		}
-		//System.out.println(response / 3600);
+		// System.out.println(response / 3600);
 		return response / 3600;
 	}
 
@@ -238,13 +262,11 @@ public class NSGAIIproblem implements Problem {
 		boolean b = true;
 		for (int a = 0; a < napplications; a++) {
 			int sum = 0;
-			for (int v = 0; v < nVMs; v++) {
-				sum += s[(a) * nVMs + v] ? 1 : 0;
+			for (int v = 0; v < nVMs * nlocations; v++) {
+				sum += s[(a) * nVMs * nlocations + v] ? 1 : 0;
 			}
 			if (sum < 1)
 				b = false;
-			// System.out.println("a:"+a);
-			// System.out.println("number of deployment:"+sum);
 		}
 
 		return b;
@@ -255,15 +277,16 @@ public class NSGAIIproblem implements Problem {
 	 */
 	public boolean constraint2(boolean[] s) {
 		boolean b = true;
-		for (int v = 0; v < nVMs; v++) {
+		for (int v = 0; v < nVMs * nlocations; v++) {
 			int sum = 0;
 			for (int a = 0; a < napplications; a++) {
-				sum += s[a * nVMs + v] ? 1 : 0;
+				sum += s[a * nVMs * nlocations + v] ? 1 : 0;
+				//System.out.println(sum);
 			}
 			if (sum > 1)
 				b = false;
 		}
-
+		 
 		return b;
 	}
 
@@ -293,6 +316,8 @@ public class NSGAIIproblem implements Problem {
 		boolean[] s = EncodingUtils.getBinary(solution.getVariable(0));
 		double cost = caculateCost(s);
 		double response = caculateResponse(s);
+		cost=(cost-minCost)/(maxCost-minCost);
+		response=(response-minResponse)/(maxResponse-minResponse);
 		boolean c1 = constraint1(s);
 		boolean c2 = constraint2(s);
 		// boolean c3 = constraint3(s);
@@ -305,7 +330,7 @@ public class NSGAIIproblem implements Problem {
 
 	@Override
 	public Solution newSolution() {
-		Solution solution = new Solution(1, 2, 2);
+		Solution solution = new Solution(1, 2,2);
 		solution.setVariable(0,
 				EncodingUtils.newBinary(napplications * nVMs * nlocations));
 		return solution;

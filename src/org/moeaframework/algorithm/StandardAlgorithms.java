@@ -1208,7 +1208,7 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 */
 	private Algorithm newGeneticAlgorithm(TypedProperties properties, Problem problem) {
 		int populationSize = (int)properties.getDouble("populationSize", 100);
-		double[] weights = properties.getDoubleArray("weights", new double[] { 1.0,1.0 });
+		double[] weights = properties.getDoubleArray("weights", new double[] {});
 		String method = properties.getString("method", "linear");
 		
 		AggregateObjectiveComparator comparator = null;

@@ -50,11 +50,11 @@ public class PopulationIO {
 	private PopulationIO() {
 		super();
 	}
-	
+
 	/**
 	 * Parses the objective vectors contained in the specified reader, returning
 	 * the resulting population.  This method does not close the reader.
-	 * 
+	 *
 	 * @param reader the reader containing the objective vectors
 	 * @return a population containing all objective vectors read
 	 * @throws IOException if an I/O error occurred
@@ -63,9 +63,9 @@ public class PopulationIO {
 	IOException {
 		Population population = new Population();
 		String line = null;
-		
+
 		while ((line = reader.readLine()) != null) {
-			String[] tokens = line.trim().split("\\s+");
+			String[] tokens = line.trim().split(",");
 			double[] values = new double[tokens.length];
 
 			for (int i = 0; i < tokens.length; i++) {
@@ -74,7 +74,7 @@ public class PopulationIO {
 
 			population.add(new Solution(values));
 		}
-		
+
 		return population;
 	}
 
@@ -82,7 +82,7 @@ public class PopulationIO {
 	 * Reads a set of objective vectors from the specified file. Files read
 	 * using this method should only have been created using the
 	 * {@code writeObjectives} method.
-	 * 
+	 *
 	 * @param file the file containing the objective vectors
 	 * @return a population containing all objective vectors in the specified
 	 *         file
@@ -101,12 +101,12 @@ public class PopulationIO {
 			}
 		}
 	}
-	
+
 	/**
-	 * Writes the objective vectors of all solutions to the specified file. 
-	 * Files created using this method should only be loaded using the 
+	 * Writes the objective vectors of all solutions to the specified file.
+	 * Files created using this method should only be loaded using the
 	 * {@code loadObjectives} method.
-	 * 
+	 *
 	 * @param file the file to which the objective vectors are written
 	 * @param solutions the solutions whose objective vectors are written to
 	 *        the specified file
@@ -137,10 +137,10 @@ public class PopulationIO {
 	}
 
 	/**
-	 * Writes a collection of solutions to the specified file. Files written 
-	 * using this method should only be read using the {@link #read} method. 
+	 * Writes a collection of solutions to the specified file. Files written
+	 * using this method should only be read using the {@link #read} method.
 	 * This method relies on serialization.
-	 * 
+	 *
 	 * @param file the file to which the solutions are written
 	 * @param solutions the solutions to be written in the specified file
 	 * @throws IOException if an I/O exception occurred
@@ -170,7 +170,7 @@ public class PopulationIO {
 	 * Reads a population from the specified file. Files read using this method
 	 * should only have been created using the {@link #write} method. This
 	 * method relies on serialization.
-	 * 
+	 *
 	 * @param file the file containing the population
 	 * @return a population containing all solutions in the specified file
 	 * @throws IOException if an I/O exception occurred

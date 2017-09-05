@@ -265,7 +265,7 @@ public class DataGenerator {
 		writeDoubleMatrix("PSO/datasets/Latency",latency);
 		return latency;
 	}
-	
+
 	/**
 	 * sum the column of a matrix to make sure each col have non-null value.
 	 * @return

@@ -45,7 +45,7 @@ public class LoadData {
 //		System.out.println("Aram: "+Arrays.toString(this.Aram));
 //		this.Abw = readAbw();
 //		System.out.println("Abw: "+Arrays.toString(this.Abw));
-		
+
 	}
 
 	public static void main(String[] args) {
@@ -66,7 +66,7 @@ public class LoadData {
 
 	/**
 	 * read Belong Matrix
-	 * 
+	 *
 	 * @return
 	 */
 	public int[][] readBelong() {
@@ -75,7 +75,7 @@ public class LoadData {
 
 	/**
 	 * read Task Matrix
-	 * 
+	 *
 	 * @return
 	 */
 	public double[][] readTask() {
@@ -84,7 +84,7 @@ public class LoadData {
 
 	/**
 	 * read Frequency Matrix
-	 * 
+	 *
 	 * @return
 	 */
 	public int[][] readFrequency() {
@@ -93,7 +93,7 @@ public class LoadData {
 
 	/**
 	 * read Computing Vector
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] readComputing() {
@@ -102,7 +102,7 @@ public class LoadData {
 
 	/**
 	 * read Vram Vector
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] readVram() {
@@ -111,7 +111,7 @@ public class LoadData {
 
 	/**
 	 * read Vbw Vector
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] readVbw() {
@@ -120,7 +120,7 @@ public class LoadData {
 
 	/**
 	 * read Price Vector
-	 * 
+	 *
 	 * @return
 	 */
 	public double[] readPrice() {
@@ -129,7 +129,7 @@ public class LoadData {
 
 	/**
 	 * read Acpu vector
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] readAcpu() {
@@ -138,7 +138,7 @@ public class LoadData {
 
 	/**
 	 * read Aram vector
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] readAram() {
@@ -147,17 +147,17 @@ public class LoadData {
 
 	/**
 	 * read Abw vector
-	 * 
+	 *
 	 * @return
 	 */
 	public int[] readAbw() {
 		return readIntVector("PSO/datasets/Abw", a);
 	}
-	
+
 
 	/**
 	 * read latency matrix
-	 * 
+	 *
 	 * @param filename
 	 * @param x
 	 * @param y
@@ -170,19 +170,19 @@ public class LoadData {
 	public double readMinCost() {
 		return readDouble("PSO/datasets/minCost");
 	}
-	
+
 	public double readMaxCost() {
 		return readDouble("PSO/datasets/maxCost");
 	}
-	
+
 	public double readMaxResponse() {
 		return readDouble("PSO/datasets/maxResponse");
 	}
-	
+
 	public double readMinResponse() {
 		return readDouble("PSO/datasets/minResponse");
 	}
-	
+
 	public void minCost() {
 		double[] Price=readPrice();
 		int[] Computing=readComputing();
@@ -215,15 +215,15 @@ public class LoadData {
 		}
 		//System.out.println("minCost= " + minCost);
 		writeDouble("PSO/datasets/minCost",minCost);
-		
+
 	}
-	
+
 	public void maxCost() {
 		double[] p = readPrice();
 		int[] c = readComputing();
 		double[][] Task =readTask();
 		double[] priceRate = new double[p.length];
-		
+
 		for (int i = 0; i < p.length; i++) {
 			priceRate[i] = p[i] / c[i];
 		}
@@ -255,7 +255,7 @@ public class LoadData {
 		int[] c = readComputing();
 		double[][] Task =readTask();
 		double[] priceRate = new double[p.length];
-		
+
 		for (int i = 0; i < p.length; i++) {
 			priceRate[i] = p[i] / c[i];
 		}
@@ -299,7 +299,7 @@ public class LoadData {
 		writeDouble("PSO/datasets/maxCost",maxCost);
 	}
 
-	public void minResponse() {	
+	public void minResponse() {
 		double minResponse=0;
 		//System.out.println("minResponse=: " + 0);
 		writeDouble("PSO/datasets/minResponse",minResponse);
@@ -330,7 +330,7 @@ public class LoadData {
 
 	/**
 	 * read int vector to file
-	 * 
+	 *
 	 * @param filename
 	 * @param x
 	 * @return
@@ -353,7 +353,7 @@ public class LoadData {
 
 	/**
 	 * read double vector
-	 * 
+	 *
 	 * @param filename
 	 * @param x
 	 * @return
@@ -376,7 +376,7 @@ public class LoadData {
 
 	/**
 	 * read int matrix into file to store generated data
-	 * 
+	 *
 	 * @param filename
 	 * @param x
 	 * @param y
@@ -417,7 +417,7 @@ public class LoadData {
 		}
 		return matrix;
 	}
-	
+
 	public void writeDouble(String filename, double d) {
 		try {
 			OutputStreamWriter write = new OutputStreamWriter(
@@ -430,14 +430,14 @@ public class LoadData {
 			// why does the catch need its own curly?
 		}
 	}
-	
+
 	public double readDouble(String filename) {
 		double d = 0;
 		try {
 			InputStreamReader read = new InputStreamReader(new FileInputStream(
 					filename), "UTF-8");
 			BufferedReader br = new BufferedReader(read);
-			
+
 					d = Double.parseDouble(br.readLine());
 
 			read.close();
@@ -446,5 +446,5 @@ public class LoadData {
 		}
 		return d;
 	}
-	
+
 }

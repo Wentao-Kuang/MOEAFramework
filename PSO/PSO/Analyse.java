@@ -7,12 +7,12 @@ public class Analyse {
 	public static void main(String[] args) {
 		
 	
-	String[] algorithms = { "NSGAII", "GA" };
+	String[] algorithms = { "NSGAII", "SPEA2" };
 	         
 	//setup the experiment
 	Executor executor = new Executor()
 	    .withProblemClass(NSGAIIproblem.class)
-	    .withMaxEvaluations(1000);
+	    .withMaxEvaluations(50000);
 	         
 	Analyzer analyzer = new Analyzer()
 	    .withProblemClass(NSGAIIproblem.class)
@@ -22,7 +22,7 @@ public class Analyse {
 	//run each algorithm for 50 seeds
 	for (String algorithm : algorithms) {
 	    analyzer.addAll(algorithm, 
-	        executor.withAlgorithm(algorithm).runSeeds(200));
+	        executor.withAlgorithm(algorithm).runSeeds(30));
 	}
 	 
 	//print the results

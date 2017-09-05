@@ -17,9 +17,9 @@ public class NSGAIIproblem implements Problem {
 		super();
 		// problem size define same with data generator
 
-		int a=20;
-		int u=60;
-		int l=60;
+		int a=10;
+		int u=20;
+		int l=20;
 		int v=7;
 		LoadData load = new LoadData(a, u, l, v);
 		this.napplications = a;

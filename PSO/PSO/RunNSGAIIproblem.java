@@ -16,7 +16,7 @@ public class RunNSGAIIproblem {
 
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<10;i++){
+		for(int i=0;i<1;i++){
 			System.out.println("run: "+i);
 			run();
 		}
@@ -41,13 +41,14 @@ public class RunNSGAIIproblem {
 		 */
 			Instrumenter instrumenter = new Instrumenter()
 			.withProblemClass(NSGAIIproblem.class)
-			.withFrequency(10000)
+			.withFrequency(500)
+			.attachAllMetricCollectors()
 			.attachElapsedTimeCollector();
 			
 			NondominatedPopulation result = new Executor()
 			.withAlgorithm("NSGAII")
 			.withProblemClass(NSGAIIproblem.class)
-			.withProperty("populationSize", 100)
+			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
 			.withProperty("sbx.rate", 0.95)
 			.withProperty("sbx.distributionIndex", 15.0)
@@ -55,7 +56,7 @@ public class RunNSGAIIproblem {
 			.withProperty("pm.distributionIndex", 20.0)
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
-			.withMaxEvaluations(10000)
+			.withMaxEvaluations(5000)
 			.run();
 
 
@@ -80,6 +81,9 @@ public class RunNSGAIIproblem {
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
+				  System.out.println("NSGAII:"+accumulator.get("GenerationalDistance", i).toString());
+				  
+				  
 				  writeResults("PSO/results/NSGA1time",accumulator.get("Elapsed Time", i).toString()+"\n");
 
 				}

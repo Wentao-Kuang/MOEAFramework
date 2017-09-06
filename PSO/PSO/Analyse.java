@@ -14,17 +14,17 @@ public class Analyse {
 	//setup the experiment
 	Executor executor = new Executor()
 	    .withProblemClass(NSGAIIproblem.class)
-	    .withMaxEvaluations(50000);
+	    .withMaxEvaluations(500000);
 	         
 	Analyzer analyzer = new Analyzer()
 	    .withProblemClass(NSGAIIproblem.class)
-	    .includeHypervolume()
+	    .includeAllMetrics()
 	    .showStatisticalSignificance();
 	 
 	//run each algorithm for 50 seeds
 	for (String algorithm : algorithms) {
 	    analyzer.addAll(algorithm, 
-	        executor.withAlgorithm(algorithm).runSeeds(30));
+	        executor.withAlgorithm(algorithm).runSeeds(50));
 	}
 	 
 	//print the results

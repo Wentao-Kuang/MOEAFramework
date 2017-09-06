@@ -20,8 +20,8 @@ public class NSGAIIproblem implements Problem {
 		int a=10;
 		int u=20;
 		int l=20;
-		int v=7;
-		LoadData load = new LoadData(a, u, l, v);
+		int v=3;
+		this.load = new LoadData(a, u, l, v);
 		this.napplications = a;
 		this.nusers = u;
 		this.nlocations = l;
@@ -46,6 +46,7 @@ public class NSGAIIproblem implements Problem {
 		// TODO Auto-generated constructor stub
 	}
 
+	private LoadData load;
 	/**
 	 * minCost
 	 */
@@ -318,11 +319,11 @@ public class NSGAIIproblem implements Problem {
 		double response = caculateResponse(s);
 		cost=(cost-minCost)/(maxCost-minCost);
 		response=(response-minResponse)/(maxResponse-minResponse);
-		boolean c1 = constraint1(s);
-		boolean c2 = constraint2(s);
+		//boolean c1 = constraint1(s);
+		//boolean c2 = constraint2(s);
 		// boolean c3 = constraint3(s);
-		solution.setConstraint(0, c1 ? 0.0 : 1.1);
-		solution.setConstraint(1, c2 ? 0.0 : 1.1);
+		//solution.setConstraint(0, c1 ? 0.0 : 1.1);
+		//solution.setConstraint(1, c2 ? 0.0 : 1.1);
 		// solution.setConstraint(2, c3?0.0:1.1);
 		solution.setObjective(0, cost);
 		solution.setObjective(1, response);
@@ -330,7 +331,7 @@ public class NSGAIIproblem implements Problem {
 
 	@Override
 	public Solution newSolution() {
-		Solution solution = new Solution(1, 2,2);
+		Solution solution = new Solution(1, 2);
 		solution.setVariable(0,
 				EncodingUtils.newBinary(napplications * nVMs * nlocations));
 		return solution;
@@ -394,15 +395,20 @@ public class NSGAIIproblem implements Problem {
 		return 1;
 	}
 
-	// public Solution generate() {
-	// Solution solution = newSolution();
-	//
-	// for (int i = 0; i < nfunctions * nVMs; i++) {
-	// ((BinaryVariable) solution.getVariable(0)).set(i,
-	// PRNG.nextBoolean());
-	// }
-	// evaluate(solution);
-	// return solution;
-	// }
-
+	public Solution readMinCostSolution() {
+		
+		boolean[] s = load.readBooleanVector("PSO/datasets/minCostSolution", napplications*nVMs*nlocations);
+		
+		Solution solution = new Solution(1,2,2);
+		solution.setVariable(0,EncodingUtils.newBinary(napplications * nVMs * nlocations));
+		 for (int i = 0; i < napplications*nVMs*nlocations; i++) {
+			 if(s[i]){
+				 ((BinaryVariable) solution.getVariable(0)).set(i,true);
+				 }else{
+				 ((BinaryVariable) solution.getVariable(0)).set(i,false);
+				 }
+			 }
+		evaluate(solution);
+		return solution;
+	}
 }

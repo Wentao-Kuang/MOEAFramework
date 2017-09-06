@@ -69,9 +69,11 @@ import org.moeaframework.core.spi.ProviderNotFoundException;
 import org.moeaframework.core.variable.RealVariable;
 import org.moeaframework.util.TypedProperties;
 import org.moeaframework.util.Vector;
+import org.moeaframework.util.distributed.FutureSolution;
 import org.moeaframework.util.weights.RandomGenerator;
 
 import PSO.NSGAIIpre;
+import PSO.NSGAIIproblem;
 
 /**
  * A provider of standard algorithms. The following table contains all
@@ -405,10 +407,11 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 */
 	private Algorithm newMoNSGAII(TypedProperties properties, Problem problem) {
 		int populationSize = (int)properties.getDouble("populationSize", 100);
-		NSGAIIpre np=new NSGAIIpre();
-		NondominatedPopulation results= np.preNSGAII();
+		NSGAIIproblem np= new NSGAIIproblem();
+		Solution s=np.readMinCostSolution();
+		FutureSolution fs=new FutureSolution(s);
 		Initialization initialization = new InjectedInitialization(problem,
-				populationSize,results.get(0));
+				populationSize,fs);
 		
 
 		NondominatedSortingPopulation population = 

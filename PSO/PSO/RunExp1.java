@@ -1,6 +1,7 @@
 package PSO;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -12,11 +13,11 @@ import org.moeaframework.analysis.plot.Plot;
 import org.moeaframework.core.NondominatedPopulation;
 import org.moeaframework.core.Solution;
 
-public class RunNSGAIIproblem {
+public class RunExp1 {
 
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<1;i++){
+		for(int i=0;i<30;i++){
 			System.out.println("run: "+i);
 			run();
 		}
@@ -41,8 +42,11 @@ public class RunNSGAIIproblem {
 		 */
 			Instrumenter instrumenter = new Instrumenter()
 			.withProblemClass(NSGAIIproblem.class)
-			.withFrequency(500)
-			.attachAllMetricCollectors()
+			.withFrequency(1000)
+			//.withReferenceSet(new File("PSO/result.text"))
+			//.attachAllMetricCollectors()
+			.attachElapsedTimeCollector()
+			.attach(new CustomCollector(null))
 			.attachElapsedTimeCollector();
 			
 			NondominatedPopulation result = new Executor()
@@ -50,18 +54,15 @@ public class RunNSGAIIproblem {
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
-			.withProperty("sbx.rate", 0.95)
-			.withProperty("sbx.distributionIndex", 15.0)
-			.withProperty("pm.rate", 0.05)
-			.withProperty("pm.distributionIndex", 20.0)
+			.withProperty("sbx.rate", 0.9)
+			.withProperty("pm.rate", 0.5)
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
 			.withMaxEvaluations(5000)
 			.run();
 
 
-			Accumulator accumulator = instrumenter.getLastAccumulator();
-
+			
 			
 
 			double[] objective1=new double[result.size()];
@@ -79,19 +80,12 @@ public class RunNSGAIIproblem {
 			}
 
 			//Algorithms Execution time
-			for (int i=0; i<accumulator.size("NFE"); i++) {
-				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  System.out.println("NSGAII:"+accumulator.get("GenerationalDistance", i).toString());
-				  
-				  
-				  writeResults("PSO/results/NSGA1time",accumulator.get("Elapsed Time", i).toString()+"\n");
+			
 
-				}
-
-			Plot p =new Plot();
-			p.scatter("NSGAII", objective1, objective2);
-			p.setXLabel("Cost");
-			p.setYLabel("Response time");
-			p.show();
+//			Plot p =new Plot();
+//			p.scatter("NSGAII", objective1, objective2);
+//			p.setXLabel("Cost");
+//			p.setYLabel("Response time");
+//			p.show();
 	}
 }

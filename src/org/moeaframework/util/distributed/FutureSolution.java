@@ -50,7 +50,7 @@ public class FutureSolution extends Solution {
 	 * 
 	 * @param solution the nested solution
 	 */
-	FutureSolution(Solution solution) {
+	public FutureSolution(Solution solution) {
 		super(solution);
 	}
 

@@ -17,7 +17,7 @@ public class WriteRefferenceSet {
 		try {
 			OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream("PSO/result.text"), "UTF-8");
 			BufferedWriter bw = new BufferedWriter(write);
-			int iterations = 50;
+			int iterations = 100;
 			for (int i = 0; i < iterations; i++) {
 				NondominatedPopulation result = new Executor()
 						.withAlgorithm("NSGAII")

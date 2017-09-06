@@ -10,7 +10,6 @@ import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import org.apache.commons.lang3.ArrayUtils;
 
 public class LoadData {
 	private int a;
@@ -170,6 +169,8 @@ public class LoadData {
 	public double readMinCost() {
 		return readDouble("PSO/datasets/minCost");
 	}
+	
+	
 
 	public double readMaxCost() {
 		return readDouble("PSO/datasets/maxCost");
@@ -184,17 +185,20 @@ public class LoadData {
 	}
 
 	public void minCost() {
-		double[] Price=readPrice();
-		int[] Computing=readComputing();
+		double[] p=readPrice();
+		int[] c=readComputing();
 		double[][] Task=readTask();
-		Integer[] priceRanks = new Integer[Price.length];
-		for (int i = 0; i < priceRanks.length; ++i) {
-			priceRanks[i] = i;
+		double[] priceRate = new double[p.length];
+		for (int i = 0; i < p.length; i++) {
+			priceRate[i] = p[i] / c[i];
 		}
-		Comparator<Integer> gc = new ArrayIndexComparator(Price);
-		Arrays.sort(priceRanks, gc);
-
-		Arrays.sort(Computing);
+		Integer[] priceRank = new Integer[priceRate.length];
+		for (int i = 0; i < priceRank.length; ++i) {
+			priceRank[i] = i;
+		}
+		Comparator<Integer> gc = new ArrayIndexComparator(priceRate);
+		Arrays.sort(priceRank, gc);
+		
 		double[] aTask = new double[a];
 		for (int i = 0; i < a; i++) {
 			aTask[i] = 0;
@@ -208,15 +212,21 @@ public class LoadData {
 		}
 		Comparator<Integer> gc1 = new ArrayIndexComparator(aTask);
 		Arrays.sort(aTaskRanks, gc1);
+		
+		boolean[] solution = new boolean[a*l*v];
 		double minCost = 0;
 		for (int i = 0; i < a; i++) {
-			minCost += ((aTask[aTaskRanks[i]] / Computing[i]) * Price[priceRanks[Price.length
-					- i - 1]]) / 3600;
+			minCost += (aTask[aTaskRanks[i]]* priceRate[priceRank[priceRate.length- i - 1]]) / 3600;
+			solution[aTaskRanks[i]*v * l+priceRank[priceRate.length - i - 1]]=true;
 		}
 		//System.out.println("minCost= " + minCost);
 		writeDouble("PSO/datasets/minCost",minCost);
-
+		//System.out.println(Arrays.toString(solution));
+		writeBooleanVector("PSO/datasets/minCostSolution",solution);
 	}
+	
+
+	
 
 	public void maxCost() {
 		double[] p = readPrice();
@@ -445,6 +455,36 @@ public class LoadData {
 			System.err.println("Reading data error");
 		}
 		return d;
+	}
+	
+	public void writeBooleanVector(String filename, boolean[] vector) {
+		try {
+			OutputStreamWriter write = new OutputStreamWriter(
+					new FileOutputStream(filename), "UTF-8");
+			BufferedWriter bw = new BufferedWriter(write);
+			for (int i = 0; i < vector.length; i++) {
+					bw.write(vector[i] + "\n");
+			}
+			bw.flush();
+		} catch (IOException e) {
+			System.err.println("Writing data error");
+			// why does the catch need its own curly?
+		}
+	}
+	public boolean[] readBooleanVector(String filename, int x) {
+		boolean[] vector = new boolean[x];
+		try {
+			InputStreamReader read = new InputStreamReader(new FileInputStream(
+					filename), "UTF-8");
+			BufferedReader br = new BufferedReader(read);
+			for (int i = 0; i < x; i++) {
+				vector[i] = Boolean.parseBoolean(br.readLine());
+			}
+			read.close();
+		} catch (IOException e) {
+			System.err.println("Reading data error");
+		}
+		return vector;
 	}
 
 }

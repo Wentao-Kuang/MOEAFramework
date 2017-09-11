@@ -65,6 +65,8 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 	 * The variation operator.
 	 */
 	private final Variation variation;
+	
+	private final Variation localVari;
 
 	/**
 	 * Constructs the NSGA-II algorithm with the specified components.
@@ -78,10 +80,11 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 	 */
 	public MoNSGAII(Problem problem, NondominatedSortingPopulation population,
 			EpsilonBoxDominanceArchive archive, Selection selection,
-			Variation variation, Initialization initialization) {
+			Variation variation,Variation localVari, Initialization initialization) {
 		super(problem, population, archive, initialization);
 		this.selection = selection;
 		this.variation = variation;
+		this.localVari = localVari;
 	}
 
 	@Override
@@ -143,7 +146,14 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 		if (archive != null) {
 			archive.addAll(offspring);
 		}
-
+		
+		
+		for(Solution s: offspring){
+			Population neighbours = new Population();
+			for(int i = 0; i < 5; i++){
+			neighbours.addAll(variation.evolve(new Solution[]{s,s}));
+			}
+		}
 		population.addAll(offspring);
 		population.truncate(populationSize);
 	}

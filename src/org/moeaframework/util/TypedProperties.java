@@ -152,7 +152,7 @@ public class TypedProperties {
 	 */
 	public double getDouble(String key, double defaultValue) {
 		String value = getString(key, null);
-
+		
 		if (value == null) {
 			return defaultValue;
 		} else {

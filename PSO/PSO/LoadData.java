@@ -48,9 +48,9 @@ public class LoadData {
 	}
 
 	public static void main(String[] args) {
-		int a=20;
-		int u=50;
-		int l=50;
+		int a=40;
+		int u=100;
+		int l=100;
 		int v=7;
 		LoadData load = new LoadData(a, u, l, v);
 		load.minCost();

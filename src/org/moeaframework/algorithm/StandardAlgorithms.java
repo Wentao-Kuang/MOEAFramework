@@ -287,6 +287,8 @@ public class StandardAlgorithms extends AlgorithmProvider {
 				return newCMAES(typedProperties, problem);
 			} else if (name.equalsIgnoreCase("SPEA2")) {
 				return newSPEA2(typedProperties, problem);
+			}else if (name.equalsIgnoreCase("MoSPEA2")) {
+				return newMoSPEA2(typedProperties, problem);
 			} else if (name.equalsIgnoreCase("PAES")) {
 				return newPAES(typedProperties, problem);
 			} else if (name.equalsIgnoreCase("PESA2")) {
@@ -405,12 +407,10 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 */
 	private Algorithm newMoNSGAII(TypedProperties properties, Problem problem) {
 		int populationSize = (int) properties.getDouble("populationSize", 100);
-		NSGAIIproblem np = new NSGAIIproblem();
-		Solution s = np.readMinCostSolution();
-		FutureSolution fs = new FutureSolution(s);
-		Initialization initialization = new InjectedInitialization(problem,
-				populationSize, fs);
-
+		
+		Initialization initialization = new RandomInitialization(problem,
+				populationSize);
+		
 		NondominatedSortingPopulation population = new NondominatedSortingPopulation();
 
 		TournamentSelection selection = null;
@@ -425,8 +425,8 @@ public class StandardAlgorithms extends AlgorithmProvider {
 
 		Properties p = new Properties();
 		//p.setProperty("populationSize",properties.getProperties().get("populationSize").toString());
-		p.setProperty("hux.rate","0.0");
-		p.setProperty("bf.rate", "1.0");
+		p.setProperty("hux.rate","0.9");
+		p.setProperty("bf.rate", "0.1");
 		TypedProperties tp = new TypedProperties(p);
 		Variation localVari = OperatorFactory.getInstance().getVariation(null,
 				tp, problem);
@@ -801,6 +801,29 @@ public class StandardAlgorithms extends AlgorithmProvider {
 				properties, problem);
 
 		return new SPEA2(problem, initialization, variation, offspringSize, k);
+	}
+	
+	/**
+	 * Returns a new {@link SPEA2} instance.
+	 * 
+	 * @param properties
+	 *            the properties for customizing the new {@code SPEA2} instance
+	 * @param problem
+	 *            the problem
+	 * @return a new {@code SPEA2} instance
+	 */
+	private Algorithm newMoSPEA2(TypedProperties properties, Problem problem) {
+		int populationSize = (int) properties.getDouble("populationSize", 100);
+		int offspringSize = (int) properties.getDouble("offspringSize", 100);
+		int k = (int) properties.getDouble("k", 1);
+
+		Initialization initialization = new RandomInitialization(problem,
+				populationSize);
+
+		Variation variation = OperatorFactory.getInstance().getVariation(null,
+				properties, problem);
+
+		return new MoSPEA2(problem, initialization, variation, offspringSize, k);
 	}
 
 	/**

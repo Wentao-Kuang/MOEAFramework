@@ -60,10 +60,8 @@ public class RunExp3 {
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
-			.withProperty("sbx.rate", 0.9)
-			.withProperty("sbx.distributionIndex", 15.0)
-			.withProperty("pm.rate", 0.5)
-			.withProperty("pm.distributionIndex", 20.0)
+			.withProperty("hux.rate", 0.9)
+			.withProperty("bf.rate", 0.05)
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
 			.withMaxEvaluations(5000)
@@ -80,13 +78,12 @@ public class RunExp3 {
 
 
 			NondominatedPopulation result1 = new Executor()
-			.withAlgorithm("SPEA2")
+			.withAlgorithm("MoNSGAII")
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize",50)
-			.withProperty("sbx.rate", 0.9)
-			.withProperty("sbx.distributionIndex", 15.0)
-			.withProperty("pm.rate", 0.5)
-			.withProperty("pm.distributionIndex", 20.0)
+			.withProperty("withReplacement", true)
+			.withProperty("hux.rate", 0.9)
+			.withProperty("bf.rate", 0.05)
 			.distributeOnAllCores()
 			.withMaxEvaluations(5000)
 			.distributeOnAllCores()
@@ -115,7 +112,7 @@ public class RunExp3 {
 				writeResults("PSO/results/NSGA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
-			System.out.println("SPEAII");
+			System.out.println("MoNSGAII");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
@@ -135,7 +132,7 @@ public class RunExp3 {
 
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
-				  System.out.println("GA:"+accumulator1.get("Elapsed Time", i).toString());
+				  System.out.println("MoNSGAII:"+accumulator1.get("Elapsed Time", i).toString());
 
 				  writeResults("PSO/results/SPEAtime1",accumulator1.get("Elapsed Time", i).toString()+"\n");
 
@@ -143,7 +140,7 @@ public class RunExp3 {
 			
 			Plot p =new Plot();
 			p.scatter("NSGAII", objective1, objective2);
-			p.scatter("SPEAII", objective1_1, objective1_2);
+			p.scatter("MoNSGAII", objective1_1, objective1_2);
 			//p.scatter("MoNSGA", objective2_1, objective2_2);
 			p.setXLabel("Cost");
 			p.setYLabel("Response time");

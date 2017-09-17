@@ -271,7 +271,12 @@ public class StandardAlgorithms extends AlgorithmProvider {
 					|| name.equalsIgnoreCase("MoNSGA-II")
 					|| name.equalsIgnoreCase("MoNSGA2")) {
 				return newMoNSGAII(typedProperties, problem);
-			} else if (name.equalsIgnoreCase("NSGAIII")
+			}else if (name.equalsIgnoreCase("ASNSGAII")
+					|| name.equalsIgnoreCase("ASNSGA-II")
+					|| name.equalsIgnoreCase("ASNSGA2")) {
+				return newASNSGAII(typedProperties, problem);
+			}
+			else if (name.equalsIgnoreCase("NSGAIII")
 					|| name.equalsIgnoreCase("NSGA-III")
 					|| name.equalsIgnoreCase("NSGA3")) {
 				return newNSGAIII(typedProperties, problem);
@@ -407,9 +412,9 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 */
 	private Algorithm newMoNSGAII(TypedProperties properties, Problem problem) {
 		int populationSize = (int) properties.getDouble("populationSize", 100);
-		
 		Initialization initialization = new RandomInitialization(problem,
 				populationSize);
+		//Initialization generator = new RandomInitialization(problem,5);
 		
 		NondominatedSortingPopulation population = new NondominatedSortingPopulation();
 
@@ -423,16 +428,51 @@ public class StandardAlgorithms extends AlgorithmProvider {
 		Variation variation = OperatorFactory.getInstance().getVariation(null,
 				properties, problem);
 
-		Properties p = new Properties();
-		//p.setProperty("populationSize",properties.getProperties().get("populationSize").toString());
-		p.setProperty("hux.rate","0.9");
-		p.setProperty("bf.rate", "0.1");
-		TypedProperties tp = new TypedProperties(p);
-		Variation localVari = OperatorFactory.getInstance().getVariation(null,
-				tp, problem);
+//		Properties p = new Properties();
+//		p.setProperty("hux.rate","0.9");
+//		p.setProperty("bf.rate", "0.1");
+//		TypedProperties tp = new TypedProperties(p);
+//		Variation localVari = OperatorFactory.getInstance().getVariation(null,
+//				tp, problem);
 		
-		return new MoNSGAII(problem, population, null, selection, variation,
-				localVari, initialization);
+		return new MoNSGAII(problem, population, null, selection, variation, initialization);
+	}
+	
+	/**
+	 * Returns a new {@link MoNSGAII} instance.
+	 * 
+	 * @param properties
+	 *            the properties for customizing the new {@code NSGAII} instance
+	 * @param problem
+	 *            the problem
+	 * @return a new {@code NSGAII} instance
+	 */
+	private Algorithm newASNSGAII(TypedProperties properties, Problem problem) {
+		int populationSize = (int) properties.getDouble("populationSize", 100);
+		Initialization initialization = new RandomInitialization(problem,
+				populationSize);
+		//Initialization generator = new RandomInitialization(problem,5);
+		
+		NondominatedSortingPopulation population = new NondominatedSortingPopulation();
+
+		TournamentSelection selection = null;
+
+		if (properties.getBoolean("withReplacement", true)) {
+			selection = new TournamentSelection(2, new ChainedComparator(
+					new ParetoDominanceComparator(), new CrowdingComparator()));
+		}
+
+		Variation variation = OperatorFactory.getInstance().getVariation(null,
+				properties, problem);
+
+//		Properties p = new Properties();
+//		p.setProperty("hux.rate","0.9");
+//		p.setProperty("bf.rate", "0.1");
+//		TypedProperties tp = new TypedProperties(p);
+//		Variation localVari = OperatorFactory.getInstance().getVariation(null,
+//				tp, problem);
+		
+		return new MoNSGAII(problem, population, null, selection, variation, initialization);
 	}
 
 	/**

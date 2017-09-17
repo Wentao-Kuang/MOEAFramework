@@ -42,7 +42,7 @@ public class RunExp1 {
 		 */
 			Instrumenter instrumenter = new Instrumenter()
 			.withProblemClass(NSGAIIproblem.class)
-			.withFrequency(1000)
+			.withFrequency(2000)
 			//.withReferenceSet(new File("PSO/result.text"))
 			//.attachAllMetricCollectors()
 			.attachElapsedTimeCollector()
@@ -50,15 +50,15 @@ public class RunExp1 {
 			.attachElapsedTimeCollector();
 			
 			NondominatedPopulation result = new Executor()
-			.withAlgorithm("NSGAII")
+			.withAlgorithm("SPEA2")
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
-			.withProperty("sbx.rate", 0.9)
-			.withProperty("pm.rate", 0.5)
+			.withProperty("hux.rate", 0.95)
+			.withProperty("bf.rate", 0.01)
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
-			.withMaxEvaluations(5000)
+			.withMaxEvaluations(10000)
 			.run();
 
 

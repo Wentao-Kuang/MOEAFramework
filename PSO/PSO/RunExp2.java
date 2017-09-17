@@ -41,14 +41,14 @@ public class RunExp2 {
 		 */
 			
 			NondominatedPopulation result = new Executor()
-			.withAlgorithm("MoNSGAII")
+			.withAlgorithm("SPEA2")
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
-			.withProperty("hux.rate", 0.9)
-			.withProperty("bf.rate", 0.05)
+			.withProperty("hux.rate", 0.95)
+			.withProperty("bf.rate", 0.01)
 			.distributeOnAllCores()
-			.withMaxEvaluations(10000)
+			.withMaxEvaluations(100000)
 			.run();
 
 
@@ -59,7 +59,7 @@ public class RunExp2 {
 			double[] objective2=new double[result.size()];
 
 			//Objectives results
-			System.out.println("MoNSGAII:");
+			System.out.println("NSGAII:");
 			for (Solution s : result){
 				System.out.println(s.getVariable(0));
 				objective1[result.indexOf(s)]=s.getObjective(0);

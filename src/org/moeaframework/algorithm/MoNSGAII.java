@@ -33,6 +33,7 @@ import org.moeaframework.core.Population;
 import org.moeaframework.core.Problem;
 import org.moeaframework.core.Selection;
 import org.moeaframework.core.Solution;
+import org.moeaframework.core.Variable;
 import org.moeaframework.core.Variation;
 import org.moeaframework.core.comparator.ChainedComparator;
 import org.moeaframework.core.comparator.CrowdingComparator;
@@ -62,13 +63,13 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 	 * original NSGA-II implementation.
 	 */
 	private final Selection selection;
-
+	// private final Initialization generator;
 	/**
 	 * The variation operator.
 	 */
 	private final Variation variation;
 
-	private final Variation localVari;
+	// private final Variation localVari;
 
 	/**
 	 * Constructs the NSGA-II algorithm with the specified components.
@@ -88,12 +89,12 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 	 */
 	public MoNSGAII(Problem problem, NondominatedSortingPopulation population,
 			EpsilonBoxDominanceArchive archive, Selection selection,
-			Variation variation, Variation localVari,
-			Initialization initialization) {
+			Variation variation, Initialization initialization) {
 		super(problem, population, archive, initialization);
 		this.selection = selection;
 		this.variation = variation;
-		this.localVari = localVari;
+		// this.localVari = localVari;
+		// this.generator = generator;
 	}
 
 	@Override
@@ -146,27 +147,36 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 				offspring.addAll(variation.evolve(parents));
 			}
 		}
-		//evaluateAll(offspring);
+		// evaluateAll(offspring);
 
 		if (archive != null) {
 			archive.addAll(offspring);
 		}
-		
+
 		NondominatedSortingPopulation newoffspring = new NondominatedSortingPopulation();
 		for (Solution s : offspring) {
 			NondominatedSortingPopulation neighbours = new NondominatedSortingPopulation();
-			int k = 5;
+
+			int k = 1;
 			neighbours.add(s);
-			for(int i = 0;i<k;i++){
-				int index = ThreadLocalRandom.current().nextInt(0,populationSize);
-				neighbours.add(population.get(index));
+			for (int i = 0; i < k; i++) {
+				int index = ThreadLocalRandom.current().nextInt(0,
+						populationSize);
+				neighbours.addAll(variation.evolve(new Solution[] { s,
+						population.get(index) }));
 			}
+
+			// neighbours.add(s);
+			// Solution[] Rs = generator.initialize();
+			// neighbours.addAll(Rs);
+			// evaluateAll(neighbours);
+
 			neighbours.truncate(1);
 			newoffspring.addAll(neighbours);
 		}
 		evaluateAll(newoffspring);
 		population.addAll(newoffspring);
-		//population.addAll(offspring);
+		// population.addAll(offspring);
 		population.truncate(populationSize);
 	}
 

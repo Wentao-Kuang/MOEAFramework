@@ -271,10 +271,10 @@ public class StandardAlgorithms extends AlgorithmProvider {
 					|| name.equalsIgnoreCase("MoNSGA-II")
 					|| name.equalsIgnoreCase("MoNSGA2")) {
 				return newMoNSGAII(typedProperties, problem);
-			}else if (name.equalsIgnoreCase("ASNSGAII")
-					|| name.equalsIgnoreCase("ASNSGA-II")
-					|| name.equalsIgnoreCase("ASNSGA2")) {
-				return newASNSGAII(typedProperties, problem);
+			}else if (name.equalsIgnoreCase("SANSGAII")
+					|| name.equalsIgnoreCase("SANSGA-II")
+					|| name.equalsIgnoreCase("SANSGA2")) {
+				return newSANSGAII(typedProperties, problem);
 			}
 			else if (name.equalsIgnoreCase("NSGAIII")
 					|| name.equalsIgnoreCase("NSGA-III")
@@ -447,11 +447,11 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 *            the problem
 	 * @return a new {@code NSGAII} instance
 	 */
-	private Algorithm newASNSGAII(TypedProperties properties, Problem problem) {
+	private Algorithm newSANSGAII(TypedProperties properties, Problem problem) {
 		int populationSize = (int) properties.getDouble("populationSize", 100);
 		Initialization initialization = new RandomInitialization(problem,
 				populationSize);
-		//Initialization generator = new RandomInitialization(problem,5);
+		Initialization generator = new RandomInitialization(problem,5);
 		
 		NondominatedSortingPopulation population = new NondominatedSortingPopulation();
 
@@ -472,7 +472,7 @@ public class StandardAlgorithms extends AlgorithmProvider {
 //		Variation localVari = OperatorFactory.getInstance().getVariation(null,
 //				tp, problem);
 		
-		return new MoNSGAII(problem, population, null, selection, variation, initialization);
+		return new SANSGAII(problem, population, null, selection, variation, initialization,generator);
 	}
 
 	/**

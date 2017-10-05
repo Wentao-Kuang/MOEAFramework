@@ -412,6 +412,8 @@ public class StandardAlgorithms extends AlgorithmProvider {
 	 */
 	private Algorithm newMoNSGAII(TypedProperties properties, Problem problem) {
 		int populationSize = (int) properties.getDouble("populationSize", 100);
+		int number = (int) properties.getDouble("maxEvaluations", 10000);
+		//System.out.println(number);
 		Initialization initialization = new RandomInitialization(problem,
 				populationSize);
 		//Initialization generator = new RandomInitialization(problem,5);
@@ -435,7 +437,7 @@ public class StandardAlgorithms extends AlgorithmProvider {
 //		Variation localVari = OperatorFactory.getInstance().getVariation(null,
 //				tp, problem);
 		
-		return new MoNSGAII(problem, population, null, selection, variation, initialization);
+		return new MoNSGAII(problem, population, null, selection, variation, initialization, number);
 	}
 	
 	/**

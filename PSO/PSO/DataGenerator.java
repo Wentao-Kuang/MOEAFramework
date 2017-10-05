@@ -18,9 +18,9 @@ public class DataGenerator {
 	//test
 	public static void main(String[] args) {
 
-		int a=20;
-		int u=50;
-		int l=50;
+		int a=100;
+		int u=200;
+		int l=200;
 		int v=7;
 		new DataGenerator(a,u,l,v);
 		//workloadGen(100,40);

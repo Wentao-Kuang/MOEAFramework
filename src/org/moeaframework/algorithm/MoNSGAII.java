@@ -68,6 +68,9 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 	 * The variation operator.
 	 */
 	private final Variation variation;
+	
+	private int number;
+	private int generation;
 
 	// private final Variation localVari;
 
@@ -89,10 +92,12 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 	 */
 	public MoNSGAII(Problem problem, NondominatedSortingPopulation population,
 			EpsilonBoxDominanceArchive archive, Selection selection,
-			Variation variation, Initialization initialization) {
+			Variation variation, Initialization initialization, int number) {
 		super(problem, population, archive, initialization);
 		this.selection = selection;
 		this.variation = variation;
+		this.number = number/50;
+		this.generation = number/50;
 		// this.localVari = localVari;
 		// this.generator = generator;
 	}
@@ -147,36 +152,41 @@ public class MoNSGAII extends AbstractEvolutionaryAlgorithm implements
 				offspring.addAll(variation.evolve(parents));
 			}
 		}
-		// evaluateAll(offspring);
 
 		if (archive != null) {
 			archive.addAll(offspring);
 		}
+		number--;
+		int probility = ThreadLocalRandom.current().nextInt(generation - number,generation+1);
+		
+		if(probility > generation/2){
+			NondominatedSortingPopulation newoffspring = new NondominatedSortingPopulation();
+			for (Solution s : offspring) {
+				NondominatedSortingPopulation neighbours = new NondominatedSortingPopulation();
 
-		NondominatedSortingPopulation newoffspring = new NondominatedSortingPopulation();
-		for (Solution s : offspring) {
-			NondominatedSortingPopulation neighbours = new NondominatedSortingPopulation();
+				int k = 1;
+				neighbours.add(s);
+				for (int i = 0; i < k; i++) {
+					int index = ThreadLocalRandom.current().nextInt(0,
+							populationSize);
+					neighbours.addAll(variation.evolve(new Solution[] { s,
+							population.get(index) }));
+				}
 
-			int k = 1;
-			neighbours.add(s);
-			for (int i = 0; i < k; i++) {
-				int index = ThreadLocalRandom.current().nextInt(0,
-						populationSize);
-				neighbours.addAll(variation.evolve(new Solution[] { s,
-						population.get(index) }));
+				// neighbours.add(s);
+				// Solution[] Rs = generator.initialize();
+				// neighbours.addAll(Rs);
+				// evaluateAll(neighbours);
+
+				neighbours.truncate(1);
+				newoffspring.addAll(neighbours);
 			}
-
-			// neighbours.add(s);
-			// Solution[] Rs = generator.initialize();
-			// neighbours.addAll(Rs);
-			// evaluateAll(neighbours);
-
-			neighbours.truncate(1);
-			newoffspring.addAll(neighbours);
+			evaluateAll(newoffspring);
+			population.addAll(newoffspring);
+		}else{	
+			 evaluateAll(offspring);
+			population.addAll(offspring);
 		}
-		evaluateAll(newoffspring);
-		population.addAll(newoffspring);
-		// population.addAll(offspring);
 		population.truncate(populationSize);
 	}
 

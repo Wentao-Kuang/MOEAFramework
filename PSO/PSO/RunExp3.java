@@ -26,7 +26,7 @@ import NSGAII.CBOproblem;
 public class RunExp3 {
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<30;i++){
+		for(int i=0;i<20;i++){
 
 			run();
 			System.out.println("run: "+(i+1));
@@ -61,7 +61,7 @@ public class RunExp3 {
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
 			.withProperty("hux.rate", 0.9)
-			.withProperty("bf.rate", 0.05)
+			.withProperty("bf.rate", 0.01)
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
 			.withMaxEvaluations(5000)
@@ -78,12 +78,12 @@ public class RunExp3 {
 
 
 			NondominatedPopulation result1 = new Executor()
-			.withAlgorithm("MoNSGAII")
+			.withAlgorithm("SPEA2")
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize",50)
 			.withProperty("withReplacement", true)
 			.withProperty("hux.rate", 0.9)
-			.withProperty("bf.rate", 0.05)
+			.withProperty("bf.rate", 0.01)
 			.distributeOnAllCores()
 			.withMaxEvaluations(5000)
 			.distributeOnAllCores()
@@ -109,16 +109,16 @@ public class RunExp3 {
 				objective1[result.indexOf(s)]=s.getObjective(0);
 				objective2[result.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
-				writeResults("PSO/results/NSGA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("PSO/results/NSGA8",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
-			System.out.println("MoNSGAII");
+			System.out.println("SPEA2");
 			for (Solution s : result1){
 				objective1_1[result1.indexOf(s)]=s.getObjective(0);
 				objective1_2[result1.indexOf(s)]=s.getObjective(1);
 				System.out.println(s.getObjective(0)+","+s.getObjective(1)+"\n");
 
-				writeResults("PSO/results/SPEA1",s.getObjective(0)+","+s.getObjective(1)+"\n");
+				writeResults("PSO/results/SPEA8",s.getObjective(0)+","+s.getObjective(1)+"\n");
 
 			}
 
@@ -128,23 +128,23 @@ public class RunExp3 {
 			//Algorithms Execution time
 			for (int i=0; i<accumulator.size("NFE"); i++) {
 				  System.out.println("NSGAII:"+accumulator.get("Elapsed Time", i).toString());
-				  writeResults("PSO/results/NSGAtime1",accumulator.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("PSO/results/NSGAtime8",accumulator.get("Elapsed Time", i).toString()+"\n");
 
 				}
 			for (int i=0; i<accumulator1.size("NFE"); i++) {
-				  System.out.println("MoNSGAII:"+accumulator1.get("Elapsed Time", i).toString());
+				  System.out.println("SPEA2:"+accumulator1.get("Elapsed Time", i).toString());
 
-				  writeResults("PSO/results/SPEAtime1",accumulator1.get("Elapsed Time", i).toString()+"\n");
+				  writeResults("PSO/results/SPEAtime8",accumulator1.get("Elapsed Time", i).toString()+"\n");
 
 				}
 			
-			Plot p =new Plot();
-			p.scatter("NSGAII", objective1, objective2);
-			p.scatter("MoNSGAII", objective1_1, objective1_2);
-			//p.scatter("MoNSGA", objective2_1, objective2_2);
-			p.setXLabel("Cost");
-			p.setYLabel("Response time");
-			p.show();
+//			Plot p =new Plot();
+//			p.scatter("NSGAII", objective1, objective2);
+//			p.scatter("SPEA2", objective1_1, objective1_2);
+//			//p.scatter("MoNSGA", objective2_1, objective2_2);
+//			p.setXLabel("Cost");
+//			p.setYLabel("Response time");
+//			p.show();
 	}
 
 }

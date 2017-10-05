@@ -17,7 +17,7 @@ public class RunExp1 {
 
 	public static void main(String[] args) {
 		//simulation times
-		for(int i=0;i<30;i++){
+		for(int i=0;i<1;i++){
 			System.out.println("run: "+i);
 			run();
 		}
@@ -50,7 +50,7 @@ public class RunExp1 {
 			.attachElapsedTimeCollector();
 			
 			NondominatedPopulation result = new Executor()
-			.withAlgorithm("SPEA2")
+			.withAlgorithm("NSGAII")
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)
@@ -58,7 +58,7 @@ public class RunExp1 {
 			.withProperty("bf.rate", 0.01)
 			.distributeOnAllCores()
 			.withInstrumenter(instrumenter)
-			.withMaxEvaluations(10000)
+			.withMaxEvaluations(5000)
 			.run();
 
 

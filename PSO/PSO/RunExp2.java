@@ -41,7 +41,7 @@ public class RunExp2 {
 		 */
 			
 			NondominatedPopulation result = new Executor()
-			.withAlgorithm("SPEA2")
+			.withAlgorithm("NSGAII")
 			.withProblemClass(NSGAIIproblem.class)
 			.withProperty("populationSize", 50)
 			.withProperty("withReplacement", true)

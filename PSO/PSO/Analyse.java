@@ -9,7 +9,7 @@ public class Analyse {
 	public static void main(String[] args) {
 		
 	
-	String[] algorithms = { "NSGAII", "SPEA2","MoNSGAII" };
+	String[] algorithms = { "NSGAII", "SPEA2", "MoNSGAII" };
 	         
 	//setup the experiment
 	Executor executor = new Executor()
@@ -18,11 +18,13 @@ public class Analyse {
 	    .withProperty("withReplacement", true)
 	    .withProperty("hux.rate", 0.95)
 		.withProperty("bf.rate", 0.01)
+		.distributeOnAllCores()
 	    .withMaxEvaluations(5000);
 	         
 	Analyzer analyzer = new Analyzer()
 	    .withProblemClass(NSGAIIproblem.class)
 	    .includeHypervolume()
+	    .includeInvertedGenerationalDistance()
 	    .showStatisticalSignificance();
 	 
 	//run each algorithm for 50 seeds

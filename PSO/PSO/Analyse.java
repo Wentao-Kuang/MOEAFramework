@@ -8,7 +8,8 @@ import org.moeaframework.Executor;
 public class Analyse {
 	public static void main(String[] args) {
 		
-	
+	for(int i = 1;i <= 2;i++){
+		System.out.println("run: "+i);
 	String[] algorithms = { "NSGAII", "SPEA2", "MoNSGAII" };
 	         
 	//setup the experiment
@@ -35,5 +36,6 @@ public class Analyse {
 	 
 	//print the results
 	analyzer.printAnalysis();
+	}
 	}
 }
